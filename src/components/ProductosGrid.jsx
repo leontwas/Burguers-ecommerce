@@ -7,8 +7,7 @@ function ProductosGrid() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Cambiá esta URL según dónde esté tu API (local o en internet)
-    const URL_API = 'http://localhost:3000/productos';
+    const URL_API = 'https://mi-api-burger.onrender.com/productos';
 
     fetch(URL_API)
       .then(res => {
@@ -39,3 +38,4 @@ function ProductosGrid() {
 }
 
 export default ProductosGrid;
+
