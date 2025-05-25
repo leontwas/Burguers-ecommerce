@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.2/css/all.css">
+    <link rel="stylesheet" href="/src/css/fuentes.css">
+    <link rel="stylesheet" href="/src/css/styleHeader.css">
+    <link rel="stylesheet" href="/src/css/styleFooter.css">
+    <link rel="stylesheet" href="/src/css/styleReserva.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Reservas</title>
+    <style>
+        main {
+            background: rgb(88, 0, 0);
+            color: rgb(3, 162, 46);
+        }
+
+        section {
+            margin: 2rem 0;
+        }
+
+        img {
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 class="bungee-regularspice-">Gloriosa Burgers</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="productos.html">Productos</a></li>
+            <li><a href="novedades.html">Novedades</a></li>  
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="https://www.facebook.com"><i class="fab fa-facebook-square"></i></a></li>
+            <li><a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <div class="titulo">
+        <h1 class="kalam-bold">Hacé tu reserva aquí...</h1>
+    </div>
+    <div class="contenedor">
+        <section class="bg-black bg-opacity-75 text-black p-5">
+            <form enctype="multipart/form-data" action="./reservas" method="POST">
+                <div class="form-floating mb-3">
+                    <input name="nombre" type="text" class="form-control" id="nombre" placeholder="Nombre" required />
+                    <label for="nombre">Nombre</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="apellido" type="text" class="form-control" id="apellido" placeholder="Apellido" required />
+                    <label for="apellido">Apellido</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="telefono" type="tel" class="form-control" id="telefono" placeholder="Teléfono" required />
+                    <label for="telefono">Teléfono</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="email" type="email" class="form-control" id="email" placeholder="Correo electrónico" required />
+                    <label for="email">Correo electrónico</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="fecha" type="date" class="form-control" id="fecha" required />
+                    <label for="fecha">Fecha</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select name="cantPers" class="form-control" id="cantPers" required>
+                        <option value="" disabled selected hidden>Seleccione un número</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                    </select>
+                    <label for="cantPers">Cantidad de personas</label>
+                </div>
+                <div class="mb-3">
+                    <label for="imagen" class="form-label">Foto de DNI (para cumpleaños)</label>
+                    <input name="imagen" class="form-control" type="file" id="imagen" accept="image/*" />
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="menores">
+                    <label class="form-check-label" for="menores">Hay menores?</label>
+                </div>
+                <div class="botonera">
+                    <button type="reset" class="btn btn-primary">Limpiar</button>
+                    <button type="submit" class="btn btn-success">Reservar</button>
+                </div>
+            </form>
+        </section>
+        <div class="image-container">
+            <br>
+            <img src="../src/assets/Imagenes/reservas/reservado.webp" alt="reservado.webp">
+        </div>
+        <section class="bg-black bg-opacity-25 p-5">
+            <h3 class="kalam-bold">Cancelar Reserva:</h3>
+            <form action="./cancelar_reserva" method="POST">
+                <div class="form-floating mb-3">
+                    <input name="email" type="email" class="form-control" id="cancel-email" placeholder="Correo electrónico" required />
+                    <label for="cancel-email">Correo electrónico</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="fecha" type="date" class="form-control" id="cancel-fecha" required />
+                    <label for="cancel-fecha">Fecha de reserva</label>
+                </div>
+                <div class="botonera">
+                    <button type="submit" class="btn btn-danger">Cancelar</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</main>
+<footer>
+    <div class="grid-container">
+        <div class="grid-item kalam-regular">Preguntas frecuentes</div>
+        <div class="grid-item kalam-regular">Sucursales</div>
+        <div class="grid-item kalam-regular">Quienes somos?</div>
+        <div class="grid-item kalam-regular">Libro de quejas</div>
+        <div class="grid-item kalam-regular">Asuntos Legales</div>
+        <div class="grid-item kalam-regular">Novedades</div> 
+        <div class="grid-item kalam-regular">Contacto</div>  
+        <div class="grid-item kalam-regular">Servicios</div> 
+        <div class="grid-item kalam-regular">Políticas de privacidad</div>         
+    </div>      
+    <div class="copyright kalam-regular">&copy; 2025 Gloriosa Burgers. Todos los derechos reservados.</div>
+</footer>
+<script src="./assets/js/validaciones.js"></script>
+</body>
+</html>

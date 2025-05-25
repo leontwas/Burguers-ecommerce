@@ -1,0 +1,103 @@
+body {
+    font-family: 'Kalam', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.contenido {
+    padding: 20px;
+}
+
+.mostrador {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.fila {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.item {
+    width: 22%;
+    margin: 10px 0;
+    text-align: center;
+    cursor: pointer;
+}
+
+.contenedor-foto img {
+    max-width: 100%;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.descripcion {
+    color:red;
+    font-size: 2vw;
+}
+
+.precio {
+    font-size: 2vw;
+}
+
+footer{
+    .grid-container {
+        grid-template-columns: repeat(3, 1fr);
+        font-size: x-large;
+      } 
+}
+
+/********************************************* Estilos para tablets ****************************************/
+@media (max-width: 850px) {
+    .item {
+        width: 45%;
+    }
+
+    footer{
+        .grid-container {  
+            font-size: large;
+          }
+
+          .descripcion {
+            color:red;
+            font-size: 6vw;
+        }
+        
+        .precio {
+            font-size: 6vw;
+        }
+ }
+
+/******************************************* Estilos para celulares ***************************************/
+@media (max-width: 480px) {
+    .item {
+        width: 90%;
+    }
+
+    .descripcion {
+        color:red;
+        font-size: 5vw;
+    }
+    
+    .precio {
+        font-size: 5vw;
+    }
+
+footer{
+    .grid-container {
+        grid-template-columns: 1fr;
+        font-size: small;
+      }
+    
+      .copyright {
+        font-size: x-small;
+      }
+}
+    }
+}

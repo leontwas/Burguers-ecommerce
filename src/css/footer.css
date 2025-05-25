@@ -1,0 +1,80 @@
+.grid-container {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+  margin-top: auto;
+  background-color: #0f0f0f;
+  color: white;
+  text-align: center;
+  font-style: italic;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+}
+
+footer {
+    text-align: center;
+    font-size: 1.2em;
+    color: #706f6f;
+    background-color: #f1f1f1;  
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;      
+}
+
+.copyright {
+    font-size: 0.8em;
+    color: #706f6f;
+}
+
+/********************************************** Celulares ********************************************************/
+@media only screen and (max-width: 650px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    font-size: small;
+    padding-top: 20px;
+  }
+
+ .copyright {
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/************************************************ Tablets *********************************************************/
+@media only screen and (min-width: 651px) and (max-width: 850px) {
+  .grid-container {
+    font-size: small;
+    grid-template-columns: repeat(3, 1fr);
+    font-size: medium;
+  }
+  
+  .copyright {
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/************************************************** Notebooks ****************************************************/
+@media only screen and (min-width: 851px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    font-size: x-large;
+  }
+  
+  .grid-item {
+    padding: 10px;
+}
+  
+  .copyright {
+    font-size: 1rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

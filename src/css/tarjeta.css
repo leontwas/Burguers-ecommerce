@@ -1,0 +1,55 @@
+.tarjeta-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.tarjeta {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 15px;
+  transition: transform 0.2s ease;
+}
+
+.tarjeta:hover {
+  transform: scale(1.03);
+}
+
+.tarjeta-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.tarjeta-nombre {
+   color: #000;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 10px 0 5px;
+}
+
+.tarjeta-picante {
+  font-size: 1.1rem;
+  margin: 5px 0;
+}
+
+.tarjeta-precio {
+  font-size: 1.1rem;
+  color: #0206fd;
+  margin-top: 20px;
+}
+
+/* Responsive optional tweaks */
+@media (max-width: 480px) {
+  .tarjeta-nombre {
+    font-size: 1rem;
+  }
+
+  .tarjeta-precio,
+  .tarjeta-picante {
+    font-size: 0.95rem;
+  }
+}

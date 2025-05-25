@@ -1,0 +1,147 @@
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+
+ body {
+  --s: 150px; 
+  
+  background:
+    linear-gradient(135deg,#0000 18.75%,#5E412F 0 31.25%,#0000 0),
+    repeating-linear-gradient(45deg,#5E412F -6.25% 6.25%,#FCEBB6 0 18.75%);
+    background-size: var(--s) var(--s); 
+    font-family: "Kalam", cursive;
+}
+
+ .contenedor>.content, .contenedor>.sidebar, .contenedor>div {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #000000;
+}
+
+.contenedor>.content {
+    grid-column: span 3;
+    grid-row: span 4;
+}
+
+.content>.article {
+    background: rgba(97, 3, 42);
+    padding: 20px;
+    margin-top: 5px;
+    color: #dfe6e9
+}
+
+.content>.article h1, .content>.article p {
+    padding: 10px;
+}
+
+.contenedor>.sidebar {
+    grid-column: span 2;
+    grid-row: span 4;
+    background: rgb(250, 247, 248);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor>.sidebar img {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.contenedor>.related-post {
+    color: #ffffff;
+    height: 180px;
+    display: flex;
+
+} 
+
+/* MEDIA QUERIES CELULARES */
+@media only screen and (max-width: 650px) {
+    .header {
+        text-align: center;
+    }
+    .contenedor>.content {
+        grid-column: 1 / -1;
+        background:
+        linear-gradient(135deg,#0000 18.75%,#5E412F 0 31.25%,#0000 0),
+        repeating-linear-gradient(45deg,#5E412F -6.25% 6.25%,#FCEBB6 0 18.75%);
+        background-size: var(--s) var(--s); 
+    }
+    .contenedor>.sidebar {
+        grid-column: 1 / 6;
+        background: radial-gradient(circle at 10% 20%, rgb(221, 49, 49) 0%, rgb(119, 0, 0) 90%);
+        font-family: "Kalam", cursive;
+        text-align: center;
+    }
+    .contenedor>.related-post {
+        grid-column: 1/-1;
+    }
+    body {
+        background:
+        linear-gradient(135deg,#0000 18.75%,#5E412F 0 31.25%,#0000 0),
+        repeating-linear-gradient(45deg,#5E412F -6.25% 6.25%,#FCEBB6 0 18.75%);
+        background-size: var(--s) var(--s); 
+        font-family: "Kalam", cursive;
+    }
+}
+
+/* MEDIA QUERIES TABLETS */
+@media only screen and (min-width: 651px) and (max-width: 866px)  {
+    .header {
+        text-align: center;
+    }
+    .contenedor>.content {
+        grid-column: 1 / -1;
+        background-color: 
+        linear-gradient(135deg,#0000 18.75%,#5E412F 0 31.25%,#0000 0),
+        repeating-linear-gradient(45deg,#5E412F -6.25% 6.25%,#FCEBB6 0 18.75%);
+        background-size: var(--s) var(--s); 
+        font-family: "Kalam", cursive;
+    }
+    .contenedor>.sidebar {
+        grid-column: 1 / 6;
+        background: radial-gradient(circle at 10% 20%, rgb(221, 49, 49) 0%, rgb(119, 0, 0) 90%);
+        font-family: "Kalam", cursive;
+    }
+    .contenedor>.related-post {
+        grid-column: 1/-1;
+    }
+    body {
+        background: radial-gradient(circle at 10% 20%, rgb(221, 49, 49) 0%, rgb(119, 0, 0) 90%);
+    }
+}
+
+/* MEDIA QUERIES NOTEBOOKS*/
+@media screen and (min-width: 867px) {
+    .contenedor {
+        width:100%;
+        margin-top: 4em;
+        display: grid;
+        gap: 1.6em;
+        grid-template-columns: repeat(5, 4fr);
+    }
+    body {
+        font-size: xx-large;
+
+        h2 {
+            font-size: 2.5vw;
+        }
+        .sidebar{
+            h2 {
+                font-size: 2.5vw;
+                color: white;
+                background: rgba(97, 3, 42);
+                padding: 10px;
+            }
+            p {
+                color: white;
+                background: rgba(97, 3, 42);
+                padding: 16px;
+            }
+        }
+    }
+}

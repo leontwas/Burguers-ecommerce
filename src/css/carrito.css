@@ -1,0 +1,48 @@
+.carrito {
+  padding: 20px;
+  color: black;
+  background: #f8f8f8;
+  border-radius: 10px;
+  margin: 20px;
+}
+
+.carrito ul {
+  list-style: none;
+  padding: 0;
+}
+
+.carrito li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.confirmar {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,1) ;
+}
+
+.restar {
+  background-color: rgb(6, 179, 202);
+  box-shadow: 0 2px 8px rgba(0,0,0,1) ;
+}
+ 
+.sumar {
+  background-color: rgb(6, 179, 202);
+  box-shadow: 0 2px 8px rgba(0,0,0,1) ;
+}
+
+
+.vaciar {
+  background-color: red;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,1) ;
+
+}

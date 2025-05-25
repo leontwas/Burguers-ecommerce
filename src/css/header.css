@@ -1,0 +1,117 @@
+/* Estilos generales del header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1a1a1a;
+  color: white;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
+
+/* Logo + Nombre */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 100px; /* valor base */
+  height: auto;
+  object-fit: contain;
+}
+
+.nombre {
+  font-size: 1.5rem; /* valor base */
+  font-weight: bold;
+}
+
+/* Navegación */
+.nav {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem; /* valor base */
+  transition: color 0.3s ease;
+}
+
+.nav a:hover {
+  color: #e91e63;
+}
+
+/* Carrito */
+.carrito-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carrito-icono {
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.contador {
+  position: absolute;
+  top: 22px;
+  right: -10px;
+  background-color: #e91e63;
+  color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav {
+    margin-top: 10px;
+    gap: 10px;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .carrito-container {
+    align-self: flex-end;
+    margin-top: 10px;
+  }
+
+  .logo {
+    width: 80px;
+  }
+
+  .nombre {
+    font-size: 1.2rem;
+  }
+
+  .nav a {
+    font-size: 0.9rem;
+  }
+}
+
+/* Para pantallas más grandes (notebooks y desktop) */
+@media (min-width: 851px) {
+  .logo {
+    width: 150px;
+  }
+
+  .nombre {
+    font-size: 2rem;
+  }
+
+  .nav a {
+    font-size: 1.2rem;
+  }
+}
