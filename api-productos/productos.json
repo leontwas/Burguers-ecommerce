@@ -1,0 +1,81 @@
+[
+  {
+    "nombre": "Fuego Supremo",
+    "picanteNivel": 5,
+    "precio": 5200,
+    "imagen": "/images/productos/fuegoSupremo.png"
+  },
+  {
+    "nombre": "Inferno Clásica",
+    "picanteNivel": 4,
+    "precio": 4800,
+    "imagen": "/images/productos/infernoClasica.png"
+  },
+   {
+    "nombre": "Chili Queen",
+    "picanteNivel": 3,
+    "precio": 4900,
+    "imagen": "/images/productos/chiliQueen.png"
+  },
+  {
+    "nombre": "Lava Bath",
+    "picanteNivel": 5,
+    "precio": 5500,
+    "imagen": "/images/productos/lavaBath.png"
+  },
+   {
+    "nombre": "Smoky Hell",
+    "picanteNivel": 4,
+    "precio": 5100,
+    "imagen": "/images/productos/smokyHell.png"
+  },
+  {
+    "nombre": "Glory Fire",
+    "picanteNivel": 3,
+    "precio": 4700,
+    "imagen": "/images/productos/gloryFire.png"
+  },
+  {
+    "nombre": "Devil Touch",
+    "picanteNivel": 5,
+    "precio": 6000,
+    "imagen": "/images/productos/devilTouch.png"
+  },
+   {
+    "nombre": "Inferno Clásica",
+    "picanteNivel": 4,
+    "precio": 4800,
+    "imagen": "/images/productos/infernoClasica.png"
+  },
+  {
+    "nombre": "Hot Rodeo",
+    "picanteNivel": 2,
+    "precio": 4600,
+    "imagen": "/images/productos/hotRodeo.png"
+  },
+  {
+    "nombre": "Volcano Kiss",
+    "picanteNivel": 4,
+    "precio": 5300,
+    "imagen": "/images/productos/volcanoKiss.png"
+  },
+  {
+    "nombre": "Spicy Tornado",
+    "picanteNivel": 3,
+    "precio": 4950,
+    "imagen": "/images/productos/spicyTornado.png"
+  },
+  {
+    "nombre": "Jalapeño Rush",
+    "picanteNivel": 2,
+    "precio": 4550,
+    "imagen": "/images/productos/jalapenioRush.png"
+  },
+  {
+    "nombre": "Ultimate Burn",
+    "picanteNivel": 5,
+    "precio": 6200,
+    "imagen": "/images/productos/ultimateBurn.png"
+  }
+]
+
