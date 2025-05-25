@@ -1,4 +1,16 @@
 import Tarjeta from './Tarjeta';
+import '../assets/images/productos/debilTouch.png';
+import '../assets/images/productos/fuegoSupremo.png';
+import '../assets/images/productos/gloryFire.png';
+import '../assets/images/productos/hotRodeo.png';
+import '../assets/images/productos/infernoClasica.png';
+import '../assets/images/productos/jalapenioRush.png';
+import '../assets/images/productos/lavaBath.png';
+import '../assets/images/productos/ultimateBurn.png';
+import '../assets/images/productos/volcanoKiss.png'; 
+import '../assets/images/productos/chiliQueen.png';
+import '../assets/images/productos/smokyHell.png';
+import '../assets/images/productos/spicyTornado.png';  
 
 const productos = [
   { imagen: '/src/assets/images/productos/fuegoSupremo.png', nombre: 'Fuego Supremo', picanteNivel: 5, precio: 5200 },
