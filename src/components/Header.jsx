@@ -11,7 +11,7 @@ function Header() {
   return (
     <header className="header">
       <div className="logo-container">
-        <img src="/src/assets/Imagenes/logo.png" alt="Logo Gloriosa Burgers" className="logo" />
+        <img src="/src/images/logo.png" alt="Logo Gloriosa Burgers" className="logo" />
         <h1 className="nombre">Gloriosa Burgers</h1>
       </div>
 
