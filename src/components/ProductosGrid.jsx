@@ -1,21 +1,27 @@
 import { useEffect, useState } from 'react';
 import Tarjeta from './Tarjeta';
 
+const API_BASE = 'https://mi-api-burger.onrender.com';
+
 function ProductosGrid() {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const URL_API = 'https://mi-api-burger.onrender.com/productos';
-
-    fetch(URL_API)
+    fetch(`${API_BASE}/productos`)
       .then(res => {
         if (!res.ok) throw new Error('Error al obtener los productos');
         return res.json();
       })
       .then(data => {
-        setProductos(data);
+        // Agregamos la URL completa a la propiedad imagen de cada producto
+        const productosConImagenCompleta = data.map(producto => ({
+          ...producto,
+          imagen: API_BASE + producto.imagen
+        }));
+
+        setProductos(productosConImagenCompleta);
         setCargando(false);
       })
       .catch(err => {
@@ -38,4 +44,3 @@ function ProductosGrid() {
 }
 
 export default ProductosGrid;
-
