@@ -17,7 +17,7 @@ function App() {
       <Header />
       <Main />
       <ProductosGrid />
-      <Carrito /> {/* Mostrar carrito */}
+      <Carrito />
       <Footer />
     </CarritoProvider>
   );

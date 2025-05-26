@@ -11,7 +11,7 @@ function Tarjeta() {
     fetch('https://68339c86464b499636fff1e3.mockapi.io/productos')
       .then((res) => res.json())
       .then((data) => {
-        setProducto(data[0]); // Puedes cambiar el índice si quieres otro producto
+        setProducto(data[0]); // Puedes elegir otro índice si quieres otro producto
       })
       .catch((error) => console.error('Error al obtener el producto:', error));
   }, []);
@@ -20,9 +20,9 @@ function Tarjeta() {
     if (producto) {
       agregarAlCarrito({
         imagen: producto.imagen,
-        nombre: producto.nombre,
-        picanteNivel: producto.picanteNivel,
-        precio: producto.precio
+        nombre: producto.name,
+        picanteNivel: 1, // Valor por defecto ya que no existe este campo
+        precio: parseFloat(producto.price),
       });
     }
   };
@@ -31,12 +31,19 @@ function Tarjeta() {
 
   return (
     <div className="tarjeta">
-      <img src={producto.imagen} alt={producto.nombre} className="tarjeta-img" />
-      <h3 className="tarjeta-nombre">{producto.nombre}</h3>
+      <img
+        src={producto.imagen}
+        alt={producto.name}
+        className="tarjeta-img"
+      />
+      <h3 className="tarjeta-nombre">{producto.name}</h3>
+
+      {/* Como no hay picanteNivel en los datos, mostramos 1 🔥 por defecto */}
       <p className="tarjeta-picante">
-        {Array.from({ length: producto.picanteNivel }, () => '🔥').join(' ')}
+        {'🔥'}
       </p>
-      <p className="tarjeta-precio">${producto.precio}</p>
+
+      <p className="tarjeta-precio">${parseFloat(producto.price).toFixed(2)}</p>
       <Boton texto="Comprar" color="#28a745" onClick={handleComprar} />
     </div>
   );
