@@ -37,6 +37,12 @@ function Tarjeta() {
         className="tarjeta-img"
       />
       <h3 className="tarjeta-nombre">{producto.name}</h3>
+
+      {/* Como no hay picanteNivel en los datos, mostramos 1 🔥 por defecto */}
+      <p className="tarjeta-picante">
+        {'🔥'}
+      </p>
+
       <p className="tarjeta-precio">${parseFloat(producto.price).toFixed(2)}</p>
       <Boton texto="Comprar" color="#28a745" onClick={handleComprar} />
     </div>
