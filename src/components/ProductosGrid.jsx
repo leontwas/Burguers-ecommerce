@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Tarjeta from './Tarjeta';
 
-const API_BASE = 'https://mi-api-burger.onrender.com';
+const API_BASE = 'https://68339c86464b499636fff1e3.mockapi.io/productos';
 
 function ProductosGrid() {
   const [productos, setProductos] = useState([]);
