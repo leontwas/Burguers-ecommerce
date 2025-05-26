@@ -1,5 +1,5 @@
 // src/context/CarritoProvider.jsx
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 // Crear el contexto
