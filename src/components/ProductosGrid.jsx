@@ -9,19 +9,13 @@ function ProductosGrid() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE}/productos`)
+    fetch(API_BASE)
       .then(res => {
         if (!res.ok) throw new Error('Error al obtener los productos');
         return res.json();
       })
       .then(data => {
-        // Agregamos la URL completa a la propiedad imagen de cada producto
-        const productosConImagenCompleta = data.map(producto => ({
-          ...producto,
-          imagen: API_BASE + producto.imagen
-        }));
-
-        setProductos(productosConImagenCompleta);
+        setProductos(data); // No modificar imagen
         setCargando(false);
       })
       .catch(err => {
@@ -36,8 +30,8 @@ function ProductosGrid() {
 
   return (
     <div className="tarjeta-grid-container">
-      {productos.map((producto, index) => (
-        <Tarjeta key={index} {...producto} />
+      {productos.map((producto) => (
+        <Tarjeta key={producto.id} producto={producto} />
       ))}
     </div>
   );
