@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types';
 import Boton from "./Boton";
 import '../css/TarjetaProyecto.css';
+
 function TarjetaProyecto({ titulo, descripcion, botonTexto }) {
   return (
     <div className="proyect-conteiner">
@@ -9,4 +11,11 @@ function TarjetaProyecto({ titulo, descripcion, botonTexto }) {
     </div>
   );
 }
+
+TarjetaProyecto.propTypes = {
+  titulo: PropTypes.string.isRequired,
+  descripcion: PropTypes.string.isRequired,
+  botonTexto: PropTypes.string.isRequired,
+};
+
 export default TarjetaProyecto;

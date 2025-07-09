@@ -1,14 +1,9 @@
 // src/context/CarritoProvider.jsx
-import React, { createContext, useContext, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import Swal from 'sweetalert2';
+import CarritoContext from "../context/CarritoContext";
 
-// Crear el contexto
-const CarritoContext = createContext();
-
-// Hook para usar el contexto fácilmente
-export const useCarrito = () => useContext(CarritoContext);
-
-// Componente Provider
 export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
@@ -22,7 +17,13 @@ export const CarritoProvider = ({ children }) => {
             : item
         );
       }
-      toast.success(`${producto.nombre} agregado al carrito.`);
+      Swal.fire({
+        icon: 'success',
+        title: 'Agregado',
+        text: `${producto.nombre} agregado al carrito.`,
+        timer: 1500,
+        showConfirmButton: false,
+      });
       return [...prev, { ...producto, cantidad: 1 }];
     });
   };
@@ -55,10 +56,20 @@ export const CarritoProvider = ({ children }) => {
 
   const confirmarCompra = () => {
     if (carrito.length === 0) {
-      toast.error("El carrito está vacío.");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'El carrito está vacío.',
+        confirmButtonColor: '#d33',
+      });
       return;
     }
-    toast.success("¡Compra confirmada!");
+    Swal.fire({
+      icon: 'success',
+      title: 'Compra confirmada',
+      text: '¡Gracias por tu compra!',
+      confirmButtonColor: '#3085d6',
+    });
     setCarrito([]);
   };
 
@@ -77,4 +88,8 @@ export const CarritoProvider = ({ children }) => {
       {children}
     </CarritoContext.Provider>
   );
+};
+
+CarritoProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

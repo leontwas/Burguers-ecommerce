@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
+import PropTypes from 'prop-types';
 import Boton from './Boton';
 import '../css/tarjeta.css';
-import { CarritoContext } from '../context/CarritoContext';
+import CarritoContext from "../context/CarritoContext";
 
 function Tarjeta({ producto }) {
   const { agregarAlCarrito } = useContext(CarritoContext);
@@ -33,5 +34,13 @@ function Tarjeta({ producto }) {
     </div>
   );
 }
+
+Tarjeta.propTypes = {
+  producto: PropTypes.shape({
+    imagen: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  }).isRequired,
+};
 
 export default Tarjeta;

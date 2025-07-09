@@ -1,4 +1,5 @@
-import '../css/equipoDeTrabajo.css'
+import PropTypes from 'prop-types';
+import '../css/equipoDeTrabajo.css';
 
 function EquipoDeTrabajo({ equipo }) {
   return (
@@ -17,5 +18,15 @@ function EquipoDeTrabajo({ equipo }) {
     </div>
   );
 }
+
+EquipoDeTrabajo.propTypes = {
+  equipo: PropTypes.arrayOf(
+    PropTypes.shape({
+      nombre: PropTypes.string.isRequired,
+      rol: PropTypes.string.isRequired,
+      imagen: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
 
 export default EquipoDeTrabajo;

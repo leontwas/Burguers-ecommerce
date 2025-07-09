@@ -1,8 +1,6 @@
-
 function Footer () {
   return (
-    <footer
-        >
+    <footer>
       <div className="grid-container">
         <div className="grid-item kalam-regular">Preguntas frecuentes</div>
         <div className="grid-item kalam-regular">Sucursales</div>
@@ -13,10 +11,10 @@ function Footer () {
         <div className="grid-item kalam-regular">Contacto</div>
         <div className="grid-item kalam-regular">Servicios</div>
         <div className="grid-item kalam-regular">Políticas de privacidad</div>
-        <p className="copyright">&copy; 2025 - Mi Aplicación React</p>
       </div>
+      <p className="copyright">&copy; 2025 - Mi Aplicación React</p>
     </footer>
   );
-};
+}
 
 export default Footer;

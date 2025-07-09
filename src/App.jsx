@@ -9,7 +9,7 @@ import Carrito from './components/Carrito';
 import Novedades from './pages/Novedades';
 import Reservas from './pages/Reservas';
 import Nosotros from './pages/Nosotros';
-import { CarritoProvider } from './context/CarritoContext';
+import { CarritoProvider } from "./context/CarritoProvider";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

@@ -1,80 +1,56 @@
-// src/context/CarritoProvider.jsx
-import { createContext, useContext, useState } from 'react';
-import { toast } from 'react-toastify';
+import { useState } from "react";
+import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import CarritoContext from "./CarritoContext";
 
-// Crear el contexto
-const CarritoContext = createContext();
-
-// Hook para usar el contexto fácilmente
-export const useCarrito = () => useContext(CarritoContext);
-
-// Componente Provider
-export const CarritoProvider = ({ children }) => {
+export function CarritoProvider({ children }) {
   const [carrito, setCarrito] = useState([]);
 
   const agregarAlCarrito = (producto) => {
-    setCarrito(prev => {
-      const existe = prev.find(item => item.nombre === producto.nombre);
-      if (existe) {
-        return prev.map(item =>
-          item.nombre === producto.nombre
-            ? { ...item, cantidad: item.cantidad + 1 }
-            : item
+    setCarrito((prev) => {
+      const existente = prev.find((p) => p.nombre === producto.nombre);
+      if (existente) {
+        return prev.map((p) =>
+          p.nombre === producto.nombre ? { ...p, cantidad: p.cantidad + 1 } : p
         );
+      } else {
+        toast.success(`${producto.nombre} ha sido agregado al carrito.`);
+        return [...prev, { ...producto, cantidad: 1 }];
       }
-      toast.success(`${producto.nombre} agregado al carrito.`);
-      return [...prev, { ...producto, cantidad: 1 }];
     });
-  };
-
-  const incrementar = (nombre) => {
-    setCarrito(prev =>
-      prev.map(item =>
-        item.nombre === nombre ? { ...item, cantidad: item.cantidad + 1 } : item
-      )
-    );
-  };
-
-  const decrementar = (nombre) => {
-    setCarrito(prev =>
-      prev.map(item =>
-        item.nombre === nombre
-          ? { ...item, cantidad: item.cantidad > 1 ? item.cantidad - 1 : 1 }
-          : item
-      )
-    );
-  };
-
-  const eliminarProducto = (nombre) => {
-    setCarrito(prev => prev.filter(item => item.nombre !== nombre));
   };
 
   const vaciarCarrito = () => {
     setCarrito([]);
   };
 
-  const confirmarCompra = () => {
-    if (carrito.length === 0) {
-      toast.error("El carrito está vacío.");
-      return;
-    }
-    toast.success("¡Compra confirmada!");
-    setCarrito([]);
+  const aumentarCantidad = (nombre) => {
+    setCarrito((prev) =>
+      prev.map((p) =>
+        p.nombre === nombre ? { ...p, cantidad: p.cantidad + 1 } : p
+      )
+    );
   };
 
-  const valor = {
-    carrito,
-    agregarAlCarrito,
-    incrementar,
-    decrementar,
-    eliminarProducto,
-    vaciarCarrito,
-    confirmarCompra
+  const disminuirCantidad = (nombre) => {
+    setCarrito((prev) =>
+      prev
+        .map((p) =>
+          p.nombre === nombre ? { ...p, cantidad: p.cantidad - 1 } : p
+        )
+        .filter((p) => p.cantidad > 0)
+    );
   };
 
   return (
-    <CarritoContext.Provider value={valor}>
+    <CarritoContext.Provider
+      value={{ carrito, agregarAlCarrito, vaciarCarrito, aumentarCantidad, disminuirCantidad }}
+    >
       {children}
     </CarritoContext.Provider>
   );
+}
+
+CarritoProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

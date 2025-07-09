@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Gallery() {
   const images = [
     "./src/assets/Imagenes/productos/glory-crunchy.png",

@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function Boton({ texto, color, onClick }) {
   const estilo = {
     backgroundColor: color,
@@ -18,5 +20,10 @@ function Boton({ texto, color, onClick }) {
   );
 }
 
-export default Boton;
+Boton.propTypes = {
+  texto: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
+export default Boton;

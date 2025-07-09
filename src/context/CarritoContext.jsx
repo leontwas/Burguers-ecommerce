@@ -1,5 +1,6 @@
 // src/context/CarritoContext.jsx
-import React, { createContext, useState } from "react";
+import PropTypes from 'prop-types';
+import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 
 export const CarritoContext = createContext();
@@ -51,3 +52,8 @@ export function CarritoProvider({ children }) {
     </CarritoContext.Provider>
   );
 }
+
+// Agregar validación de props para children
+CarritoProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

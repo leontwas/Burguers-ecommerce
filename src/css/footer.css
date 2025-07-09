@@ -25,6 +25,7 @@ footer {
 .copyright {
     font-size: 0.8em;
     color: #706f6f;
+    text-align: center;
 }
 
 /********************************************** Celulares ********************************************************/
@@ -70,11 +71,12 @@ footer {
     padding: 10px;
 }
   
-  .copyright {
-    font-size: 1rem;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.copyright {
+  font-size: 0.9rem;
+  color: #706f6f;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
 }

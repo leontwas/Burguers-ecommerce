@@ -1,12 +1,22 @@
-// src/components/Carrito.jsx
-import React, { useContext } from 'react';
-import { CarritoContext } from '../context/CarritoContext';
-import "../css/carrito.css"; // Crear estilos si querés
+import { useContext } from 'react';
+import Swal from 'sweetalert2';
+import CarritoContext from "../context/CarritoContext";
+import "../css/carrito.css";
 
 function Carrito() {
   const { carrito, aumentarCantidad, disminuirCantidad, vaciarCarrito } = useContext(CarritoContext);
 
   const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
+
+  const confirmarCompra = () => {
+    Swal.fire({
+      icon: 'success',
+      title: '¡Compra confirmada!',
+      text: 'Gracias por tu compra',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Aceptar'
+    });
+  };
 
   return (
     <div className="carrito">
@@ -33,7 +43,7 @@ function Carrito() {
         <>
           <p><strong>Total:</strong> ${total}</p>
           <button className='vaciar' onClick={vaciarCarrito}>Vaciar Carrito</button>
-          <button className='confirmar' onClick={() => alert('¡Compra confirmada!')}>Pagar</button>
+          <button className='confirmar' onClick={confirmarCompra}>Pagar</button>
         </>
       )}
     </div>

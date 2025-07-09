@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import '../css/header.css';
 import { FaShoppingCart } from 'react-icons/fa';
-import { CarritoContext } from '../context/CarritoContext';
+import CarritoContext from "../context/CarritoContext";
 import { NavLink, Link } from 'react-router-dom';
 
 function Header() {

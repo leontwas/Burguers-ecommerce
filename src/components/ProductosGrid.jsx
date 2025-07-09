@@ -15,7 +15,7 @@ function ProductosGrid() {
         return res.json();
       })
       .then(data => {
-        setProductos(data); // No modificar imagen
+        setProductos(data); 
         setCargando(false);
       })
       .catch(err => {
