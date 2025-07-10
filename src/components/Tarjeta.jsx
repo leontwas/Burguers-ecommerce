@@ -4,16 +4,21 @@ import Boton from './Boton';
 import '../css/tarjeta.css';
 import CarritoContext from "../context/CarritoContext";
 
+const API_BASE = 'https://mi-api-burger.onrender.com';
+
 function Tarjeta({ producto }) {
   const { agregarAlCarrito } = useContext(CarritoContext);
+
+  // ✅ Mostramos la imagen al renderizar cada tarjeta
+  console.log('Imagen del producto:', producto.imagen);
 
   const handleComprar = () => {
     if (producto) {
       agregarAlCarrito({
         imagen: producto.imagen,
-        nombre: producto.name,
-        picanteNivel: 1, // Valor por defecto
-        precio: parseFloat(producto.price),
+        nombre: producto.nombre,
+        picanteNivel: 1,
+        precio: parseFloat(producto.precio),
       });
     }
   };
@@ -23,13 +28,13 @@ function Tarjeta({ producto }) {
   return (
     <div className="tarjeta">
       <img
-        src={producto.imagen}
-        alt={producto.name}
+        src={`${API_BASE}${producto.imagen}`}
+        alt={producto.nombre}
         className="tarjeta-img"
       />
-      <h3 className="tarjeta-nombre">{producto.name}</h3>
+      <h3 className="tarjeta-nombre">{producto.nombre}</h3>
       <p className="tarjeta-picante">🔥</p>
-      <p className="tarjeta-precio">${parseFloat(producto.price).toFixed(2)}</p>
+      <p className="tarjeta-precio">${parseFloat(producto.precio).toFixed(2)}</p>
       <Boton texto="Comprar" color="#28a745" onClick={handleComprar} />
     </div>
   );
@@ -38,8 +43,8 @@ function Tarjeta({ producto }) {
 Tarjeta.propTypes = {
   producto: PropTypes.shape({
     imagen: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    nombre: PropTypes.string.isRequired,
+    precio: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   }).isRequired,
 };
 
