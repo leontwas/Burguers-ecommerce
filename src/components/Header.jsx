@@ -1,11 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import '../css/header.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import CarritoContext from "../context/CarritoContext";
 import { NavLink, Link } from 'react-router-dom';
+import LoginRegister from './LoginRegister';
 
 function Header() {
   const { carrito } = useContext(CarritoContext);
+  const [showLogin, setShowLogin] = useState(false);
 
   const totalProductos = carrito.reduce((acc, p) => acc + p.cantidad, 0);
 
@@ -24,11 +26,23 @@ function Header() {
       </nav>
 
       <div className="carrito-container">
+        
         <Link to="/carrito">
           <FaShoppingCart className="carrito-icono" />
         </Link>
         <span className="contador">{totalProductos}</span>
+      <h4>Carrito</h4>
       </div>
+        <button className="login-btn" onClick={() => setShowLogin(!showLogin)}>
+          👤 Login
+        </button>
+
+      {showLogin && (
+        <div className="login-modal">
+          <button className="cerrar-login" onClick={() => setShowLogin(false)}>✖</button>
+          <LoginRegister />
+        </div>
+      )}
     </header>
   );
 }

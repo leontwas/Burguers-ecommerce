@@ -19,8 +19,8 @@
 }
 
 .tarjeta-img {
-  width: 100px;
-  height:100px;
+  width: 210px;
+  height: 210px;
   object-fit: contain;
   border-radius: 8px;
 }

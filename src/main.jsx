@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'; // ✅ IMPORTANTE
-import App from './App'; // ✅ IMPORTANTE
+import { BrowserRouter } from 'react-router-dom'; 
+import App from './App'; 
 import './css/fuentes.css';
 import './css/header.css'
 import './css/footer.css';
