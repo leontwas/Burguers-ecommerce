@@ -9,6 +9,7 @@ import Carrito from './components/Carrito';
 import Novedades from './pages/Novedades';
 import Reservas from './pages/Reservas';
 import Nosotros from './pages/Nosotros';
+import Login from './components/Login';
 import { CarritoProvider } from "./context/CarritoProvider";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,6 +30,7 @@ function App() {
         <Route path="/reservas" element={<Reservas />} />
         <Route path="/nosotros" element={<Nosotros />} />
         <Route path="/carrito" element={<Carrito />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
       <Footer />
     </CarritoProvider>

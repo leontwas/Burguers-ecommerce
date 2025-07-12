@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import '../css/login3.css'; 
+import '../css/login.css'; 
 
 export default function LoginRegister() {
   const [active, setActive] = useState(false); // false = login, true = register
 
   return (
-    <div>
+    <div className="tarjeta-login">
       <div className={`wrapper${active ? ' active' : ''}`}>
         <span className="bg-animate"></span>
         <span className="bg-animate2"></span>
@@ -51,7 +51,7 @@ export default function LoginRegister() {
             Bienvenido
           </h2>
           <p className="animation" style={{ '--i': 1 }}>
-            Para acceder ingresa un nombre de usuario, tu correo electrónico y una contraseña.
+            Para acceder ingresa tu correo electrónico y tu contraseña.
           </p>
         </div>
 
@@ -103,7 +103,7 @@ export default function LoginRegister() {
             Bienvenido
           </h2>
           <p className="animation" style={{ '--i': 1 }}>
-            Para acceder ingresa un nombre de usuario, tu correo electrónico y una contraseña.
+            Para registrarte ingresa un nombre de usuario, tu correo electrónico y una contraseña.
           </p>
         </div>
       </div>

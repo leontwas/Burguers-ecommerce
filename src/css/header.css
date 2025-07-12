@@ -76,6 +76,14 @@
   font-weight: bold;
 }
 
+.login-modal {
+  min-height: 100vh;
+  background-color: #081b29;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
 .active-link {
   text-decoration: underline;
   font-weight: bold;

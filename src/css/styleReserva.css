@@ -1,6 +1,9 @@
 body {
-  background: radial-gradient rgb(253, 253, 253);
-  min-width: 320px;
+  min-height: 100vh;
+  background-color: #081b29;
+  display: grid;
+  place-items: center;
+  padding: 20px;
 }
 
 .contenedor {

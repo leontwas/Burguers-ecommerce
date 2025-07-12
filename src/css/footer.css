@@ -28,6 +28,68 @@ footer {
     text-align: center;
 }
 
+.footlink {
+  color: white !important;
+  text-decoration: none;
+  transition-duration: .4s;
+}
+
+.footlink:hover {
+  transform: scale(1.4);
+  transition-duration: .4s;
+  text-decoration: none;
+}
+
+.footlist .footlink {
+  font-size: 2rem;
+  padding: 10px;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footlist .footlink:hover {
+  transform: translateY(-3px);
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.footlist .footlink {
+  font-size: 2rem;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.footlist .footlink:hover {
+  transform: translateY(-3px);
+}
+
+/* Facebook */
+.footlist .footlink.fa-facebook {
+  color: #1877F2 !important;
+}
+
+/* YouTube */
+.footlist .footlink.fa-youtube {
+  color: red !important;
+}
+
+/* Instagram sin sombra */
+.footlist .footlink.fa-instagram {
+  font-size: 2rem;
+  padding: 10px;
+  background: radial-gradient(circle at 30% 107%, 
+    #fdf497 0%, #fdf497 5%, 
+    #fd5949 45%, #d6249f 60%, 
+    #285AEB 90%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* WhatsApp */
+.footlist .footlink.fa-whatsapp {
+  color: green !important;
+}
+
 /********************************************** Celulares ********************************************************/
 @media only screen and (max-width: 650px) {
   .grid-container {
@@ -57,6 +119,10 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+   .footlist {
+    justify-content: center;
   }
 }
 
