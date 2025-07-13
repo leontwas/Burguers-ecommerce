@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import '../css/header.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import CarritoContext from "../context/CarritoContext";
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'; // No need for Link anymore, as NavLink handles both
 import LoginModal from '../components/LoginModal';
 
 function Header() {
@@ -24,19 +24,19 @@ function Header() {
           <NavLink to="/novedades" className={({ isActive }) => isActive ? 'active-link' : ''}>Novedades</NavLink>
           <NavLink to="/reservas" className={({ isActive }) => isActive ? 'active-link' : ''}>Reservas</NavLink>
           <NavLink to="/nosotros" className={({ isActive }) => isActive ? 'active-link' : ''}>Nosotros</NavLink>
-        </nav>
 
-        <div className="carrito-container">
-          <Link to="/carrito">
+          {/* Carrito as a NavLink */}
+          <NavLink to="/carrito" className={({ isActive }) => isActive ? 'active-link carrito-nav-link' : 'carrito-nav-link'}>
             <FaShoppingCart className="carrito-icono" />
-          </Link>
-          <span className="contador">{totalProductos}</span>
-          <h4>Carrito</h4>
-        </div>
+            <span className="contador">{totalProductos}</span>
+            Carrito
+          </NavLink>
 
-        <button className="login-btn" onClick={() => setShowLogin(true)}>
-          👤 Login
-        </button>
+          {/* Login as a NavLink, triggering the modal */}
+          <NavLink to="#" onClick={(e) => { e.preventDefault(); setShowLogin(true); }} className="login-nav-link">
+            👤 Login
+          </NavLink>
+        </nav>
       </header>
 
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
