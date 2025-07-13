@@ -42,7 +42,7 @@
 }
 
 .nav a:hover {
-  color: #e91e63;
+  color:  #0ef;
 }
 
 /* Carrito */
@@ -87,7 +87,8 @@
 .active-link {
   text-decoration: underline;
   font-weight: bold;
-  color: #b22222; /* o el color que combine con tu estilo */
+  border: 1px solid #0ef;
+  box-shadow: 0 0 10px #0ef;
 }
 
 /* Responsive */
