@@ -1,7 +1,7 @@
 // src/components/LoginModal.jsx
 import { createPortal } from 'react-dom';
 import LoginRegister from './LoginRegister';
-import '../css/loginModal.css'; // Opcional para estilos del fondo/modal
+import '../css/loginModal.css'; 
 
 export default function LoginModal({ onClose }) {
   return createPortal(
