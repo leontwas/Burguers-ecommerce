@@ -1,12 +1,18 @@
 import { useContext, useState } from 'react';
-import '../css/header.css';
+import '../css/header.css'; // Asegúrate de que este archivo CSS contenga los estilos actualizados
 import { FaShoppingCart } from 'react-icons/fa';
 import CarritoContext from "../context/CarritoContext";
-import { NavLink } from 'react-router-dom'; // No need for Link anymore, as NavLink handles both
+import { NavLink } from 'react-router-dom';
 import LoginModal from '../components/LoginModal';
+// Se elimina la importación de useAuth ya que se quita la funcionalidad de autenticación
+// import { useAuth } from '../context/AuthContext';
+// Se eliminan las importaciones de íconos de lucide-react si solo se usaban para AuthContext
+// import { User, LogOut } from 'lucide-react';
 
 function Header() {
   const { carrito } = useContext(CarritoContext);
+  // Se eliminan las variables relacionadas con AuthContext
+  // const { currentUser, isAdmin, logout, loading } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
 
   const totalProductos = carrito.reduce((acc, p) => acc + p.cantidad, 0);
@@ -28,12 +34,22 @@ function Header() {
           {/* Carrito as a NavLink */}
           <NavLink to="/carrito" className={({ isActive }) => isActive ? 'active-link carrito-nav-link' : 'carrito-nav-link'}>
             <FaShoppingCart className="carrito-icono" />
-            <span className="contador">{totalProductos}</span>
-            Carrito
+            {/* Envuelve el texto "Carrito" en un span para mejor control */}
+            <span className="carrito-text">Carrito</span>
+            {/* Mueve el contador para que quede DESPUÉS del texto */}
+            {totalProductos > 0 && <span className="contador">{totalProductos}</span>}
           </NavLink>
 
-          {/* Login as a NavLink, triggering the modal */}
+          {/* Se elimina el enlace al panel de administración ya que se quita la funcionalidad de autenticación */}
+          {/* {isAdmin && (
+            <NavLink to="/admin" className={({ isActive }) => isActive ? 'active-link admin-nav-link' : 'admin-nav-link'}>
+              🛠️ Admin
+            </NavLink>
+          )} */}
+
+          {/* Login Link - Vuelve a su estado original sin lógica de autenticación */}
           <NavLink to="#" onClick={(e) => { e.preventDefault(); setShowLogin(true); }} className="login-nav-link">
+            {/* Se usa un emoji simple o se puede volver al ícono User si se desea, pero sin lógica de autenticación */}
             👤 Login
           </NavLink>
         </nav>

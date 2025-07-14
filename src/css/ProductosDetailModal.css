@@ -1,0 +1,65 @@
+/* ProductDetailModal.css */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top of other content */
+}
+
+.product-detail-card {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  position: relative; /* For potential close button positioning */
+}
+
+.detail-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.detail-nombre {
+  font-size: 2em;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.detail-descripcion {
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.detail-picante {
+  font-size: 1.2em;
+  color: #e44d26; /* A red/orange for fire */
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.detail-precio {
+  font-size: 1.5em;
+  color: #28a745; /* Green for price */
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.detail-actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 15px; /* Space between buttons */
+}

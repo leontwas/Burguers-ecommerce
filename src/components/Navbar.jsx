@@ -1,25 +1,47 @@
-import { Link } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import '../css/header.css';
+import { FaShoppingCart } from 'react-icons/fa';
+import CarritoContext from "../context/CarritoContext";
+import { NavLink } from 'react-router-dom'; // No need for Link anymore, as NavLink handles both
+import LoginModal from '../components/LoginModal';
 
-function Navbar() {
+function Header() {
+  const { carrito } = useContext(CarritoContext);
+  const [showLogin, setShowLogin] = useState(false);
+
+  const totalProductos = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+
   return (
-    <nav style={{ backgroundColor: "#333", color: "white", padding: "10px" }}>
-      <ul style={{
-        listStyle: "none",
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "center",
-        margin: 0,
-        padding: 0
-      }}>
-        <li><Link to="/">Inicio</Link></li>
-        <li><Link to="/productos">Productos</Link></li>
-        <li><Link to="/novedades">Novedades</Link></li>
-        <li><Link to="/reservas">Reservas</Link></li>
-        <li><Link to="/nosotros">Nosotros</Link></li>
-        <li><Link to="/login">Login</Link></li> {/* Asumiendo que creas una ruta "/login" */}
-      </ul>
-    </nav>
+    <>
+      <header className="header">
+        <div className="logo-container">
+          <img src="/images/logo.png" alt="Logo Gloriosa Burgers" className="logo" />
+          <h1 className="nombre">Gloriosa Burgers</h1>
+        </div>
+
+        <nav className="nav">
+          <NavLink to="/" className={({ isActive }) => isActive ? 'active-link' : ''}>Inicio</NavLink>
+          <NavLink to="/novedades" className={({ isActive }) => isActive ? 'active-link' : ''}>Novedades</NavLink>
+          <NavLink to="/reservas" className={({ isActive }) => isActive ? 'active-link' : ''}>Reservas</NavLink>
+          <NavLink to="/nosotros" className={({ isActive }) => isActive ? 'active-link' : ''}>Nosotros</NavLink>
+
+          {/* Carrito as a NavLink */}
+          <NavLink to="/carrito" className={({ isActive }) => isActive ? 'active-link carrito-nav-link' : 'carrito-nav-link'}>
+            <FaShoppingCart className="carrito-icono" />
+            <span className="contador">{totalProductos}</span>
+            Carrito
+          </NavLink>
+
+          {/* Login as a NavLink, triggering the modal */}
+          <NavLink to="#" onClick={(e) => { e.preventDefault(); setShowLogin(true); }} className="login-nav-link">
+            👤 Login
+          </NavLink>
+        </nav>
+      </header>
+
+      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+    </>
   );
 }
 
-export default Navbar;
+export default Header;

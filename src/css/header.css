@@ -1,139 +1,130 @@
-/* Estilos generales del header */
+/* header.css */
+
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  background-color: #1a1a1a;
-  color: white;
-  padding: 10px 20px;
-  flex-wrap: wrap;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #323235;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Inter', sans-serif;
 }
 
-/* Logo + Nombre */
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 10px;
 }
 
 .logo {
-  width: 100px; /* valor base */
-  height: auto;
-  object-fit: contain;
+  height: 20vh; /* Ajusta según el tamaño de tu logo */
+  margin-right: 15px;
 }
 
 .nombre {
-  font-size: 1.5rem; /* valor base */
-  font-weight: bold;
+  font-size: 1.8em;
+  color: #e44d26; /* Color de tu marca */
+  margin: 0;
 }
 
-/* Navegación */
 .nav {
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+  gap: 25px; /* Espacio entre los elementos de navegación */
+  align-items: center;
 }
 
 .nav a {
   text-decoration: none;
   color: white;
-  font-size: 1rem; /* valor base */
+  font-weight: 500;
+  font-size: 1.1em;
+  padding: 5px 0;
+  position: relative; /* Importante para el posicionamiento absoluto del contador */
   transition: color 0.3s ease;
 }
 
-.nav a:hover {
-  color:  #0ef;
+.nav a:hover,
+.nav a.active-link {
+  color: #e44d26; /* Color al pasar el mouse o activo */
 }
 
-/* Carrito */
-.carrito-container {
-  position: relative;
-  display: flex;
+/* Estilos específicos para el enlace del carrito */
+.carrito-nav-link {
+  display: flex; /* Para alinear el icono y el texto */
   align-items: center;
-  justify-content: center;
+  position: relative; /* Necesario para posicionar el contador absolutamente */
+  padding-right: 20px; /* Deja espacio para el contador */
 }
 
 .carrito-icono {
-  font-size: 1.8rem;
-  cursor: pointer;
-  color: white;
-  padding-right: 10px;
+  font-size: 1.4em;
+  margin-right: 5px;
+}
+
+.carrito-text {
+  margin-right: 5px; /* Espacio entre el texto "Carrito" y el contador */
 }
 
 .contador {
-  position: absolute;
-  top: 22px;
-  right: -20px;
-  background-color: #e91e63;
+  background-color: #e44d26; /* Color de fondo del contador (rojo/naranja) */
   color: white;
-  font-size: 0.75rem;
-  padding: 2px 6px;
-  border-radius: 50%;
-}
-
-.login-btn {
-  color:white;
+  border-radius: 50%; /* Forma circular */
+  padding: 2px 7px; /* Ajusta el padding para el tamaño del número */
+  font-size: 0.75em; /* Tamaño de fuente más pequeño */
   font-weight: bold;
+  position: absolute; /* Posicionamiento absoluto */
+  top: 25px; /* Ajusta la posición vertical */
+  right: -18px; /* Ajusta la posición horizontal */
+  min-width: 18px; /* Asegura un ancho mínimo para números de un dígito */
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Sutil sombra */
 }
 
-.login-modal {
-  min-height: 100vh;
-  background-color: #081b29;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-}
-
-.active-link {
-  text-decoration: underline;
+/* Estilos para el enlace de login/admin */
+.login-nav-link {
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
   font-weight: bold;
-  border: 1px solid #0ef;
-  box-shadow: 0 0 10px #0ef;
+  text-decoration: none; /* Asegura que no tenga subrayado */
 }
 
-/* Responsive */
-@media screen and (max-width: 768px) {
+/*.login-nav-link:hover {
+  background-color: #0056b3; 
+  color: white;
+}*/
+
+.admin-nav-link {
+  background-color: #28a745; /* Verde */
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  text-decoration: none; /* Asegura que no tenga subrayado */
+}
+
+.admin-nav-link:hover {
+  background-color: #218838; /* Verde más oscuro al pasar el mouse */
+  color: white; /* Mantener el color del texto blanco */
+}
+
+
+/* Media queries para responsividad (ejemplo) */
+@media (max-width: 768px) {
   .header {
     flex-direction: column;
-    align-items: flex-start;
+    padding: 10px 15px;
   }
 
   .nav {
-    margin-top: 10px;
-    gap: 10px;
-    flex-direction: column;
-    width: 100%;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
   }
 
-  .carrito-container {
-    align-self: flex-end;
-    margin-top: 10px;
-  }
-
-  .logo {
-    width: 80px;
-  }
-
-  .nombre {
-    font-size: 1.2rem;
-  }
-
-  .nav a {
-    font-size: 0.9rem;
-  }
-}
-
-/* Para pantallas más grandes (notebooks y desktop) */
-@media (min-width: 851px) {
-  .logo {
-    width: 150px;
-  }
-
-  .nombre {
-    font-size: 2rem;
-  }
-
-  .nav a {
-    font-size: 1.2rem;
+  .logo-container {
+    margin-bottom: 10px;
   }
 }
