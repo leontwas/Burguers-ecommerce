@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import CarritoContext from "./CarritoContext";
 
 export function CarritoProvider({ children }) {
@@ -14,7 +14,22 @@ export function CarritoProvider({ children }) {
           p.nombre === producto.nombre ? { ...p, cantidad: p.cantidad + 1 } : p
         );
       } else {
-        toast.success(`${producto.nombre} ha sido agregado al carrito.`);
+        Swal.fire({
+          title: '¡Agregado!',
+          text: `${producto.nombre} ha sido agregado al carrito.`,
+          icon: 'success',
+          timer: 2000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+          position: 'center',
+          width: '400px',
+          padding: '20px',
+          customClass: {
+            popup: 'swal-popup-large',
+            title: 'swal-title-large',
+            content: 'swal-content-large'
+          }
+        });
         return [...prev, { ...producto, cantidad: 1 }];
       }
     });

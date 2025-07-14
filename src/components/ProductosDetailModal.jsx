@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 import Boton from './Boton';
-import '../css/ProductosDetailModal.css'; // You'll need to create this CSS file
+import '../css/ProductosDetailModal.css'; 
 
 const API_BASE = 'https://mi-api-burger.onrender.com';
 
 function ProductDetailModal({ producto, onClose, onAddToCart }) {
-  if (!producto) return null; // Don't render if no product data
+  if (!producto) return null; 
 
-  // Function to render fire icons based on spice level
   const renderFuegoIcons = (level) => {
     return '🔥'.repeat(level);
   };

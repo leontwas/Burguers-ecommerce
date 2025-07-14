@@ -1,14 +1,9 @@
 import { useContext } from 'react';
 import Swal from 'sweetalert2';
 import CarritoContext from "../context/CarritoContext";
-import "../css/carrito.css"; // Asegúrate de que este CSS exista y contenga los estilos para .carrito-item-img
+import "../css/carrito.css"; 
 
-// Define la base de la API para las imágenes
-// Si tus imágenes están en la misma carpeta 'public' que tu frontend desplegado en Netlify,
-// no necesitarías API_BASE y la ruta sería solo p.imagen (ej. /images/01.png).
-// Si están en un servidor externo (como Render.com, como se insinuó antes), entonces sí.
-// Para este ejemplo, asumimos que están en un servidor externo o en una ruta base específica.
-const API_BASE = 'https://mi-api-burger.onrender.com'; // O la URL donde estén tus imágenes
+const API_BASE = 'https://mi-api-burger.onrender.com'; 
 
 function Carrito() {
   const { carrito, aumentarCantidad, disminuirCantidad, vaciarCarrito } = useContext(CarritoContext);
@@ -33,7 +28,7 @@ function Carrito() {
         <p>Tu carrito está vacío.</p>
       ) : (
         <ul>
-          {carrito.map((p) => ( // No es necesario 'i' si usas p.id como key
+          {carrito.map((p) => ( 
             <li key={p.id} className="carrito-item"> {/* Añadido clase para estilizar el li */}
               <img
                 src={`${API_BASE}${p.imagen}`} // Construye la URL completa de la imagen
@@ -44,9 +39,9 @@ function Carrito() {
                 <strong>{p.nombre}</strong>  ${parseFloat(p.precio).toFixed(2)} c/u
               </div>
               <div className="carrito-item-cantidad"> {/* Contenedor para botones de cantidad */}
-                <button className='restar' onClick={() => disminuirCantidad(p.id)}>-</button> {/* Usar p.id */}
+                <button className='restar' onClick={() => disminuirCantidad(p.nombre)}>-</button> {/* Usar p.nombre */}
                 <span style={{ margin: '0 10px' }}>{p.cantidad}</span>
-                <button className='sumar' onClick={() => aumentarCantidad(p.id)}>+</button> {/* Usar p.id */}
+                <button className='sumar' onClick={() => aumentarCantidad(p.nombre)}>+</button> {/* Usar p.nombre */}
               </div>
             </li>
           ))}

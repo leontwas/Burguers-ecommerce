@@ -1,18 +1,24 @@
 /* header.css */
 
-.header {
-  display: flex;
+.header-bootstrap {
+  background-color: #2c2c2c; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+  padding: 0; 
+  font-family: 'Inter', sans-serif;
+}
+
+.header-container-fluid {
+  padding: 0 30px; 
+  display: flex; /* Asegura el flexbox para el logo y el toggle */
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  background-color: #323235;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  font-family: 'Inter', sans-serif;
 }
 
 .logo-container {
   display: flex;
   align-items: center;
+  text-decoration: none; /* Quitar subrayado del Navbar.Brand */
+  color: inherit; /* Heredar color para el texto del brand */
 }
 
 .logo {
@@ -26,33 +32,41 @@
   margin: 0;
 }
 
-.nav {
+/* Estilos para el menú de navegación (visible en desktop) */
+/* La clase 'nav-custom' se aplica al Nav de Bootstrap para tus estilos */
+.nav-custom {
   display: flex;
   gap: 25px; /* Espacio entre los elementos de navegación */
   align-items: center;
+  /* En pantallas grandes, esto asegura que los elementos estén en fila */
+  flex-direction: row;
 }
 
-.nav a {
+/* Estilos para los NavLink (ahora con clase .nav-link de Bootstrap) */
+.nav-custom .nav-link { /* Apunta a la clase que agregamos en el NavLink */
   text-decoration: none;
   color: white;
   font-weight: 500;
   font-size: 1.1em;
-  padding: 5px 0;
-  position: relative; /* Importante para el posicionamiento absoluto del contador */
+  padding: 5px 0; /* Ajusta el padding vertical */
+  position: relative;
   transition: color 0.3s ease;
+  /* Sobrescribe estilos por defecto de Bootstrap para Nav.Link */
+  padding-left: 0 !important; /* Elimina padding-left de Bootstrap */
+  padding-right: 0 !important; /* Elimina padding-right de Bootstrap */
 }
 
-.nav a:hover,
-.nav a.active-link {
-  color: #e44d26; /* Color al pasar el mouse o activo */
+.nav-custom .nav-link:hover,
+.nav-custom .nav-link.active-link {
+  color: #e44d26;
 }
 
 /* Estilos específicos para el enlace del carrito */
 .carrito-nav-link {
-  display: flex; /* Para alinear el icono y el texto */
+  display: flex;
   align-items: center;
-  position: relative; /* Necesario para posicionar el contador absolutamente */
-  padding-right: 20px; /* Deja espacio para el contador */
+  position: relative;
+  padding-right: 20px;
 }
 
 .carrito-icono {
@@ -61,70 +75,93 @@
 }
 
 .carrito-text {
-  margin-right: 5px; /* Espacio entre el texto "Carrito" y el contador */
+  margin-right: 5px;
 }
 
 .contador {
-  background-color: #e44d26; /* Color de fondo del contador (rojo/naranja) */
+  background-color: #e44d26;
   color: white;
-  border-radius: 50%; /* Forma circular */
-  padding: 2px 7px; /* Ajusta el padding para el tamaño del número */
-  font-size: 0.75em; /* Tamaño de fuente más pequeño */
+  border-radius: 50%;
+  padding: 2px 7px;
+  font-size: 0.75em;
   font-weight: bold;
-  position: absolute; /* Posicionamiento absoluto */
-  top: 25px; /* Ajusta la posición vertical */
-  right: -18px; /* Ajusta la posición horizontal */
-  min-width: 18px; /* Asegura un ancho mínimo para números de un dígito */
+  position: absolute;
+  top: -5px;
+  right: 0px;
+  min-width: 18px;
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Sutil sombra */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 /* Estilos para el enlace de login/admin */
 .login-nav-link {
+  background-color: #007bff;
   color: white;
   padding: 8px 15px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
   font-weight: bold;
-  text-decoration: none; /* Asegura que no tenga subrayado */
+  text-decoration: none;
 }
 
-/*.login-nav-link:hover {
-  background-color: #0056b3; 
+.login-nav-link:hover {
+  background-color: #0056b3;
   color: white;
-}*/
+}
 
 .admin-nav-link {
-  background-color: #28a745; /* Verde */
+  background-color: #28a745;
   color: white;
   padding: 8px 15px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
   font-weight: bold;
-  text-decoration: none; /* Asegura que no tenga subrayado */
+  text-decoration: none;
 }
 
 .admin-nav-link:hover {
-  background-color: #218838; /* Verde más oscuro al pasar el mouse */
-  color: white; /* Mantener el color del texto blanco */
+  background-color: #218838;
+  color: white;
 }
 
+/* --- MEDIA QUERIES PARA RESPONSIVIDAD --- */
 
-/* Media queries para responsividad (ejemplo) */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    padding: 10px 15px;
+@media (max-width: 991.98px) { 
+  .header-container-fluid {
+    padding: 10px 15px; 
   }
 
-  .nav {
-    margin-top: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
+  /* Estilos para el Offcanvas cuando está abierto */
+  .offcanvas-body .nav-custom {
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 10px; 
+    padding-top: 15px; 
   }
 
-  .logo-container {
-    margin-bottom: 10px;
+  .offcanvas-body .nav-custom .nav-link {
+    width: 100%; 
+    padding: 10px 0; 
+    text-align: left;
+    font-size: 1.2em; 
+
+  .offcanvas-body .nav-custom .login-nav-link,
+  .offcanvas-body .nav-custom .admin-nav-link {
+    width: auto; 
+    margin-top: 10px; 
+    padding: 8px 15px;
+    align-self: center; 
   }
+
+  /* Oculta el nombre de la marca si no hay espacio */
+  .header-bootstrap .nombre {
+    font-size: 1.5em; 
+  }
+}
+
+@media (max-width: 575.98px) { 
+  .header-bootstrap .nombre {
+    font-size: 1.2em; 
+  }
+}
 }
