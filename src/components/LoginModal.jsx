@@ -20,7 +20,7 @@ export default function LoginModal({ onClose }) {
             z-index: 9999;
             padding: 20px;
           }
-Login
+
           .cerrar-login {
             position: absolute;
             top: 20px;
