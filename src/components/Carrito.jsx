@@ -1,7 +1,14 @@
 import { useContext } from 'react';
 import Swal from 'sweetalert2';
 import CarritoContext from "../context/CarritoContext";
-import "../css/carrito.css";
+import "../css/carrito.css"; // Asegúrate de que este CSS exista y contenga los estilos para .carrito-item-img
+
+// Define la base de la API para las imágenes
+// Si tus imágenes están en la misma carpeta 'public' que tu frontend desplegado en Netlify,
+// no necesitarías API_BASE y la ruta sería solo p.imagen (ej. /images/01.png).
+// Si están en un servidor externo (como Render.com, como se insinuó antes), entonces sí.
+// Para este ejemplo, asumimos que están en un servidor externo o en una ruta base específica.
+const API_BASE = 'https://mi-api-burger.onrender.com'; // O la URL donde estén tus imágenes
 
 function Carrito() {
   const { carrito, aumentarCantidad, disminuirCantidad, vaciarCarrito } = useContext(CarritoContext);
@@ -16,6 +23,7 @@ function Carrito() {
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'Aceptar'
     });
+    vaciarCarrito(); // Vaciar el carrito después de confirmar la compra
   };
 
   return (
@@ -25,14 +33,20 @@ function Carrito() {
         <p>Tu carrito está vacío.</p>
       ) : (
         <ul>
-          {carrito.map((p, i) => (
-            <li key={i}>
-              <img src={p.imagen} alt={p.nombre} width={100} />
-              <strong>{p.nombre}</strong>  ${p.precio} c/u
-              <div>
-                <button className='restar' onClick={() => disminuirCantidad(p.nombre)}>-</button>
+          {carrito.map((p) => ( // No es necesario 'i' si usas p.id como key
+            <li key={p.id} className="carrito-item"> {/* Añadido clase para estilizar el li */}
+              <img
+                src={`${API_BASE}${p.imagen}`} // Construye la URL completa de la imagen
+                alt={p.nombre}
+                className="carrito-item-img" // Clase para estilizar la miniatura
+              />
+              <div className="carrito-item-info"> {/* Contenedor para nombre y precio */}
+                <strong>{p.nombre}</strong>  ${parseFloat(p.precio).toFixed(2)} c/u
+              </div>
+              <div className="carrito-item-cantidad"> {/* Contenedor para botones de cantidad */}
+                <button className='restar' onClick={() => disminuirCantidad(p.id)}>-</button> {/* Usar p.id */}
                 <span style={{ margin: '0 10px' }}>{p.cantidad}</span>
-                <button className='sumar' onClick={() => aumentarCantidad(p.nombre)}>+</button>
+                <button className='sumar' onClick={() => aumentarCantidad(p.id)}>+</button> {/* Usar p.id */}
               </div>
             </li>
           ))}
@@ -41,7 +55,7 @@ function Carrito() {
 
       {carrito.length > 0 && (
         <>
-          <p><strong>Total:</strong> ${total}</p>
+          <p><strong>Total:</strong> ${total.toFixed(2)}</p> {/* Formatear el total */}
           <button className='vaciar' onClick={vaciarCarrito}>Vaciar Carrito</button>
           <button className='confirmar' onClick={confirmarCompra}>Pagar</button>
         </>

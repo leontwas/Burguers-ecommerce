@@ -63,3 +63,78 @@
   justify-content: space-around;
   gap: 15px; /* Space between buttons */
 }
+
+/* Estilos para los botones dentro de detail-actions */
+/* Asumiendo que tus botones son el componente <Boton> y tienen estilos base */
+/* Si no tienen clases específicas, puedes usar selectores más genéricos o añadir clases */
+
+/* Estilos base para los botones (si no los tienes ya en Boton.jsx o un CSS global) */
+.detail-actions button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px; /* Bordes más redondeados */
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  transition: all 0.3s ease; /* Transición suave para todos los efectos */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra inicial */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  letter-spacing: 0.5px; /* Espaciado entre letras */
+}
+
+/* Estilos específicos para el botón "Agregar al Carrito" (color: #28a745) */
+.detail-actions button[style*="background-color: rgb(40, 167, 69)"],
+.detail-actions button[style*="background-color: #28a745"] {
+  background-color: #28a745; /* Verde */
+  color: white;
+}
+
+.detail-actions button[style*="background-color: rgb(40, 167, 69)"]:hover,
+.detail-actions button[style*="background-color: #28a745"]:hover {
+  background-color: #218838; /* Verde más oscuro al pasar el mouse */
+  transform: translateY(-3px); /* Efecto de "levantar" */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
+}
+
+.detail-actions button[style*="background-color: rgb(40, 167, 69)"]:active,
+.detail-actions button[style*="background-color: #28a745"]:active {
+  transform: translateY(0); /* Vuelve a la posición original al hacer click */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra más pequeña al hacer click */
+}
+
+
+/* Estilos específicos para el botón "Volver atrás" (color: #007bff) */
+.detail-actions button[style*="background-color: rgb(0, 123, 255)"],
+.detail-actions button[style*="background-color: #007bff"] {
+  background-color: #007bff; /* Azul */
+  color: white;
+}
+
+.detail-actions button[style*="background-color: rgb(0, 123, 255)"]:hover,
+.detail-actions button[style*="background-color: #007bff"]:hover {
+  background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+  transform: translateY(-3px); /* Efecto de "levantar" */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
+}
+
+.detail-actions button[style*="background-color: rgb(0, 123, 255)"]:active,
+.detail-actions button[style*="background-color: #007bff"]:active {
+  transform: translateY(0); /* Vuelve a la posición original al hacer click */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra más pequeña al hacer click */
+}
+
+/* SweetAlert2 custom styles (mantener si los tienes) */
+.swal2-popup {
+  border-radius: 10px !important;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
+}
+
+.swal2-title {
+  color: #333 !important;
+  font-size: 1.8em !important;
+}
+
+.swal2-content {
+  color: #555 !important;
+  font-size: 1.1em !important;
+}

@@ -1,48 +1,265 @@
+/* src/css/carrito.css */
+
 .carrito {
-  padding: 20px;
-  color: black;
-  background: #f8f8f8;
-  border-radius: 10px;
-  margin: 20px;
+  max-width: 800px; /* Mantener un ancho máximo para el contenedor del carrito */
+  margin: 40px auto;
+  padding: 25px; /* Aumentado el padding para mejor espaciado */
+  background-color: #fff; /* Fondo blanco para la tarjeta del carrito */
+  border-radius: 12px; /* Bordes más redondeados */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Sombra más suave y moderna */
+  font-family: 'Inter', sans-serif; /* Fuente consistente */
+  color: #333; /* Color de texto general */
+  text-align: center;
+}
+
+.carrito h2 {
+  font-size: 2.5em;
+  color: #e44d26; /* Un color vibrante para el título */
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee; /* Línea divisoria */
+  padding-bottom: 15px;
 }
 
 .carrito ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.carrito li {
+.carrito-item {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 15px;
+  justify-content: space-between; /* Distribuye espacio entre los elementos */
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+  gap: 15px; /* Espacio entre columnas */
+  flex-wrap: nowrap; /* Evita que los ítems se envuelvan por defecto */
+}
+
+.carrito-item:last-child {
+  border-bottom: none; /* No hay borde en el último elemento */
+}
+
+/* Estilos para la miniatura de la imagen del producto */
+.carrito-item-img {
+  width: 50px; /* Ancho de la miniatura (más pequeño) */
+  height: 50px; /* Altura de la miniatura (más pequeña) */
+  object-fit: cover; /* Recorta la imagen para que cubra el área sin distorsión */
+  border-radius: 8px; /* Bordes redondeados para la miniatura */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+  flex-shrink: 0; /* Evita que la imagen se encoja */
+}
+
+.carrito-item-info {
+  flex-grow: 1; /* Permite que esta sección ocupe el espacio disponible */
+  text-align: left;
+  font-size: 1.1em;
+  min-width: 120px; /* Asegura un ancho mínimo para la información */
+}
+
+.carrito-item-info strong {
+  display: block; /* Nombre arriba del precio */
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.carrito-item-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Espacio entre los botones y el contador */
+  flex-shrink: 0; /* Evita que los controles de cantidad se encojan */
+}
+
+.carrito-item-cantidad button {
+  background-color: rgb(6, 179, 202); /* Color de tus botones restar/sumar */
+  color: white; /* Texto blanco para los botones */
+  border: none; /* Sin borde */
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease; /* Transiciones suaves */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3); /* Sombra para los botones */
+}
+
+.carrito-item-cantidad button:hover {
+  background-color: rgb(5, 140, 158); /* Tono más oscuro al pasar el ratón */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.carrito-item-cantidad span {
+  min-width: 25px; /* Asegura espacio para el número */
+  text-align: center;
+  font-weight: bold;
+  color: #444;
+}
+
+.carrito p {
+  font-size: 1.4em;
+  margin-top: 30px;
+  color: #333;
+}
+
+.carrito p strong {
+  color: #28a745; /* Verde para el total */
+}
+
+/* Estilos para los botones de acción principales (Vaciar y Pagar) */
+.vaciar, .confirmar {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 10px;
+}
+
+.vaciar {
+  background-color: red; /* Rojo */
+  color: white;
+}
+
+.vaciar:hover {
+  background-color: #c82333; /* Rojo más oscuro */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+.vaciar:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .confirmar {
-  background-color: green;
+  background-color: green; /* Verde */
   color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,1) ;
 }
 
-.restar {
-  background-color: rgb(6, 179, 202);
-  box-shadow: 0 2px 8px rgba(0,0,0,1) ;
-}
- 
-.sumar {
-  background-color: rgb(6, 179, 202);
-  box-shadow: 0 2px 8px rgba(0,0,0,1) ;
+.confirmar:hover {
+  background-color: #218838; /* Verde más oscuro */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
 }
 
+.confirmar:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-.vaciar {
-  background-color: red;
-  color: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,1) ;
+/* SweetAlert2 custom styles (si los tienes en otro lugar, puedes quitarlos de aquí) */
+.swal2-popup {
+  border-radius: 10px !important;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
+}
 
+.swal2-title {
+  color: #333 !important;
+  font-size: 1.8em !important;
+}
+
+.swal2-content {
+  color: #555 !important;
+  font-size: 1.1em !important;
+}
+
+/* --- MEDIA QUERIES PARA RESPONSIVIDAD --- */
+
+/* Para pantallas más pequeñas (ej. móviles, hasta 768px) */
+@media (max-width: 768px) {
+  .carrito {
+    margin: 20px 10px; /* Reduce los márgenes laterales */
+    padding: 15px; /* Reduce el padding */
+  }
+
+  .carrito h2 {
+    font-size: 2em; /* Título más pequeño */
+    margin-bottom: 20px;
+  }
+
+  .carrito-item {
+    flex-direction: column; /* Apila los elementos verticalmente */
+    align-items: flex-start; /* Alinea los ítems a la izquierda */
+    padding: 10px 0;
+    gap: 10px; /* Reduce el espacio entre ítems apilados */
+  }
+
+  .carrito-item-img {
+    width: 60px; /* Miniatura un poco más grande para mejor visibilidad en móvil */
+    height: 60px;
+    margin-bottom: 5px; /* Espacio debajo de la imagen */
+  }
+
+  .carrito-item-info {
+    text-align: center; /* Centra el texto de información */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    font-size: 1em; /* Texto de info más pequeño */
+  }
+
+  .carrito-item-info strong {
+    margin-bottom: 2px;
+  }
+
+  .carrito-item-cantidad {
+    width: 100%; /* Ocupa todo el ancho */
+    justify-content: center; /* Centra los botones de cantidad */
+    margin-top: 10px; /* Espacio superior para los controles de cantidad */
+  }
+
+  .carrito-item-cantidad button {
+    padding: 8px 15px; /* Botones de cantidad un poco más grandes */
+    font-size: 1em;
+  }
+
+  .carrito-item-cantidad span {
+    font-size: 1em;
+  }
+
+  .carrito p {
+    font-size: 1.2em; /* Texto del total más pequeño */
+    margin-top: 20px;
+  }
+
+  .vaciar, .confirmar {
+    padding: 10px 20px; /* Botones de acción más pequeños */
+    font-size: 1em;
+    margin: 8px; /* Reduce el margen entre botones */
+  }
+}
+
+/* Para pantallas muy pequeñas (ej. móviles pequeños, hasta 480px) */
+@media (max-width: 480px) {
+  .carrito {
+    margin: 15px 5px;
+    padding: 10px;
+  }
+
+  .carrito h2 {
+    font-size: 1.8em;
+  }
+
+  .carrito-item-img {
+    width: 50px; /* Vuelve a 50px para pantallas muy pequeñas */
+    height: 50px;
+  }
+
+  .carrito-item-info {
+    font-size: 0.95em;
+  }
+
+  .carrito-item-cantidad button {
+    padding: 6px 12px;
+    font-size: 0.9em;
+  }
+
+  .vaciar, .confirmar {
+    padding: 8px 15px;
+    font-size: 0.9em;
+    margin: 5px;
+  }
 }
