@@ -17,7 +17,7 @@ function Tarjeta({ producto }) {
       agregarAlCarrito({
         imagen: producto.imagen,
         nombre: producto.nombre,
-        picanteNivel: 1,
+        picanteNivel: producto.picanteNivel,
         precio: parseFloat(producto.precio),
       });
     }
