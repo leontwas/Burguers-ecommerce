@@ -15,10 +15,10 @@ function Header() {
   const { carrito } = useContext(CarritoContext);
   const { currentUser, isAdmin, logout, loading, currentUsername } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
-  const [showOffcanvas, setShowOffcanvas] = useState(false); 
+  const [showOffcanvas, setShowOffcanvas] = useState(false); // 📱 Estado que controla si el menú móvil está abierto
   const totalProductos = carrito.reduce((acc, p) => acc + p.cantidad, 0);
-  const handleCloseOffcanvas = () => setShowOffcanvas(false);
-  const handleShowOffcanvas = () => setShowOffcanvas(true);
+  const handleCloseOffcanvas = () => setShowOffcanvas(false); // 📱 Función para cerrar el menú móvil
+  const handleShowOffcanvas = () => setShowOffcanvas(true); // 📱 Función para abrir el menú móvil
 
   return (
     <>
@@ -29,13 +29,18 @@ function Header() {
             <h1 className="nombre">Gloriosa Burgers</h1>
           </Navbar.Brand>
 
+          {/* 🍔 AQUÍ ESTÁ EL BOTÓN HAMBURGUESA 🍔 */}
+          {/* Este botón solo aparece en pantallas menores a 'lg' (992px) */}
           <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={handleShowOffcanvas} />
+          
+          {/* 📱 AQUÍ ESTÁ EL MENÚ MÓVIL DESPLEGABLE 📱 */}
+          {/* Este Offcanvas se abre desde la derecha cuando se hace clic en el botón hamburguesa */}
           <Navbar.Offcanvas
             id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel"
-            placement="end" 
-            show={showOffcanvas}
-            onHide={handleCloseOffcanvas}
+            placement="end" // Se desliza desde la derecha
+            show={showOffcanvas} // Se muestra cuando showOffcanvas es true
+            onHide={handleCloseOffcanvas} // Se cierra cuando se hace clic fuera o en el botón X
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id="offcanvasNavbarLabel">Menú</Offcanvas.Title>

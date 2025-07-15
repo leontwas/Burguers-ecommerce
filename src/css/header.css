@@ -1,14 +1,14 @@
 /* header.css */
 
 .header-bootstrap {
-  background-color: #2c2c2c; 
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-  padding: 0; 
+  background-color: #2c2c2c;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0;
   font-family: 'Inter', sans-serif;
 }
 
 .header-container-fluid {
-  display: flex; 
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
@@ -17,43 +17,54 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: inherit; 
+  color: inherit;
 }
 
 .logo {
-  height: 20vh; 
+  height: 20vh;
   margin-right: 15px;
 }
 
 .nombre {
   font-size: 1.8em;
-  color: #e44d26; 
+  color: #e44d26;
   margin: 0;
 }
 
+/* ======== NAVIGATION LINKS ========= */
+
 .nav-custom {
   display: flex;
-  gap: 25px; 
+  gap: 25px;
   align-items: center;
   flex-direction: row;
+  justify-content: center; /* centro horizontal en desktop */
+  flex-wrap: wrap;
 }
 
-.nav-custom .nav-link { 
+.nav-custom .nav-link {
   text-decoration: none;
   color: white;
   font-weight: 500;
   font-size: 1.1em;
-  padding: 5px 0; 
+  padding: 5px 0;
   position: relative;
-  transition: color 0.3s ease;
-  padding-left: 0 !important; 
+  padding-left: 0 !important;
   padding-right: 0 !important;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
-.nav-custom .nav-link:hover,
-.nav-custom .nav-link.active-link {
+.nav-custom .nav-link:hover {
   color: #e44d26;
+  transform: translateY(-2px); /* efecto sutil al hacer hover */
 }
+
+.nav-custom .nav-link.active-link {
+  color: #e44d26 !important;
+  font-weight: bold;
+}
+
+/* Carrito */
 
 .carrito-nav-link {
   display: flex;
@@ -72,7 +83,6 @@
 }
 
 .contador {
-  background-color: #e44d26;
   color: white;
   border-radius: 50%;
   padding: 2px 7px;
@@ -86,18 +96,31 @@
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
+/* Login visualmente como nav-link */
+
 .login-nav-link {
-  color: white !important;
-  padding: 8px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  font-weight: bold;
+  color: white;
+  font-weight: 500;
+  font-size: 1.1em;
+  padding: 5px 0;
+  position: relative;
+  transition: color 0.3s ease, transform 0.2s ease;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   text-decoration: none;
 }
 
 .login-nav-link:hover {
-  color: #e44d26 !important;
+  color: #e44d26;
+  transform: translateY(-2px);
 }
+
+.login-nav-link.active-link {
+  color: #e44d26 !important;
+  font-weight: bold;
+}
+
+/* Admin como botón especial */
 
 .admin-nav-link {
   background-color: #28a745;
@@ -114,42 +137,73 @@
   color: white;
 }
 
-/* --- MEDIA QUERIES PARA RESPONSIVIDAD --- */
+/* ======== BOTÓN HAMBURGUESA ======== */
 
-@media (max-width: 991.98px) { 
+.navbar-toggler {
+  border: 2px solid #ffd700 !important;
+  padding: 6px 10px !important;
+  border-radius: 5px !important;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,215,0,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+}
+
+.navbar-toggler:hover {
+  background-color: rgba(255,255,255,0.1) !important;
+  border-color: #f0f0f0 !important;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.5) !important;
+}
+
+/* ======== MEDIA QUERIES ======== */
+
+@media (max-width: 991.98px) {
   .header-container-fluid {
-    padding: 10px 15px; 
+    padding: 10px 15px;
   }
 
   .offcanvas-body .nav-custom {
-    flex-direction: column; 
-    align-items: flex-start; 
-    gap: 10px; 
-    padding-top: 15px; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+    padding-top: 15px;
   }
 
-  .offcanvas-body .nav-custom .nav-link {
-    width: 100%; 
-    padding: 10px 0; 
-    text-align: left;
-    font-size: 1.2em; 
+  .offcanvas-body .nav-custom .nav-link,
+  .offcanvas-body .nav-custom .login-nav-link {
+    color: #2c2c2c !important;
+    font-size: 1.2em;
+    width: 100%;
+    transition: color 0.3s ease;
+  }
 
-  .offcanvas-body .nav-custom .login-nav-link,
+  .offcanvas-body .nav-custom .nav-link:hover,
+  .offcanvas-body .nav-custom .login-nav-link:hover {
+    color: #e44d26 !important;
+  }
+
   .offcanvas-body .nav-custom .admin-nav-link {
-    width: auto; 
-    margin-top: 10px; 
-    padding: 8px 15px;
-    align-self: center; 
+    background-color: #28a745;
+    color: white !important;
+    font-size: 1.1em;
+  }
+
+  .offcanvas-body .nav-custom .admin-nav-link:hover {
+    background-color: #218838;
   }
 
   .header-bootstrap .nombre {
-    font-size: 1.5em; 
+    font-size: 1.5em;
   }
 }
 
-@media (max-width: 575.98px) { 
+@media (max-width: 575.98px) {
   .header-bootstrap .nombre {
-    font-size: 1.2em; 
+    font-size: 1.2em;
   }
-}
 }
