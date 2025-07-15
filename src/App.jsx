@@ -27,9 +27,7 @@ function App() {
               <ProductosGrid />
             </>
           } />
-          <Route path="/novedades" element={<Novedades />} />
           <Route path="/reservas" element={<ReservaMesa />} />
-          <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/login" element={<Login />} />
         </Routes>
