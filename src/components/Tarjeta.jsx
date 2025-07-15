@@ -1,27 +1,25 @@
-import { useContext, useState } from 'react'; // Import useState
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Boton from './Boton';
 import '../css/tarjeta.css';
 import CarritoContext from "../context/CarritoContext";
-import ProductDetailModal from './ProductosDetailModal'; // Import the new modal component
+import ProductDetailModal from './ProductosDetailModal'; 
 
 const API_BASE = 'https://mi-api-burger.onrender.com';
 
 function Tarjeta({ producto }) {
   const { agregarAlCarrito } = useContext(CarritoContext);
-  const [showDetail, setShowDetail] = useState(false); // State to control modal visibility
-
-  // Function to render fire icons based on spice level
+  const [showDetail, setShowDetail] = useState(false); 
   const renderFuegoIcons = (level) => {
     return '🔥'.repeat(level);
   };
 
-  const handleComprar = (item) => { // Modified to accept item, for use in modal
+  const handleComprar = (item) => { 
     if (item) {
       agregarAlCarrito({
         imagen: item.imagen,
         nombre: item.nombre,
-        nivel_picante: item.nivel_picante, // Ensure this matches your JSON attribute
+        nivel_picante: item.nivel_picante, 
         precio: parseFloat(item.precio),
       });
     }
@@ -50,16 +48,14 @@ function Tarjeta({ producto }) {
           Picante: {renderFuegoIcons(producto.nivel_picante)}
         </p>
         <p className="tarjeta-precio">${parseFloat(producto.precio).toFixed(2)}</p>
-        {/* Button to open the detail modal */}
         <Boton texto="Ver descripción" color="#007bff" onClick={handleVerDescripcion} />
       </div>
 
-      {/* Render the modal only if showDetail is true */}
       {showDetail && (
         <ProductDetailModal
           producto={producto}
           onClose={handleCloseDetail}
-          onAddToCart={handleComprar} // Pass the add to cart function
+          onAddToCart={handleComprar} 
         />
       )}
     </>

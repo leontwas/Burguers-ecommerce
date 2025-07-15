@@ -1,52 +1,39 @@
 import { useContext, useState } from 'react';
-import '../css/header.css'; // Asegúrate de que este archivo CSS contenga los estilos actualizados
+import '../css/header.css'; 
 import { FaShoppingCart } from 'react-icons/fa';
 import CarritoContext from "../context/CarritoContext";
 import { NavLink } from 'react-router-dom';
 import LoginModal from '../components/LoginModal';
-
-// Importaciones de React-Bootstrap
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-
-
-// Reintroducir la importación de useAuth
 import { useAuth } from '../context/AuthContext';
-// Reintroducir las importaciones de íconos de lucide-react
 import { User, LogOut } from 'lucide-react';
 
 function Header() {
   const { carrito } = useContext(CarritoContext);
-  // Reintroducir las variables relacionadas con AuthContext
-  const { currentUser, isAdmin, logout, loading } = useAuth();
+  const { currentUser, isAdmin, logout, loading, currentUsername } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
-  const [showOffcanvas, setShowOffcanvas] = useState(false); // Estado para controlar el Offcanvas
-
+  const [showOffcanvas, setShowOffcanvas] = useState(false); 
   const totalProductos = carrito.reduce((acc, p) => acc + p.cantidad, 0);
-
-  // Funciones para manejar el Offcanvas
   const handleCloseOffcanvas = () => setShowOffcanvas(false);
   const handleShowOffcanvas = () => setShowOffcanvas(true);
 
   return (
     <>
-      <Navbar expand="lg" className="header-bootstrap"> {/* Usa Navbar de Bootstrap */}
-        <Container fluid className="header-container-fluid"> {/* Contenedor fluido para el Navbar */}
-          <Navbar.Brand as={NavLink} to="/" className="logo-container"> {/* Usa Navbar.Brand para el logo/nombre */}
+      <Navbar expand="lg" className="header-bootstrap"> 
+        <Container fluid className="header-container-fluid"> 
+          <Navbar.Brand as={NavLink} to="/" className="logo-container"> 
             <img src="/images/logo.png" alt="Logo Gloriosa Burgers" className="logo" />
             <h1 className="nombre">Gloriosa Burgers</h1>
           </Navbar.Brand>
 
-          {/* Botón de hamburguesa para pantallas pequeñas */}
           <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={handleShowOffcanvas} />
-
-          {/* Offcanvas para el menú responsivo */}
           <Navbar.Offcanvas
             id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel"
-            placement="end" // El menú aparecerá desde la derecha
+            placement="end" 
             show={showOffcanvas}
             onHide={handleCloseOffcanvas}
           >
@@ -54,12 +41,10 @@ function Header() {
               <Offcanvas.Title id="offcanvasNavbarLabel">Menú</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="justify-content-end flex-grow-1 pe-3 nav-custom"> {/* nav-custom para tus estilos */}
+              <Nav className="justify-content-end flex-grow-1 pe-3 nav-custom">
                 {/* Los NavLink de react-router-dom funcionan bien dentro de Nav de react-bootstrap */}
                 <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active-link' : ''}`} onClick={handleCloseOffcanvas}>Inicio</NavLink>
-                <NavLink to="/novedades" className={({ isActive }) => `nav-link ${isActive ? 'active-link' : ''}`} onClick={handleCloseOffcanvas}>Novedades</NavLink>
                 <NavLink to="/reservas" className={({ isActive }) => `nav-link ${isActive ? 'active-link' : ''}`} onClick={handleCloseOffcanvas}>Reservas</NavLink>
-                <NavLink to="/nosotros" className={({ isActive }) => `nav-link ${isActive ? 'active-link' : ''}`} onClick={handleCloseOffcanvas}>Nosotros</NavLink>
 
                 {/* Carrito as a NavLink */}
                 <NavLink to="/carrito" className={({ isActive }) => `nav-link ${isActive ? 'active-link carrito-nav-link' : 'carrito-nav-link'}`} onClick={handleCloseOffcanvas}>
@@ -78,9 +63,9 @@ function Header() {
                       🛠️ Admin
                     </NavLink>
                   ) : (
-                    // Si es usuario normal, muestra email y botón de salir
+                    // Si es usuario normal, muestra el username y botón de salir
                     <NavLink to="#" onClick={(e) => { e.preventDefault(); logout(); handleCloseOffcanvas(); }} className="nav-link login-nav-link">
-                      <LogOut size={20} style={{ marginRight: '5px' }} /> {currentUser.email} (Salir)
+                      <LogOut size={20} style={{ marginRight: '5px' }} /> {currentUsername} (Salir) {/* Muestra el username */}
                     </NavLink>
                   )
                 ) : (

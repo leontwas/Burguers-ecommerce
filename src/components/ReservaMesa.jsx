@@ -118,7 +118,7 @@ function ReservaMesa() {
 
   return (
     <Container className="mt-5 p-4 bg-dark text-white rounded shadow-lg">
-      <h2 className="text-center kalam-bold mb-4">Reservá tu mesa</h2>
+     <h2 className="text-center mb-4" style={{ color: '#0ef' }}>Reservá tu mesa</h2>
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col md={6}>

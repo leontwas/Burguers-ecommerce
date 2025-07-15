@@ -53,7 +53,6 @@ export function CarritoProvider({ children }) {
   );
 }
 
-// Agregar validación de props para children
 CarritoProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

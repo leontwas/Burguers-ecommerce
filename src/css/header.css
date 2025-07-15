@@ -8,8 +8,7 @@
 }
 
 .header-container-fluid {
-  padding: 0 30px; 
-  display: flex; /* Asegura el flexbox para el logo y el toggle */
+  display: flex; 
   justify-content: space-between;
   align-items: center;
 }
@@ -17,43 +16,38 @@
 .logo-container {
   display: flex;
   align-items: center;
-  text-decoration: none; /* Quitar subrayado del Navbar.Brand */
-  color: inherit; /* Heredar color para el texto del brand */
+  text-decoration: none;
+  color: inherit; 
 }
 
 .logo {
-  height: 20vh; /* Ajusta según el tamaño de tu logo */
+  height: 20vh; 
   margin-right: 15px;
 }
 
 .nombre {
   font-size: 1.8em;
-  color: #e44d26; /* Color de tu marca */
+  color: #e44d26; 
   margin: 0;
 }
 
-/* Estilos para el menú de navegación (visible en desktop) */
-/* La clase 'nav-custom' se aplica al Nav de Bootstrap para tus estilos */
 .nav-custom {
   display: flex;
-  gap: 25px; /* Espacio entre los elementos de navegación */
+  gap: 25px; 
   align-items: center;
-  /* En pantallas grandes, esto asegura que los elementos estén en fila */
   flex-direction: row;
 }
 
-/* Estilos para los NavLink (ahora con clase .nav-link de Bootstrap) */
-.nav-custom .nav-link { /* Apunta a la clase que agregamos en el NavLink */
+.nav-custom .nav-link { 
   text-decoration: none;
   color: white;
   font-weight: 500;
   font-size: 1.1em;
-  padding: 5px 0; /* Ajusta el padding vertical */
+  padding: 5px 0; 
   position: relative;
   transition: color 0.3s ease;
-  /* Sobrescribe estilos por defecto de Bootstrap para Nav.Link */
-  padding-left: 0 !important; /* Elimina padding-left de Bootstrap */
-  padding-right: 0 !important; /* Elimina padding-right de Bootstrap */
+  padding-left: 0 !important; 
+  padding-right: 0 !important;
 }
 
 .nav-custom .nav-link:hover,
@@ -61,7 +55,6 @@
   color: #e44d26;
 }
 
-/* Estilos específicos para el enlace del carrito */
 .carrito-nav-link {
   display: flex;
   align-items: center;
@@ -86,17 +79,15 @@
   font-size: 0.75em;
   font-weight: bold;
   position: absolute;
-  top: -5px;
-  right: 0px;
+  top: 15px;
+  right: -16px;
   min-width: 18px;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-/* Estilos para el enlace de login/admin */
 .login-nav-link {
-  background-color: #007bff;
-  color: white;
+  color: white !important;
   padding: 8px 15px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
@@ -105,8 +96,7 @@
 }
 
 .login-nav-link:hover {
-  background-color: #0056b3;
-  color: white;
+  color: #e44d26 !important;
 }
 
 .admin-nav-link {
@@ -131,7 +121,6 @@
     padding: 10px 15px; 
   }
 
-  /* Estilos para el Offcanvas cuando está abierto */
   .offcanvas-body .nav-custom {
     flex-direction: column; 
     align-items: flex-start; 
@@ -153,7 +142,6 @@
     align-self: center; 
   }
 
-  /* Oculta el nombre de la marca si no hay espacio */
   .header-bootstrap .nombre {
     font-size: 1.5em; 
   }

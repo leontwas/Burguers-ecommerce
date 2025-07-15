@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import Swal from 'sweetalert2';
 import CarritoContext from "../context/CarritoContext";
-import "../css/carrito.css"; 
+import "../css/carrito.css";
 
-const API_BASE = 'https://mi-api-burger.onrender.com'; 
+const API_BASE = 'https://mi-api-burger.onrender.com';
 
 function Carrito() {
   const { carrito, aumentarCantidad, disminuirCantidad, vaciarCarrito } = useContext(CarritoContext);
@@ -18,7 +18,7 @@ function Carrito() {
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'Aceptar'
     });
-    vaciarCarrito(); // Vaciar el carrito después de confirmar la compra
+    vaciarCarrito(); 
   };
 
   return (
@@ -28,15 +28,15 @@ function Carrito() {
         <p>Tu carrito está vacío.</p>
       ) : (
         <ul>
-          {carrito.map((p) => ( 
-            <li key={p.id} className="carrito-item"> {/* Añadido clase para estilizar el li */}
+          {carrito.map((p, index) => ( // Añadido 'index' como segundo argumento
+            <li key={p.id || index} className="carrito-item"> {/* Usar p.id como key, con index como fallback */}
               <img
                 src={`${API_BASE}${p.imagen}`} // Construye la URL completa de la imagen
                 alt={p.nombre}
                 className="carrito-item-img" // Clase para estilizar la miniatura
               />
               <div className="carrito-item-info"> {/* Contenedor para nombre y precio */}
-                <strong>{p.nombre}</strong>  ${parseFloat(p.precio).toFixed(2)} c/u
+                <strong>{p.nombre}</strong> ${parseFloat(p.precio).toFixed(2)} c/u
               </div>
               <div className="carrito-item-cantidad"> {/* Contenedor para botones de cantidad */}
                 <button className='restar' onClick={() => disminuirCantidad(p.nombre)}>-</button> {/* Usar p.nombre */}

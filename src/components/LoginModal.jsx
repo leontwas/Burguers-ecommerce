@@ -1,6 +1,6 @@
 // src/components/LoginModal.jsx
 import { createPortal } from 'react-dom';
-import LoginRegister from './LoginRegister';
+import Login from './Login'; 
 
 export default function LoginModal({ onClose }) {
   return createPortal(
@@ -17,7 +17,7 @@ export default function LoginModal({ onClose }) {
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            z-index: 9999; /* Asegura que el modal esté por encima de la mayoría de los elementos */
             padding: 20px;
           }
 
@@ -30,13 +30,14 @@ export default function LoginModal({ onClose }) {
             background: transparent;
             border: none;
             cursor: pointer;
-            z-index: 10000;
+            z-index: 10000; /* Asegura que el botón de cerrar esté por encima del modal */
           }
         `}
       </style>
       <div className="login-modal">
         <button className="cerrar-login" onClick={onClose}>✖</button>
-        <LoginRegister />
+        {/* Pasa la función onClose al componente Login */}
+        <Login onClose={onClose} />
       </div>
     </>,
     document.body

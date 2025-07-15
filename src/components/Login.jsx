@@ -1,8 +1,149 @@
+// src/components/Login.jsx
 import { useState } from 'react';
-import '../css/login.css'; 
+import Swal from 'sweetalert2';
+import '../css/login.css'; // Tus estilos CSS se mantienen intactos
+import { db } from '../firebase/config'; // Importa la instancia de db para Firestore
+import { doc, setDoc } from 'firebase/firestore'; // Importa doc y setDoc para guardar el rol del usuario
+import { useAuth } from '../context/AuthContext'; // Importa el hook useAuth
+import PropTypes from 'prop-types'; // Importa PropTypes
 
-export default function LoginRegister() {
+// El componente Login ahora recibe la prop 'onClose'
+export default function Login({ onClose }) {
   const [active, setActive] = useState(false); // false = login, true = register
+  const { login: authLogin, register: authRegister } = useAuth(); // Obtiene las funciones login y register del contexto
+
+  // Estados para el formulario de login
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: ''
+  });
+
+  // Estados para el formulario de registro
+  const [registerData, setRegisterData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
+
+  // Manejar cambios en los inputs de login
+  const handleLoginChange = (e) => {
+    setLoginData({
+      ...loginData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // Manejar cambios en los inputs de registro
+  const handleRegisterChange = (e) => {
+    setRegisterData({
+      ...registerData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // Función para manejar el login con Firebase
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    console.log("Intentando iniciar sesión con:", loginData.email);
+
+    try {
+      // Llama a la función login del AuthContext, que manejará la SweetAlert y la redirección
+      await authLogin(loginData.email, loginData.password);
+
+      console.log('Usuario autenticado y redirigido.');
+      setLoginData({ email: '', password: '' }); // Limpiar formulario
+      if (onClose) { // Si se proporcionó una función onClose, llámala para cerrar el modal
+        onClose();
+      }
+    } catch (error) {
+      console.error('Error en handleLogin:', error);
+      let errorMessage = 'Error al iniciar sesión';
+      if (error.code === 'auth/user-not-found') {
+        errorMessage = 'No se encontró un usuario con ese correo electrónico.';
+      } else if (error.code === 'auth/wrong-password') {
+        errorMessage = 'Contraseña incorrecta.';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'El formato del correo electrónico es inválido.';
+      } else if (error.code === 'auth/invalid-credential') {
+        errorMessage = 'Credenciales inválidas. Por favor, verifica tu correo y contraseña.';
+      } else {
+        errorMessage = error.message;
+      }
+
+      Swal.fire({
+        title: 'Error',
+        text: errorMessage,
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }
+  };
+
+  // Función para manejar el registro con Firebase
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    console.log("Intentando registrar con:", registerData.email);
+    console.log("Datos de registro:", registerData);
+
+    try {
+      if (!registerData.username || !registerData.email || !registerData.password) {
+        console.log("Error: Campos incompletos");
+        throw new Error('Por favor completa todos los campos');
+      }
+
+      if (registerData.password.length < 6) {
+        console.log("Error: Contraseña débil");
+        throw new Error('La contraseña debe tener al menos 6 caracteres');
+      }
+
+      const user = await authRegister(registerData.email, registerData.password, 'user');
+
+      const userDocRef = doc(db, `users/${user.uid}`);
+      await setDoc(userDocRef, {
+        username: registerData.username,
+      }, { merge: true });
+
+      await Swal.fire({
+        title: '¡Registro exitoso!',
+        text: `Tu cuenta ha sido creada correctamente para ${user.email}`,
+        icon: 'success',
+        timer: 2000,
+        timerProgressBar: true,
+        position: 'center'
+      });
+
+      setRegisterData({ username: '', email: '', password: '' });
+      setActive(false);
+      console.log("Registro completado y formulario limpiado.");
+
+      if (onClose) {
+        onClose();
+      }
+
+    } catch (error) {
+      console.error('Error en handleRegister:', error);
+      let errorMessage = 'Error al registrar usuario';
+      let errorIcon = 'error';
+
+      if (error.code === 'auth/email-already-in-use') {
+        errorMessage = 'El correo electrónico ya está en uso. Por favor, inicia sesión o usa otro correo.';
+        errorIcon = 'warning';
+      } else if (error.code === 'auth/weak-password') {
+        errorMessage = 'La contraseña es demasiado débil. Debe tener al menos 6 caracteres.';
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = 'El formato del correo electrónico es inválido.';
+      } else {
+        errorMessage = error.message;
+      }
+
+      Swal.fire({
+        title: 'Error',
+        text: errorMessage,
+        icon: errorIcon,
+        confirmButtonText: 'OK'
+      });
+    }
+  };
 
   return (
     <div className="tarjeta-login">
@@ -13,14 +154,26 @@ export default function LoginRegister() {
         {/* FORM LOGIN */}
         <div className="form-box login">
           <h2 className="animation" style={{ '--i': 0 }}>Inicio de Sesión</h2>
-          <form action="#">
+          <form onSubmit={handleLogin}>
             <div className="input-box animation" style={{ '--i': 1 }}>
-              <input type="text" required />
+              <input
+                type="email"
+                name="email"
+                value={loginData.email}
+                onChange={handleLoginChange}
+                required
+              />
               <label>Correo electrónico</label>
               <i className='bx bxs-envelope'></i>
             </div>
             <div className="input-box animation" style={{ '--i': 2 }}>
-              <input type="password" required />
+              <input
+                type="password"
+                name="password"
+                value={loginData.password}
+                onChange={handleLoginChange}
+                required
+              />
               <label>Contraseña</label>
               <i className='bx bxs-lock'></i>
             </div>
@@ -60,19 +213,37 @@ export default function LoginRegister() {
           <h2 className="animation" style={{ '--i': 0 }}>
             Regístrate
           </h2>
-          <form action="#">
+          <form onSubmit={handleRegister}>
             <div className="input-box animation" style={{ '--i': 1 }}>
-              <input type="text" required />
+              <input
+                type="text"
+                name="username"
+                value={registerData.username}
+                onChange={handleRegisterChange}
+                required
+              />
               <label>Nombre de usuario</label>
               <i className='bx bxs-user'></i>
             </div>
             <div className="input-box animation" style={{ '--i': 2 }}>
-              <input type="email" required />
+              <input
+                type="email"
+                name="email"
+                value={registerData.email}
+                onChange={handleRegisterChange}
+                required
+              />
               <label>Correo electrónico</label>
               <i className='bx bxs-envelope'></i>
             </div>
             <div className="input-box animation" style={{ '--i': 3 }}>
-              <input type="password" required />
+              <input
+                type="password"
+                name="password"
+                value={registerData.password}
+                onChange={handleRegisterChange}
+                required
+              />
               <label>Contraseña</label>
               <i className='bx bxs-lock'></i>
             </div>
@@ -110,3 +281,8 @@ export default function LoginRegister() {
     </div>
   );
 }
+
+// Definición de PropTypes para validar la prop onClose
+Login.propTypes = {
+  onClose: PropTypes.func, // onClose es una función y es opcional
+};

@@ -33,14 +33,6 @@
   max-width: 40%;
   min-width: 300px;
 }
-.entrevista {
-  border-radius: 20px;
-  border: 6px solid darkolivegreen;
-  box-shadow: 10px 10px 5px #161616;
-  width: 100%;
-  height: auto;
-  margin-left: -120px;
-}
 
 /* Estilo del texto principal */
 #texto-negro1 {

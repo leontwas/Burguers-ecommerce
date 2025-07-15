@@ -1,30 +1,19 @@
+// src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { initializeApp } from 'firebase/app';
-import { 
-  getAuth, 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged, 
-} from 'firebase/auth';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../firebase/config';
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
-// Configuración de Firebase - REEMPLAZA con tu configuración real
-const firebaseConfig = {
-  apiKey: "tu-api-key",
-  authDomain: "tu-project.firebaseapp.com",
-  projectId: "tu-project-id",
-  storageBucket: "tu-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "tu-app-id"
-};
-
-// Crea el contexto de autenticación
 const AuthContext = createContext();
 
-// Hook personalizado para usar el contexto de autenticación
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -33,86 +22,71 @@ export const useAuth = () => {
   return context;
 };
 
-// Proveedor del contexto de autenticación
+
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [currentUsername, setCurrentUsername] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [db, setDb] = useState(null);
-  const [auth, setAuth] = useState(null);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
-    const initFirebase = async () => {
-      try {
-        // Verificar que la configuración de Firebase esté presente
-        if (!firebaseConfig.projectId) {
-          console.error("Firebase config is missing. Please configure firebaseConfig.");
-          setLoading(false);
-          return;
-        }
 
-        // Inicializar Firebase
-        const app = initializeApp(firebaseConfig);
-        const firestoreDb = getFirestore(app);
-        const firebaseAuth = getAuth(app);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      setCurrentUser(user);
+      if (user) {
+        try {
+          const userDocRef = doc(db, `users/${user.uid}`);
+          const userDocSnap = await getDoc(userDocRef);
 
-        setDb(firestoreDb);
-        setAuth(firebaseAuth);
-
-        // Listener para cambios en el estado de autenticación
-        const unsubscribe = onAuthStateChanged(firebaseAuth, async (user) => {
-          setCurrentUser(user);
-          if (user) {
-            try {
-              // Obtener el rol del usuario desde Firestore
-              const userDocRef = doc(firestoreDb, `users/${user.uid}`);
-              const userDocSnap = await getDoc(userDocRef);
-
-              if (userDocSnap.exists()) {
-                const userData = userDocSnap.data();
-                setIsAdmin(userData.role === 'admin');
-              } else {
-                // Si el usuario no tiene un documento de rol, crear uno con rol 'user'
-                await setDoc(userDocRef, { 
-                  email: user.email, 
-                  role: 'user',
-                  createdAt: new Date().toISOString()
-                });
-                setIsAdmin(false);
-              }
-            } catch (error) {
-              console.error("Error al obtener datos del usuario:", error);
-              setIsAdmin(false);
-            }
+          if (userDocSnap.exists()) {
+            const userData = userDocSnap.data();
+            setIsAdmin(userData.role === 'admin');
+            setCurrentUsername(userData.username || user.email);
           } else {
+
+            await setDoc(userDocRef, {
+              email: user.email,
+              role: 'user',
+              createdAt: new Date().toISOString(),
+              username: user.email 
+            }, { merge: true });
             setIsAdmin(false);
+            setCurrentUsername(user.email);
           }
-          setLoading(false);
-        });
-
-        return () => unsubscribe();
-      } catch (error) {
-        console.error("Error initializing Firebase:", error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error de Inicialización',
-          text: `No se pudo iniciar Firebase: ${error.message}`,
-        });
-        setLoading(false);
+        } catch (error) {
+          console.error("Error al obtener datos del usuario desde Firestore:", error);
+          setIsAdmin(false);
+          setCurrentUsername(null);
+        }
+      } else {
+        setIsAdmin(false);
+        setCurrentUsername(null);
       }
-    };
+      setLoading(false);
+    });
 
-    initFirebase();
+    return () => unsubscribe();
   }, []);
 
-  // Funciones de autenticación
   const login = async (email, password) => {
-    if (!auth) {
-      throw new Error('Firebase no está inicializado');
-    }
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      return userCredential.user;
+      const user = userCredential.user;
+
+      await Swal.fire({ 
+        title: '¡Inicio de Sesión Exitoso!',
+        text: `Bienvenido de nuevo, ${currentUsername || user.email}.`, 
+        icon: 'success',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        position: 'center'
+      });
+
+      navigate('/'); 
+
+      return user;
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
       throw error;
@@ -120,21 +94,29 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (email, password, role = 'user') => {
-    if (!auth || !db) {
-      throw new Error('Firebase no está inicializado');
-    }
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      
-      // Guardar el rol del usuario en Firestore
+
       const userDocRef = doc(db, `users/${user.uid}`);
-      await setDoc(userDocRef, { 
-        email: user.email, 
+      await setDoc(userDocRef, {
+        email: user.email,
         role: role,
         createdAt: new Date().toISOString()
-      });
-      
+      }, { merge: true });
+
+
+      await Swal.fire({
+      title: '¡Registro Exitoso!',
+      text: `Bienvenido, ${user.email}.`,
+      icon: 'success',
+      timer: 2000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      position: 'center'
+       });
+       navigate('/');
+
       return user;
     } catch (error) {
       console.error("Error al registrar usuario:", error);
@@ -143,13 +125,8 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    if (!auth) {
-      return;
-    }
     try {
       await signOut(auth);
-      setCurrentUser(null);
-      setIsAdmin(false);
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
       Swal.fire({
@@ -163,12 +140,11 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     isAdmin,
+    currentUsername,
     loading,
     login,
     register,
     logout,
-    db,
-    auth
   };
 
   return (
