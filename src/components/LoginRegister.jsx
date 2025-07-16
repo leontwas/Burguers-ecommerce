@@ -1,73 +1,31 @@
-//src/components/LoginRegister.jsx
+// src/components/LoginRegister.jsx
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import '../css/login.css'; 
-import { auth } from '../firebase/config'; 
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { db } from '../firebase/config'; 
-import { doc, setDoc } from 'firebase/firestore'; 
+import '../css/login.css';
+import { useAuth } from '../context/AuthProvider';
+import checkPasswordPwned from '../utils/checkPasswordPwned'; // asegurate de que la ruta sea correcta
 
-export default function Login() { 
+export default function LoginRegister() {
+  const { login, register } = useAuth();
+
   const [active, setActive] = useState(false);
+  const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [registerData, setRegisterData] = useState({ username: '', email: '', password: '' });
 
-
-  const [loginData, setLoginData] = useState({
-    email: '',
-    password: ''
-  });
-
-  // Estados para el formulario de registro
-  const [registerData, setRegisterData] = useState({
-    username: '', // Aunque Firebase Auth no maneja directamente el 'username', lo mantenemos para tu lógica de UI
-    email: '',
-    password: ''
-  });
-
-  // Manejar cambios en los inputs de login
   const handleLoginChange = (e) => {
-    setLoginData({
-      ...loginData,
-      [e.target.name]: e.target.value
-    });
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-  // Manejar cambios en los inputs de registro
   const handleRegisterChange = (e) => {
-    setRegisterData({
-      ...registerData,
-      [e.target.name]: e.target.value
-    });
+    setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
 
-  // Función para manejar el login con Firebase
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Intentando iniciar sesión con:", loginData.email); // Log de depuración
-
     try {
-      // Intenta iniciar sesión con email y contraseña usando Firebase Auth
-      const userCredential = await signInWithEmailAndPassword(auth, loginData.email, loginData.password);
-      const user = userCredential.user;
-      console.log("Inicio de sesión exitoso. Usuario:", user.email); // Log de depuración
-
-      await Swal.fire({
-        title: '¡Bienvenido!',
-        text: `Has iniciado sesión correctamente como ${user.email}`,
-        icon: 'success',
-        timer: 2000,
-        timerProgressBar: true,
-        position: 'center'
-      });
-
-      // Aquí puedes agregar la lógica para manejar el usuario autenticado
-      // Por ejemplo: guardar token, actualizar estado global, etc.
-      console.log('Usuario autenticado:', user);
-
-      // Limpiar formulario
+      await login(loginData.email, loginData.password);
       setLoginData({ email: '', password: '' });
-
     } catch (error) {
-      console.error('Error en handleLogin:', error); // Log de depuración detallado
       let errorMessage = 'Error al iniciar sesión';
       if (error.code === 'auth/user-not-found') {
         errorMessage = 'No se encontró un usuario con ese correo electrónico.';
@@ -76,7 +34,7 @@ export default function Login() {
       } else if (error.code === 'auth/invalid-email') {
         errorMessage = 'El formato del correo electrónico es inválido.';
       } else if (error.code === 'auth/invalid-credential') {
-        errorMessage = 'Credenciales inválidas. Por favor, verifica tu correo y contraseña.';
+        errorMessage = 'Credenciales inválidas.';
       } else {
         errorMessage = error.message;
       }
@@ -90,63 +48,44 @@ export default function Login() {
     }
   };
 
-  // Función para manejar el registro con Firebase
   const handleRegister = async (e) => {
     e.preventDefault();
-    console.log("Intentando registrar con:", registerData.email); // Log de depuración
-    console.log("Datos de registro:", registerData); // Log de depuración
 
     try {
-      // Validaciones básicas antes de intentar el registro
-      if (!registerData.username || !registerData.email || !registerData.password) {
-        console.log("Error: Campos incompletos"); // Log de depuración
+      const { username, email, password } = registerData;
+
+      if (!username || !email || !password) {
         throw new Error('Por favor completa todos los campos');
       }
 
-      if (registerData.password.length < 6) {
-        console.log("Error: Contraseña débil"); // Log de depuración
+      if (password.length < 6) {
         throw new Error('La contraseña debe tener al menos 6 caracteres');
       }
 
-      // Intenta crear un nuevo usuario con email y contraseña usando Firebase Auth
-      console.log("Llamando a createUserWithEmailAndPassword..."); // Log de depuración
-      const userCredential = await createUserWithEmailAndPassword(auth, registerData.email, registerData.password);
-      const user = userCredential.user;
-      console.log("Usuario registrado exitosamente en Firebase Auth:", user.email); // Log de depuración
+      // Verifica si la contraseña ha sido comprometida
+      const pwnedCount = await checkPasswordPwned(password);
+      if (pwnedCount > 0) {
+        await Swal.fire({
+          title: 'Contraseña comprometida',
+          text: `Esta contraseña ha sido expuesta en ${pwnedCount} filtraciones. Elige otra más segura.`,
+          icon: 'warning',
+          confirmButtonText: 'Entendido'
+        });
+        return;
+      }
 
-      // Guardar el rol del usuario en Firestore
-      console.log("Intentando guardar rol de usuario en Firestore..."); // Log de depuración
-      const userDocRef = doc(db, `users/${user.uid}`);
-      await setDoc(userDocRef, {
-        email: user.email,
-        role: 'user', // Puedes pasar el rol como parámetro si lo necesitas
-        createdAt: new Date().toISOString()
-      });
-      console.log("Rol de usuario guardado en Firestore."); // Log de depuración
-
-      await Swal.fire({
-        title: '¡Registro exitoso!',
-        text: `Tu cuenta ha sido creada correctamente para ${user.email}`,
-        icon: 'success',
-        timer: 2000,
-        timerProgressBar: true,
-        position: 'center'
-      });
-
-       setRegisterData({ username: '', email: '', password: '' });
+      await register(email, password);
+      setRegisterData({ username: '', email: '', password: '' });
       setActive(false);
-      console.log("Registro completado y formulario limpiado.");
-
     } catch (error) {
-      console.error('Error en handleRegister:', error); 
       let errorMessage = 'Error al registrar usuario';
-      let errorIcon = 'error'; 
+      let errorIcon = 'error';
 
       if (error.code === 'auth/email-already-in-use') {
-        errorMessage = 'El correo electrónico ya está en uso. Por favor, inicia sesión o usa otro correo.';
-        errorIcon = 'warning'; 
+        errorMessage = 'El correo electrónico ya está en uso.';
+        errorIcon = 'warning';
       } else if (error.code === 'auth/weak-password') {
-        errorMessage = 'La contraseña es demasiado débil. Debe tener al menos 6 caracteres.';
+        errorMessage = 'La contraseña es demasiado débil.';
       } else if (error.code === 'auth/invalid-email') {
         errorMessage = 'El formato del correo electrónico es inválido.';
       } else {
@@ -156,7 +95,7 @@ export default function Login() {
       Swal.fire({
         title: 'Error',
         text: errorMessage,
-        icon: errorIcon, 
+        icon: errorIcon,
         confirmButtonText: 'OK'
       });
     }
@@ -173,24 +112,12 @@ export default function Login() {
           <h2 className="animation" style={{ '--i': 0 }}>Inicio de Sesión</h2>
           <form onSubmit={handleLogin}>
             <div className="input-box animation" style={{ '--i': 1 }}>
-              <input
-                type="email"
-                name="email"
-                value={loginData.email}
-                onChange={handleLoginChange}
-                required
-              />
+              <input type="email" name="email" value={loginData.email} onChange={handleLoginChange} required />
               <label>Correo electrónico</label>
               <i className='bx bxs-envelope'></i>
             </div>
             <div className="input-box animation" style={{ '--i': 2 }}>
-              <input
-                type="password"
-                name="password"
-                value={loginData.password}
-                onChange={handleLoginChange}
-                required
-              />
+              <input type="password" name="password" value={loginData.password} onChange={handleLoginChange} required />
               <label>Contraseña</label>
               <i className='bx bxs-lock'></i>
             </div>
@@ -200,14 +127,7 @@ export default function Login() {
             <div className="logreg-link animation" style={{ '--i': 4 }}>
               <p>
                 ¿No tienes una cuenta?{' '}
-                <a
-                  href="#"
-                  className="register-link"
-                  onClick={e => {
-                    e.preventDefault();
-                    setActive(true);
-                  }}
-                >
+                <a href="#" className="register-link" onClick={e => { e.preventDefault(); setActive(true); }}>
                   Regístrate
                 </a>
               </p>
@@ -217,9 +137,7 @@ export default function Login() {
 
         {/* INFO TEXT LOGIN */}
         <div className="info-text login">
-          <h2 className="animation" style={{ '--i': 0 }}>
-            Bienvenido
-          </h2>
+          <h2 className="animation" style={{ '--i': 0 }}>Bienvenido</h2>
           <p className="animation" style={{ '--i': 1 }}>
             Para acceder ingresa tu correo electrónico y tu contraseña.
           </p>
@@ -227,40 +145,20 @@ export default function Login() {
 
         {/* FORM REGISTER */}
         <div className="form-box register">
-          <h2 className="animation" style={{ '--i': 0 }}>
-            Regístrate
-          </h2>
+          <h2 className="animation" style={{ '--i': 0 }}>Regístrate</h2>
           <form onSubmit={handleRegister}>
             <div className="input-box animation" style={{ '--i': 1 }}>
-              <input
-                type="text"
-                name="username"
-                value={registerData.username}
-                onChange={handleRegisterChange}
-                required
-              />
+              <input type="text" name="username" value={registerData.username} onChange={handleRegisterChange} required />
               <label>Nombre de usuario</label>
               <i className='bx bxs-user'></i>
             </div>
             <div className="input-box animation" style={{ '--i': 2 }}>
-              <input
-                type="email"
-                name="email"
-                value={registerData.email}
-                onChange={handleRegisterChange}
-                required
-              />
+              <input type="email" name="email" value={registerData.email} onChange={handleRegisterChange} required />
               <label>Correo electrónico</label>
               <i className='bx bxs-envelope'></i>
             </div>
             <div className="input-box animation" style={{ '--i': 3 }}>
-              <input
-                type="password"
-                name="password"
-                value={registerData.password}
-                onChange={handleRegisterChange}
-                required
-              />
+              <input type="password" name="password" value={registerData.password} onChange={handleRegisterChange} required />
               <label>Contraseña</label>
               <i className='bx bxs-lock'></i>
             </div>
@@ -270,14 +168,7 @@ export default function Login() {
             <div className="logreg-link animation" style={{ '--i': 5 }}>
               <p>
                 ¿Ya tienes una cuenta?{' '}
-                <a
-                  href="#"
-                  className="login-link"
-                  onClick={e => {
-                    e.preventDefault();
-                    setActive(false);
-                  }}
-                >
+                <a href="#" className="login-link" onClick={e => { e.preventDefault(); setActive(false); }}>
                   Inicia sesión
                 </a>
               </p>
@@ -287,9 +178,7 @@ export default function Login() {
 
         {/* INFO TEXT REGISTER */}
         <div className="info-text register">
-          <h2 className="animation" style={{ '--i': 0 }}>
-            Bienvenido
-          </h2>
+          <h2 className="animation" style={{ '--i': 0 }}>Bienvenido</h2>
           <p className="animation" style={{ '--i': 1 }}>
             Para registrarte ingresa un nombre de usuario, tu correo electrónico y una contraseña.
           </p>

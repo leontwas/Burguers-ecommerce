@@ -38,13 +38,15 @@
   gap: 25px;
   align-items: center;
   flex-direction: row;
-  justify-content: center; /* centro horizontal en desktop */
+  justify-content: center;
   flex-wrap: wrap;
 }
 
-.nav-custom .nav-link {
+/* Login y Nav links unificados para que login sea blanco en desktop */
+.nav-custom .nav-link,
+.nav-custom .login-nav-link {
+  color: white !important;
   text-decoration: none;
-  color: white;
   font-weight: 500;
   font-size: 1.1em;
   padding: 5px 0;
@@ -54,12 +56,14 @@
   transition: color 0.3s ease, transform 0.2s ease;
 }
 
-.nav-custom .nav-link:hover {
+.nav-custom .nav-link:hover,
+.nav-custom .login-nav-link:hover {
   color: #e44d26;
-  transform: translateY(-2px); /* efecto sutil al hacer hover */
+  transform: translateY(-2px);
 }
 
-.nav-custom .nav-link.active-link {
+.nav-custom .nav-link.active-link,
+.nav-custom .login-nav-link.active-link {
   color: #e44d26 !important;
   font-weight: bold;
 }
@@ -84,6 +88,7 @@
 
 .contador {
   color: white;
+  background-color: red; /* ← círculo rojo */
   border-radius: 50%;
   padding: 2px 7px;
   font-size: 0.75em;
@@ -93,32 +98,8 @@
   right: -16px;
   min-width: 18px;
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
-/* Login visualmente como nav-link */
-
-.login-nav-link {
-  color: white;
-  font-weight: 500;
-  font-size: 1.1em;
-  padding: 5px 0;
-  position: relative;
-  transition: color 0.3s ease, transform 0.2s ease;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  text-decoration: none;
-}
-
-.login-nav-link:hover {
-  color: #e44d26;
-  transform: translateY(-2px);
-}
-
-.login-nav-link.active-link {
-  color: #e44d26 !important;
-  font-weight: bold;
-}
 
 /* Admin como botón especial */
 
@@ -150,12 +131,12 @@
 }
 
 .navbar-toggler:hover {
-  background-color: rgba(255,255,255,0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
   border-color: #f0f0f0 !important;
 }
 
 .navbar-toggler:focus {
-  box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.5) !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5) !important;
 }
 
 /* ======== MEDIA QUERIES ======== */
@@ -165,6 +146,7 @@
     padding: 10px 15px;
   }
 
+  /* Offcanvas: color oscuro para login y links */
   .offcanvas-body .nav-custom {
     flex-direction: column;
     align-items: center;
@@ -176,7 +158,7 @@
 
   .offcanvas-body .nav-custom .nav-link,
   .offcanvas-body .nav-custom .login-nav-link {
-    color: #2c2c2c !important;
+    color: #2c2c2c !important; /* aquí cambia a oscuro */
     font-size: 1.2em;
     width: 100%;
     transition: color 0.3s ease;
