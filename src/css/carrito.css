@@ -168,6 +168,30 @@
   font-size: 1.1em !important;
 }
 
+
+.agregar {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 10px;
+  font-size: 1em;
+  background-color: rgb(0, 123, 255); 
+  color: white;
+}
+
+.agregar:hover {
+  background-color: rgb(0, 123, 255);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
 /* --- MEDIA QUERIES PARA RESPONSIVIDAD --- */
 
 /* Para pantallas más pequeñas (ej. móviles, hasta 768px) */
@@ -230,6 +254,7 @@
     font-size: 1em;
     margin: 8px; /* Reduce el margen entre botones */
   }
+
 }
 
 /* Para pantallas muy pequeñas (ej. móviles pequeños, hasta 480px) */

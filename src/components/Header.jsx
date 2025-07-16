@@ -1,7 +1,7 @@
 // src/components/Header.jsx
-import { useContext, useState } from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
+import { useContext, useState } from 'react';
 import CarritoContext from "../context/CarritoContext";
 import LoginModal from './LoginModal';
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,13 +9,14 @@ import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { useAuth } from '../context/AuthProvider';
+import { useLoginModal } from '../context/LoginModalContext'; // ✅ nuevo
 import { User, LogOut } from 'lucide-react';
 import '../css/header.css';
 
 function Header() {
   const { carrito } = useContext(CarritoContext);
   const { currentUser, isAdmin, logout, loading, currentUsername } = useAuth();
-  const [showLogin, setShowLogin] = useState(false);
+  const { showLogin, setShowLogin } = useLoginModal(); // ✅ desde el contexto
   const [showOffcanvas, setShowOffcanvas] = useState(false);
   const totalProductos = carrito.reduce((acc, p) => acc + p.cantidad, 0);
 
