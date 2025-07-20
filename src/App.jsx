@@ -1,8 +1,8 @@
 // src/components/LoginPage.jsx
-import Login from '../src/components/Login';
+import Login from './Login';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAuth } from '../src/context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
   const navigate = useNavigate();
