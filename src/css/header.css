@@ -1,6 +1,7 @@
 /* header.css */
 
 .header-bootstrap {
+  width: 100%; /* Asegura que ocupe el 100% del ancho disponible */
   background-color: #2c2c2c;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 0;
@@ -8,6 +9,7 @@
 }
 
 .header-container-fluid {
+  width: 100%; /* Asegura que ocupe el 100% del ancho dentro del header */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -100,7 +102,6 @@
   text-align: center;
 }
 
-
 /* Admin como botón especial */
 
 .admin-nav-link {
@@ -124,10 +125,15 @@
   border: 2px solid #ffd700 !important;
   padding: 6px 10px !important;
   border-radius: 5px !important;
+  /* Eliminamos el margin-left problemático de la media query más pequeña */
+  /* Lo manejamos de forma más robusta en la media query de 575.98px */
 }
 
+/* Para ajustar el icono SVG dentro del botón */
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,215,0,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E") !important;
+  /* Añadimos background-size para controlar el tamaño del icono SVG */
+  background-size: 100% 100%; /* Por defecto, para que no se estire raro */
 }
 
 .navbar-toggler:hover {
@@ -144,6 +150,12 @@
 @media (max-width: 991.98px) {
   .header-container-fluid {
     padding: 10px 15px;
+  }
+
+  .logo {
+    width: 20vw;
+    height: 40vh;
+    margin-left: -20px !important; /* Considera revisar el uso de !important aquí */
   }
 
   /* Offcanvas: color oscuro para login y links */
@@ -185,7 +197,31 @@
 }
 
 @media (max-width: 575.98px) {
-  .header-bootstrap .nombre {
-    font-size: 1.2em;
+  .logo {
+    width: 20vw;
+    height: 10vh;
+    margin-left: -20px !important;
   }
+
+  .header-bootstrap .nombre {
+    font-size: 1em;
+    margin-left: -20px !important;
+    margin-right: -30px !important;
+  }
+
+  /* Ajustes para el botón hamburguesa */
+  .navbar-toggler {
+    padding: 4px 8px !important; /* Reduce el padding para hacerlo más pequeño */
+    margin-left: -10px; /* Desplaza ligeramente a la izquierda (ajusta según necesites) */
+    /* Remueve el !important si puedes manejarlo con especificidad */
+  }
+
+  .navbar-toggler-icon {
+    /* Reduce el tamaño del icono SVG para que se ajuste al padding reducido */
+    width: 1.2em !important; /* Ancho del icono */
+    height: 1.2em !important; /* Alto del icono */
+    /* Asegúrate de que el background-size sea cover o contain para que no se corte */
+    background-size: contain !important; /* El icono se ajustará sin cortar */
+  }
+
 }

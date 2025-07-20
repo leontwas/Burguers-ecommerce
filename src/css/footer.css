@@ -52,6 +52,9 @@ footer {
 }
 
 .footlist .footlink {
+  width: 50px;
+  aspect-ratio: 1/1;
+  object-fit: contain;
   font-size: 2rem;
   padding: 10px;
   transition: transform 0.3s ease;
