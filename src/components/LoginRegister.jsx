@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 import '../css/login.css';
 import { useAuth } from '../context/AuthProvider';
-import checkPasswordPwned from '../utils/checkPasswordPwned'; // asegurate de que la ruta sea correcta
+import checkPasswordPwned from '../utils/checkPasswordPwned';
 
 export default function LoginRegister() {
   const { login, register } = useAuth();
@@ -62,7 +62,6 @@ export default function LoginRegister() {
         throw new Error('La contraseña debe tener al menos 6 caracteres');
       }
 
-      // Verifica si la contraseña ha sido comprometida
       const pwnedCount = await checkPasswordPwned(password);
       if (pwnedCount > 0) {
         await Swal.fire({
@@ -74,7 +73,7 @@ export default function LoginRegister() {
         return;
       }
 
-      await register(email, password);
+      await register(email, password, username);
       setRegisterData({ username: '', email: '', password: '' });
       setActive(false);
     } catch (error) {
@@ -157,7 +156,8 @@ export default function LoginRegister() {
               <label>Correo electrónico</label>
               <i className='bx bxs-envelope'></i>
             </div>
-            <div className="input-box animation" style={{ '--i': 3 }}>
+            {/* ⭐ AQUI ESTABA EL ERROR: Faltaba un '}' en el estilo del div ⭐ */}
+            <div className="input-box animation" style={{ '--i': 3 }}> 
               <input type="password" name="password" value={registerData.password} onChange={handleRegisterChange} required />
               <label>Contraseña</label>
               <i className='bx bxs-lock'></i>

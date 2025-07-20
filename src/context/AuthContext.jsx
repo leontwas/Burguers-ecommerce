@@ -22,16 +22,14 @@ export const useAuth = () => {
   return context;
 };
 
-
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [currentUsername, setCurrentUsername] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
-
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       if (user) {
@@ -44,13 +42,16 @@ export function AuthProvider({ children }) {
             setIsAdmin(userData.role === 'admin');
             setCurrentUsername(userData.username || user.email);
           } else {
-
+            // Si el usuario de Firebase Auth existe pero no tiene documento en Firestore,
+            // creamos uno por defecto. Esto es útil para usuarios que se autenticaron
+            // antes de que se implementara la lógica de Firestore para roles/usernames.
+            // Para usuarios nuevos registrados con el formulario, esto no debería ejecutarse.
             await setDoc(userDocRef, {
               email: user.email,
-              role: 'user',
+              role: 'user', // Por defecto 'user' si el documento no existía.
               createdAt: new Date().toISOString(),
-              username: user.email 
-            }, { merge: true });
+              username: user.email // Por defecto el email como username si no se especificó.
+            }, { merge: true }); // Usar merge para no sobrescribir si ya existe algo.
             setIsAdmin(false);
             setCurrentUsername(user.email);
           }
@@ -74,9 +75,15 @@ export function AuthProvider({ children }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      await Swal.fire({ 
+      // Una vez logueado, esperamos a que onAuthStateChanged actualice los estados.
+      // Pero para el Swal.fire inmediato, podemos buscar el username de una vez.
+      const userDocRef = doc(db, `users/${user.uid}`);
+      const userDocSnap = await getDoc(userDocRef);
+      const userData = userDocSnap.exists() ? userDocSnap.data() : { username: user.email }; // Fallback a email si no hay datos de usuario
+
+      await Swal.fire({
         title: '¡Inicio de Sesión Exitoso!',
-        text: `Bienvenido de nuevo, ${currentUsername || user.email}.`, 
+        text: `Bienvenido de nuevo, ${userData.username || user.email}.`, // Usamos el username del documento o el email
         icon: 'success',
         timer: 2000,
         timerProgressBar: true,
@@ -84,7 +91,7 @@ export function AuthProvider({ children }) {
         position: 'center'
       });
 
-      navigate('/'); 
+      navigate('/');
 
       return user;
     } catch (error) {
@@ -93,7 +100,8 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const register = async (email, password, role = 'user') => {
+  // ✅ CORRECCIÓN: Ahora `register` acepta `username` como tercer argumento
+  const register = async (email, password, username, role = 'user') => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -102,20 +110,20 @@ export function AuthProvider({ children }) {
       await setDoc(userDocRef, {
         email: user.email,
         role: role,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        username: username, // ✅ Se guarda el username proporcionado
       }, { merge: true });
 
-
       await Swal.fire({
-      title: '¡Registro Exitoso!',
-      text: `Bienvenido, ${user.email}.`,
-      icon: 'success',
-      timer: 2000,
-      timerProgressBar: true,
-      showConfirmButton: false,
-      position: 'center'
-       });
-       navigate('/');
+        title: '¡Registro Exitoso!',
+        text: `Bienvenido, ${username || user.email}.`, // ✅ Usamos el username para el mensaje
+        icon: 'success',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        position: 'center'
+      });
+      navigate('/');
 
       return user;
     } catch (error) {
