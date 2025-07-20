@@ -1,6 +1,6 @@
 // src/components/LoginModal.jsx
 import { createPortal } from 'react-dom';
-import Login from './Login'; 
+import LoginRegister from './LoginRegister'; // <--- CAMBIO AQUÍ: Importa LoginRegister
 
 export default function LoginModal({ onClose }) {
   return createPortal(
@@ -36,8 +36,8 @@ export default function LoginModal({ onClose }) {
       </style>
       <div className="login-modal">
         <button className="cerrar-login" onClick={onClose}>✖</button>
-        {/* Pasa la función onClose al componente Login */}
-        <Login onClose={onClose} />
+        {/* Pasa la función onClose al componente LoginRegister */}
+        <LoginRegister onClose={onClose} /> {/* <--- CAMBIO AQUÍ: Usa LoginRegister */}
       </div>
     </>,
     document.body
