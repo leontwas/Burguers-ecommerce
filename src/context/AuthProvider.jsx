@@ -31,13 +31,6 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user?.email === 'admin' && user.uid === 'admin') {
-        setCurrentUser(user);
-        setIsAdmin(true);
-        setCurrentUsername('Administrador');
-        return setLoading(false);
-      }
-
       setCurrentUser(user);
       if (user) {
         try {
@@ -53,13 +46,13 @@ export function AuthProvider({ children }) {
               email: user.email,
               role: 'user',
               createdAt: new Date().toISOString(),
-              username: user.email
+              username: user.displayName || user.email 
             }, { merge: true });
             setIsAdmin(false);
-            setCurrentUsername(user.email);
+            setCurrentUsername(user.displayName || user.email);
           }
         } catch (error) {
-          console.error("Error al obtener datos del usuario desde Firestore:", error);
+          console.error("Error al obtener o crear datos del usuario en Firestore:", error);
           setIsAdmin(false);
           setCurrentUsername(null);
         }
@@ -75,24 +68,6 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
-      if (email === 'admin' && password === '1234') {
-        const fakeAdminUser = { email: 'admin', uid: 'admin' };
-        setCurrentUser(fakeAdminUser);
-        setIsAdmin(true);
-        setCurrentUsername('Administrador');
-
-        await Swal.fire({
-          title: 'Bienvenido Admin!',
-          text: 'Has iniciado sesión como administrador.',
-          icon: 'success',
-          timer: 2000,
-          showConfirmButton: false
-        });
-
-        navigate('/');
-        return fakeAdminUser;
-      }
-
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
@@ -112,11 +87,7 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const register = async (email, password, role = 'user') => {
-    if (email === 'admin@gmail.com') {
-      throw new Error('Este correo está reservado para uso interno.');
-    }
-
+  const register = async (email, password, username) => { 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -124,13 +95,14 @@ export function AuthProvider({ children }) {
       const userDocRef = doc(db, `users/${user.uid}`);
       await setDoc(userDocRef, {
         email: user.email,
-        role,
+        username: username, 
+        role: 'user', 
         createdAt: new Date().toISOString()
       }, { merge: true });
 
       await Swal.fire({
         title: 'Registro Exitoso!',
-        text: `Bienvenido, ${user.email}.`,
+        text: `Bienvenido, ${username}.`, 
         icon: 'success',
         timer: 2000,
         showConfirmButton: false,
