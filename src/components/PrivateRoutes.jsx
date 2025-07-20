@@ -17,7 +17,7 @@ export default function PrivateRoutes({ adminOnly = false }) {
 
   if (!currentUser) {
     // Si no hay usuario, redirigir a la página de login
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/Login" replace />;
   }
 
   if (adminOnly && !isAdmin) {

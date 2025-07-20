@@ -1,35 +1,41 @@
-// src/components/LoginPage.jsx
-import Login from './Login';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
+import './css/App.css';
+import './css/index.css';
+import './css/footer.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import { Routes, Route } from 'react-router-dom';
+import Main from './components/Main';
+import ProductosGrid from './components/ProductosGrid';
+import Carrito from './components/Carrito';
+import ReservaMesa from './components/ReservaMesa';
+import Login from './components/Login';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { CarritoProvider } from "./context/CarritoProvider";
+import { AuthProvider } from "./context/AuthContext"; // ← Importar AuthProvider
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export default function LoginPage() {
-  const navigate = useNavigate();
-  const { user } = useAuth();
-
-  // Si el usuario ya está logueado, redirigir al inicio
-  useEffect(() => {
-    if (user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
-
-  const handleLoginSuccess = () => {
-    // Redirigir al inicio después del login exitoso
-    navigate('/');
-  };
-
+function App() {
   return (
-    <div style={{
-      minHeight: '100vh',
-      backgroundColor: '#081b29',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: '20px'
-    }}>
-      <Login onClose={handleLoginSuccess} />
-    </div>
+    <AuthProvider>
+      <CarritoProvider>
+        <ToastContainer />
+        <Header />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Main />
+              <ProductosGrid />
+            </>
+          } />
+          <Route path="/reservas" element={<ReservaMesa />} />
+          <Route path="/carrito" element={<Carrito />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+        <Footer />
+      </CarritoProvider>
+    </AuthProvider>
   );
 }
+
+export default App;
