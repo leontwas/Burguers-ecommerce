@@ -12,12 +12,10 @@ import ReservaMesa from './components/ReservaMesa';
 import Login from './components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { CarritoProvider } from "./context/CarritoProvider";
-import { AuthProvider } from "./context/AuthProvider"; // ← Importar AuthProvider
+import { AuthProvider } from "./context/AuthProvider"; 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-// ⭐ IMPORTA TU COMPONENTE ProductCRUDForm ⭐
-import ProductCRUDForm from './components/ProductCRUDForm'; // Asegúrate de que la ruta sea correcta
+import ProductCRUDForm from './components/ProductCRUDForm'; 
 
 function App() {
   return (
@@ -35,8 +33,6 @@ function App() {
           <Route path="/reservas" element={<ReservaMesa />} />
           <Route path="/carrito" element={<Carrito />} />
           <Route path="/login" element={<Login />} />
-
-          {/* ⭐ AÑADE ESTA RUTA PARA EL COMPONENTE CRUD ⭐ */}
           <Route path="/crud-productos" element={<ProductCRUDForm />} />
         </Routes>
         <Footer />
