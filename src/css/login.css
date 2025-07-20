@@ -13,36 +13,38 @@ body {
   background-color: #081b29;
   display: grid;
   place-items: center;
-  padding: 20px; 
+  padding: 20px;
 }
 
 .wrapper {
   position: relative;
-  width: 90vw; 
-  max-width: 750px; 
-  height: 70vh; 
-  max-height: 450px; 
-
+  width: 90vw;
+  max-width: 750px;
+  height: 70vh;
+  max-height: 450px;
   background: transparent;
   border: 2px solid #0ef;
   box-shadow: 0 0 25px #0ef;
   overflow: hidden;
-  display: flex;
+  display: flex; /* Asegura flexbox para el layout horizontal */
   justify-content: center;
   align-items: center;
-  min-width: 280px; 
-  min-height: 380px; 
+  min-width: 280px;
+  min-height: 380px;
 }
 
-
-.wrapper .form-box {
-  position: absolute;
+/* Contenedores de formularios e información */
+.wrapper .form-box,
+.wrapper .info-text {
+  position: absolute; /* Por defecto para el layout de escritorio */
   top: 0;
   width: 50%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* Añadido para transiciones suaves en cambios de tamaño */
+  transition: all 0.7s ease;
 }
 
 .wrapper .form-box.login {
@@ -55,6 +57,7 @@ body {
   padding: 0 5% 0 8%;
 }
 
+/* Animaciones de entrada/salida para el modo de escritorio */
 .wrapper .form-box.login .animation,
 .wrapper .form-box.register .animation {
   transform: translateX(0);
@@ -86,7 +89,7 @@ body {
 }
 
 .form-box h2 {
-  font-size: clamp(24px, 4vw, 32px); 
+  font-size: clamp(24px, 4vw, 32px);
   color: #fff;
   text-align: center;
 }
@@ -94,8 +97,8 @@ body {
 .form-box .input-box {
   position: relative;
   width: 100%;
-  height: clamp(40px, 7vh, 50px); 
-  margin: clamp(15px, 3.5vh, 25px) 0; 
+  height: clamp(40px, 7vh, 50px);
+  margin: clamp(15px, 3.5vh, 25px) 0;
 }
 
 .input-box input {
@@ -105,8 +108,8 @@ body {
   border: none;
   outline: none;
   border-bottom: 2px solid #fff;
-  padding-right: clamp(15px, 3vw, 23px); 
-  font-size: clamp(14px, 2.5vw, 16px); 
+  padding-right: clamp(15px, 3vw, 23px);
+  font-size: clamp(14px, 2.5vw, 16px);
   color: #fff;
   font-weight: 500;
   transition: 0.5s;
@@ -122,7 +125,7 @@ body {
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-  font-size: clamp(14px, 2.5vw, 16px); 
+  font-size: clamp(14px, 2.5vw, 16px);
   color: #fff;
   pointer-events: none;
   transition: 0.5s;
@@ -139,7 +142,7 @@ body {
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  font-size: clamp(16px, 3vw, 18px); 
+  font-size: clamp(16px, 3vw, 18px);
   color: #fff;
   transition: 0.5s;
 }
@@ -152,7 +155,7 @@ body {
 .btn {
   position: relative;
   width: 100%;
-  height: clamp(40px, 6vh, 45px); 
+  height: clamp(40px, 6vh, 45px);
   background: transparent;
   border: 2px solid #0ef;
   outline: none;
@@ -182,10 +185,10 @@ body {
 }
 
 .form-box .logreg-link {
-  font-size: clamp(12px, 2vw, 14.5px); 
+  font-size: clamp(12px, 2vw, 14.5px);
   color: #fff;
   text-align: center;
-  margin: clamp(15px, 3vh, 20px) 0 clamp(5px, 1.5vh, 10px); 
+  margin: clamp(15px, 3vh, 20px) 0 clamp(5px, 1.5vh, 10px);
 }
 
 .logreg-link p a {
@@ -198,6 +201,7 @@ body {
   text-decoration: underline;
 }
 
+/* Estilos para los textos informativos */
 .wrapper .info-text {
   position: absolute;
   top: 0;
@@ -211,16 +215,17 @@ body {
 .wrapper .info-text.login {
   right: 0;
   text-align: right;
-  padding: 0 5% 60px 15%; 
+  padding: 0 5% 60px 15%;
 }
 
 .wrapper .info-text.register {
   left: 0;
   text-align: left;
   padding: 0 15% 60px 5%;
-  pointer-events: none;
+  pointer-events: none; /* Asegura que no interfiera con el clic en el botón de registro */
 }
 
+/* Animaciones de entrada/salida para el modo de escritorio */
 .wrapper .info-text.login .animation,
 .wrapper .info-text.register .animation {
   transform: translateX(0);
@@ -252,23 +257,24 @@ body {
 }
 
 .info-text h2 {
-  font-size: clamp(28px, 5vw, 36px); 
+  font-size: clamp(28px, 5vw, 36px);
   color: #fff;
   line-height: 1.3;
   text-transform: uppercase;
 }
 
 .info-text p {
-  font-size: clamp(14px, 2.5vw, 16px); 
+  font-size: clamp(14px, 2.5vw, 16px);
   color: #fff;
 }
 
+/* Background animado */
 .wrapper .bg-animate {
   position: absolute;
   top: -4px;
   right: 0;
-  width: 120%; 
-  height: 130%; 
+  width: 120%;
+  height: 130%;
   background: linear-gradient(45deg, #081b29, #0ef);
   border-bottom: 3px solid #0ef;
   transform: rotate(10deg) skewY(40deg);
@@ -285,9 +291,9 @@ body {
 .wrapper .bg-animate2 {
   position: absolute;
   top: 100%;
-  left: 30%; 
-  width: 120%; 
-  height: 150%; 
+  left: 30%;
+  width: 120%;
+  height: 150%;
   background: #081b29;
   border-bottom: 3px solid #0ef;
   transform: rotate(0) skewY(0);
@@ -301,103 +307,127 @@ body {
   transition-delay: 1.2s;
 }
 
+/*
+  Media Queries para hacer el layout responsivo
+  -------------------------------------------
+*/
+
 @media (max-width: 768px) {
   body {
-    padding: 10px; 
+    padding: 10px;
   }
 
   .wrapper {
-    flex-direction: column;
-    width: 95vw; 
-    max-width: 450px; 
-    height: auto; 
-    min-height: 600px; 
+    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+    width: 95vw;
+    max-width: 450px; /* Ancho máximo en móvil */
+    height: auto; /* Altura automática para que el contenido determine la altura */
+    min-height: 600px; /* Altura mínima para asegurar espacio */
+    padding: 20px; /* Añade padding al wrapper para evitar que el contenido toque los bordes */
   }
 
+  /* Los elementos ya no son absolutos, ocupan el flujo normal */
   .wrapper .form-box,
   .wrapper .info-text {
-    position: relative; 
-    width: 100%; 
-    height: auto; 
-    padding: 20px; 
+    position: relative; /* Cambia a relativo */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    height: auto; /* Altura automática */
+    padding: 20px 0; /* Ajusta el padding para un layout vertical */
     text-align: center;
   }
 
+  /* Elimina el posicionamiento absoluto y ajusta paddings para móvil */
   .wrapper .form-box.login,
   .wrapper .form-box.register,
   .wrapper .info-text.login,
   .wrapper .info-text.register {
-    left: 0; 
-    right: 0; 
-    padding: 20px; 
+    left: auto; /* Elimina la posición left */
+    right: auto; /* Elimina la posición right */
+    padding: 20px; /* Padding uniforme */
+    width: 100%; /* Asegura que ocupen todo el ancho */
   }
 
-  .wrapper .info-text.login { order: 1; }
-  .wrapper .form-box.login { order: 2; }
-  .wrapper .info-text.register { order: 3; }
-  .wrapper .form-box.register { order: 4; }
+  /* Ordena los elementos para que se muestren correctamente */
+  .wrapper .info-text.login {
+    order: 1; /* El texto de login aparece primero */
+  }
+  .wrapper .form-box.login {
+    order: 2; /* El formulario de login aparece segundo */
+  }
+  .wrapper .info-text.register {
+    order: 3; /* El texto de registro aparece tercero */
+  }
+  .wrapper .form-box.register {
+    order: 4; /* El formulario de registro aparece cuarto */
+  }
 
+  /*
+    Ajustes de visibilidad y transformación para el modo móvil.
+    Ahora, en lugar de translateX, usamos translateY.
+    Cuando un formulario está activo, el otro se oculta.
+  */
 
+  /* Esconde los form-box y info-text por defecto y controla la visibilidad con 'active' */
+  .wrapper .form-box,
+  .wrapper .info-text {
+    /* Ocultar por defecto para que solo se vea el que está activo */
+    display: none;
+  }
+
+  /* Mostrar los elementos activos en el wrapper.active */
+  .wrapper.active .form-box.register,
+  .wrapper.active .info-text.register,
+  .wrapper:not(.active) .form-box.login, /* Login activo por defecto */
+  .wrapper:not(.active) .info-text.login {
+    display: flex; /* Mostrar el elemento cuando es el activo */
+  }
+
+  /* Las animaciones en móvil serán un simple fade-in/fade-out o scaling */
   .wrapper .form-box.login .animation,
-  .wrapper .form-box.register .animation {
-    transform: translateY(0); 
-  }
-
-  .wrapper.active .form-box.login .animation {
-    transform: translateY(-100%); 
-    opacity: 0;
-    filter: blur(10px);
-  }
-
-  .wrapper .form-box.register .animation {
-    transform: translateY(100%); 
-    opacity: 0;
-    filter: blur(10px);
-  }
-
-  .wrapper.active .form-box.register .animation {
-    transform: translateY(0); 
-    opacity: 1;
-    filter: blur(0);
-  }
-
+  .wrapper .form-box.register .animation,
   .wrapper .info-text.login .animation,
   .wrapper .info-text.register .animation {
-    transform: translateY(0);
-  }
-
-  .wrapper.active .info-text.login .animation {
-    transform: translateY(100%); 
-    opacity: 0;
-    filter: blur(10px);
-  }
-
-  .wrapper .info-text.register .animation {
-    transform: translateY(-100%);
-    opacity: 0;
-    filter: blur(10px);
-  }
-
-  .wrapper.active .info-text.register .animation {
-    transform: translateY(0); 
-    opacity: 1;
+    transform: none; /* Elimina las transformaciones iniciales */
+    opacity: 1; /* Visibles */
     filter: blur(0);
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Transición más simple */
   }
 
+  /* Al cambiar, los que desaparecen se desvanecen */
+  .wrapper.active .form-box.login,
+  .wrapper.active .info-text.login,
+  .wrapper:not(.active) .form-box.register,
+  .wrapper:not(.active) .info-text.register {
+    display: none; /* Oculta completamente los inactivos para evitar scrolls innecesarios */
+  }
+
+  /* Esto es crucial: asegura que solo el contenido relevante se muestre */
+  .wrapper.active .form-box.register,
+  .wrapper.active .info-text.register {
+    display: flex; /* Muestra el registro cuando está activo */
+  }
+
+  .wrapper:not(.active) .form-box.login,
+  .wrapper:not(.active) .info-text.login {
+    display: flex; /* Muestra el login cuando no está activo (es decir, el estado inicial) */
+  }
+
+  /* Elimina los backgrounds animados en móvil para simplificar */
   .wrapper .bg-animate,
   .wrapper .bg-animate2 {
     display: none;
   }
 }
 
+/* Ajustes de fuente para pantallas muy pequeñas */
 @media (max-width: 480px) {
   .wrapper {
-    min-height: 550px; 
+    min-height: 550px;
     padding: 10px;
   }
 
   .form-box h2 {
-    font-size: 22px; 
+    font-size: 22px;
   }
 
   .input-box input,
@@ -406,10 +436,10 @@ body {
   .btn,
   .form-box .logreg-link,
   .info-text p {
-    font-size: 13px; 
+    font-size: 13px;
   }
 
   .info-text h2 {
-    font-size: 24px; 
+    font-size: 24px;
   }
 }
