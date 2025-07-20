@@ -59,7 +59,11 @@ function Header() {
                 ) : currentUser ? (
                   <>
                     {isAdmin && (
-                      <NavLink to="/admin" className={({ isActive }) => `nav-link admin-nav-link ${isActive ? 'active-link' : ''}`} onClick={handleCloseOffcanvas}>
+                      <NavLink
+                        to="/crud-productos"
+                        className={({ isActive }) => `nav-link admin-nav-link ${isActive ? 'active-link' : ''}`}
+                        onClick={handleCloseOffcanvas}
+                      >
                         🛠️ CRUD
                       </NavLink>
                     )}
