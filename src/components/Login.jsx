@@ -1,16 +1,14 @@
 // src/components/Login.jsx
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import '../css/login.css'; // Tus estilos CSS se mantienen intactos
-import { db } from '../firebase/config'; // Importa la instancia de db para Firestore
-import { doc, setDoc } from 'firebase/firestore'; // Importa doc y setDoc para guardar el rol del usuario
-import { useAuth } from '../context/AuthContext'; // Importa el hook useAuth
-import PropTypes from 'prop-types'; // Importa PropTypes
-
-// El componente Login ahora recibe la prop 'onClose'
+import '../css/login.css'; 
+import { db } from '../firebase/config'; 
+import { doc, setDoc } from 'firebase/firestore'; 
+import { useAuth } from '../context/AuthContext'; 
+import PropTypes from 'prop-types'; 
 export default function Login({ onClose }) {
-  const [active, setActive] = useState(false); // false = login, true = register
-  const { login: authLogin, register: authRegister } = useAuth(); // Obtiene las funciones login y register del contexto
+  const [active, setActive] = useState(false); 
+  const { login: authLogin, register: authRegister } = useAuth(); 
 
   // Estados para el formulario de login
   const [loginData, setLoginData] = useState({
@@ -52,7 +50,7 @@ export default function Login({ onClose }) {
 
       console.log('Usuario autenticado y redirigido.');
       setLoginData({ email: '', password: '' }); // Limpiar formulario
-      if (onClose) { // Si se proporcionó una función onClose, llámala para cerrar el modal
+      if (onClose) { 
         onClose();
       }
     } catch (error) {
@@ -282,7 +280,6 @@ export default function Login({ onClose }) {
   );
 }
 
-// Definición de PropTypes para validar la prop onClose
 Login.propTypes = {
-  onClose: PropTypes.func, // onClose es una función y es opcional
+  onClose: PropTypes.func, 
 };

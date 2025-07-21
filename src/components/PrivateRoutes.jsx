@@ -1,13 +1,12 @@
 // src/components/PrivateRoutes.jsx
 import { Navigate, Outlet } from 'react-router-dom';
-import PropTypes from 'prop-types'; // Importa PropTypes
-import { useAuth } from '../context/AuthProvider'; // Asegúrate de que la ruta sea correcta
+import PropTypes from 'prop-types'; 
+import { useAuth } from '../context/AuthProvider'; 
 
 export default function PrivateRoutes({ adminOnly = false }) {
   const { currentUser, isAdmin, loading } = useAuth();
 
   if (loading) {
-    // Puedes reemplazar esto con un spinner de carga real
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: 'white', fontSize: '1.5em' }}>
         Cargando...
@@ -22,7 +21,6 @@ export default function PrivateRoutes({ adminOnly = false }) {
 
   if (adminOnly && !isAdmin) {
     // Si la ruta es solo para admin y el usuario no es admin, redirigir a una página de no autorizado o al inicio
-    // Puedes crear una página "/unauthorized" o simplemente redirigir a "/"
     return <Navigate to="/" replace />;
   }
 
@@ -30,7 +28,6 @@ export default function PrivateRoutes({ adminOnly = false }) {
   return <Outlet />;
 }
 
-// Añade la validación de props para 'adminOnly'
 PrivateRoutes.propTypes = {
   adminOnly: PropTypes.bool,
 };

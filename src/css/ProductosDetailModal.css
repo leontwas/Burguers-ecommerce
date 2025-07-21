@@ -1,16 +1,15 @@
 /* ProductDetailModal.css */
-
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Dark semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.7); 
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it's on top of other content */
+  z-index: 1000; 
 }
 
 .product-detail-card {
@@ -21,7 +20,7 @@
   text-align: center;
   max-width: 500px;
   width: 90%;
-  position: relative; /* For potential close button positioning */
+  position: relative; 
 }
 
 .detail-img {
@@ -46,14 +45,14 @@
 
 .detail-picante {
   font-size: 1.2em;
-  color: #e44d26; /* A red/orange for fire */
+  color: #e44d26; 
   margin-bottom: 10px;
   font-weight: bold;
 }
 
 .detail-precio {
   font-size: 1.5em;
-  color: #28a745; /* Green for price */
+  color: #28a745; 
   font-weight: bold;
   margin-bottom: 20px;
 }
@@ -61,69 +60,64 @@
 .detail-actions {
   display: flex;
   justify-content: space-around;
-  gap: 15px; /* Space between buttons */
+  gap: 15px; 
 }
-
-/* Estilos para los botones dentro de detail-actions */
-/* Asumiendo que tus botones son el componente <Boton> y tienen estilos base */
-/* Si no tienen clases específicas, puedes usar selectores más genéricos o añadir clases */
 
 /* Estilos base para los botones (si no los tienes ya en Boton.jsx o un CSS global) */
 .detail-actions button {
   padding: 12px 25px;
   border: none;
-  border-radius: 8px; /* Bordes más redondeados */
+  border-radius: 8px; 
   cursor: pointer;
   font-size: 1.1em;
   font-weight: bold;
-  transition: all 0.3s ease; /* Transición suave para todos los efectos */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra inicial */
-  text-transform: uppercase; /* Texto en mayúsculas */
-  letter-spacing: 0.5px; /* Espaciado entre letras */
+  transition: all 0.3s ease; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
+  text-transform: uppercase; 
+  letter-spacing: 0.5px; 
 }
 
 /* Estilos específicos para el botón "Agregar al Carrito" (color: #28a745) */
 .detail-actions button[style*="background-color: rgb(40, 167, 69)"],
 .detail-actions button[style*="background-color: #28a745"] {
-  background-color: #28a745; /* Verde */
+  background-color: #28a745; 
   color: white;
 }
 
 .detail-actions button[style*="background-color: rgb(40, 167, 69)"]:hover,
 .detail-actions button[style*="background-color: #28a745"]:hover {
-  background-color: #218838; /* Verde más oscuro al pasar el mouse */
-  transform: translateY(-3px); /* Efecto de "levantar" */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
+  background-color: #218838; 
+  transform: translateY(-3px); 
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); 
 }
 
 .detail-actions button[style*="background-color: rgb(40, 167, 69)"]:active,
 .detail-actions button[style*="background-color: #28a745"]:active {
-  transform: translateY(0); /* Vuelve a la posición original al hacer click */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra más pequeña al hacer click */
+  transform: translateY(0); 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
 
 /* Estilos específicos para el botón "Volver atrás" (color: #007bff) */
 .detail-actions button[style*="background-color: rgb(0, 123, 255)"],
 .detail-actions button[style*="background-color: #007bff"] {
-  background-color: #007bff; /* Azul */
+  background-color: #007bff; 
   color: white;
 }
 
 .detail-actions button[style*="background-color: rgb(0, 123, 255)"]:hover,
 .detail-actions button[style*="background-color: #007bff"]:hover {
-  background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
-  transform: translateY(-3px); /* Efecto de "levantar" */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
+  background-color: #0056b3; 
+  transform: translateY(-3px); 
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); 
 }
 
 .detail-actions button[style*="background-color: rgb(0, 123, 255)"]:active,
 .detail-actions button[style*="background-color: #007bff"]:active {
-  transform: translateY(0); /* Vuelve a la posición original al hacer click */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra más pequeña al hacer click */
+  transform: translateY(0); 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
-/* SweetAlert2 custom styles (mantener si los tienes) */
 .swal2-popup {
   border-radius: 10px !important;
   box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;

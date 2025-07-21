@@ -66,8 +66,8 @@ Tarjeta.propTypes = {
   producto: PropTypes.shape({
     imagen: PropTypes.string.isRequired,
     nombre: PropTypes.string.isRequired,
-    descripcion: PropTypes.string.isRequired, // Added description to propTypes
-    nivel_picante: PropTypes.number.isRequired, // Added nivel_picante to propTypes
+    descripcion: PropTypes.string.isRequired, 
+    nivel_picante: PropTypes.number.isRequired, 
     precio: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   }).isRequired,
 };

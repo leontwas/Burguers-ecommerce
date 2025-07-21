@@ -1,4 +1,4 @@
-// src/context/AuthProvider.jsx
+// src/context/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
@@ -42,14 +42,15 @@ export function AuthProvider({ children }) {
             setIsAdmin(userData.role === 'admin');
             setCurrentUsername(userData.username || user.email);
           } else {
+            // ⭐ CORRECCIÓN: Usar user.email como fallback para username inicial
             await setDoc(userDocRef, {
               email: user.email,
               role: 'user',
               createdAt: new Date().toISOString(),
-              username: user.displayName || user.email 
+              username: user.email // Si no hay un username definido al crear en Firebase Auth, usamos el email
             }, { merge: true });
             setIsAdmin(false);
-            setCurrentUsername(user.displayName || user.email);
+            setCurrentUsername(user.email); // Setear el username predeterminado
           }
         } catch (error) {
           console.error("Error al obtener o crear datos del usuario en Firestore:", error);
@@ -71,12 +72,19 @@ export function AuthProvider({ children }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // ⭐ MEJORA: Obtener el username de Firestore para el mensaje de bienvenida
+      const userDocRef = doc(db, `users/${user.uid}`);
+      const userDocSnap = await getDoc(userDocRef);
+      const userData = userDocSnap.exists() ? userDocSnap.data() : {}; // Obtener datos del usuario, o un objeto vacío si no existe
+
       await Swal.fire({
-        title: 'Inicio de sesión exitoso',
-        text: `Bienvenido, ${user.email}`,
+        title: '¡Inicio de Sesión Exitoso!',
+        text: `Bienvenido de nuevo, ${userData.username || user.email}.`, // Usar el username de Firestore o el email
         icon: 'success',
         timer: 2000,
-        showConfirmButton: false
+        timerProgressBar: true, // ⭐ Consistencia: Añadido aquí
+        showConfirmButton: false,
+        position: 'center' // ⭐ Consistencia: Añadido aquí
       });
 
       navigate('/');
@@ -87,7 +95,7 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const register = async (email, password, username) => { 
+  const register = async (email, password, username) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -95,18 +103,19 @@ export function AuthProvider({ children }) {
       const userDocRef = doc(db, `users/${user.uid}`);
       await setDoc(userDocRef, {
         email: user.email,
-        username: username, 
-        role: 'user', 
+        username: username,
+        role: 'user', // Asumiendo 'user' como rol por defecto en el registro
         createdAt: new Date().toISOString()
       }, { merge: true });
 
       await Swal.fire({
-        title: 'Registro Exitoso!',
-        text: `Bienvenido, ${username}.`, 
+        title: '¡Registro Exitoso!',
+        text: `Bienvenido, ${username || user.email}.`, // Usar el username proporcionado o el email
         icon: 'success',
         timer: 2000,
+        timerProgressBar: true, // ⭐ Consistencia: Añadido aquí
         showConfirmButton: false,
-        position: 'center'
+        position: 'center' // ⭐ Consistencia: Añadido aquí
       });
 
       navigate('/');
