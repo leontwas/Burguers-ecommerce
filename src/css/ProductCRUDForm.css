@@ -32,6 +32,10 @@
   .titulo-crud h2 {
     font-size: 1.8rem;
   }
+  
+  .contenedor {
+    margin-top: 20px;
+  }
 
   .custom-form-container {
     padding: 20px; 

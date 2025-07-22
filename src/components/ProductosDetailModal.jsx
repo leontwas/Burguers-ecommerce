@@ -4,6 +4,7 @@ import Boton from './Boton';
 import '../css/ProductosDetailModal.css';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'; // ✅ Importa SweetAlert2
+import { GiShoppingCart } from 'react-icons/gi';
 
 const API_BASE = 'https://mi-api-burger.onrender.com';
 
@@ -55,7 +56,7 @@ function ProductDetailModal({ producto, onClose, onAddToCart }) {
           {/* ✅ Usa la nueva función handleAddToCartAndNotify */}
           <Boton texto="Volver" color="#007bff" onClick={onClose} />
           <Boton texto="Agregar" color="#28a745" onClick={handleAddToCartAndNotify} />
-          <Boton texto="Ir al Carrito" color="#6c757d" onClick={handleGoToCart} />
+          <Boton texto={<GiShoppingCart size={30} style={{ marginTop: '2px' }} />} color="#6c757d" onClick={handleGoToCart} />
         </div>
       </div>
     </div>
