@@ -1,4 +1,4 @@
-/* login.css */
+/* src/css/login.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
 * {
@@ -8,9 +8,40 @@
   font-family: 'Poppins', sans-serif;
 }
 
+/* ⭐ ESTOS SON LOS ESTILOS PARA EL OVERLAY Y EL BOTÓN DE CERRAR ⭐ */
+/* Asegúrate de que estén aquí o en un CSS importado antes que login.css si los quieres separados */
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(8, 27, 41, 1); /* Tu color original, opacidad 1 para cubrir todo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.cerrar-login {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 24px;
+  color: white;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10000;
+}
+/* FIN DE ESTILOS DE MODAL ESPECÍFICOS */
+
+
+/* Tu CSS original para el body - Considera si realmente quieres que afecte el body global de tu React app */
 body {
   min-height: 100vh;
-  background-color: #081b29;
+  background-color: #081b29; /* Cuidado: esto cambiará el fondo de todo el <body> */
   display: grid;
   place-items: center;
   padding: 20px;
@@ -18,46 +49,38 @@ body {
 
 .wrapper {
   position: relative;
-  width: 90vw;
-  max-width: 750px;
-  height: 70vh;
-  max-height: 450px;
+  width: 750px;
+  height: 450px;
   background: transparent;
   border: 2px solid #0ef;
   box-shadow: 0 0 25px #0ef;
   overflow: hidden;
-  display: flex; /* Asegura flexbox para el layout horizontal */
+  display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 280px;
-  min-height: 380px;
 }
 
-/* Contenedores de formularios e información */
-.wrapper .form-box,
-.wrapper .info-text {
-  position: absolute; /* Por defecto para el layout de escritorio */
+/* === FORMULARIOS === */
+.wrapper .form-box {
+  position: absolute;
   top: 0;
   width: 50%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* Añadido para transiciones suaves en cambios de tamaño */
-  transition: all 0.7s ease;
 }
 
 .wrapper .form-box.login {
   left: 0;
-  padding: 0 8% 0 5%;
+  padding: 0 60px 0 40px;
 }
 
 .wrapper .form-box.register {
   right: 0;
-  padding: 0 5% 0 8%;
+  padding: 0 40px 0 60px;
 }
 
-/* Animaciones de entrada/salida para el modo de escritorio */
 .wrapper .form-box.login .animation,
 .wrapper .form-box.register .animation {
   transform: translateX(0);
@@ -89,7 +112,7 @@ body {
 }
 
 .form-box h2 {
-  font-size: clamp(24px, 4vw, 32px);
+  font-size: 32px;
   color: #fff;
   text-align: center;
 }
@@ -97,8 +120,8 @@ body {
 .form-box .input-box {
   position: relative;
   width: 100%;
-  height: clamp(40px, 7vh, 50px);
-  margin: clamp(15px, 3.5vh, 25px) 0;
+  height: 50px;
+  margin: 25px 0;
 }
 
 .input-box input {
@@ -108,8 +131,8 @@ body {
   border: none;
   outline: none;
   border-bottom: 2px solid #fff;
-  padding-right: clamp(15px, 3vw, 23px);
-  font-size: clamp(14px, 2.5vw, 16px);
+  padding-right: 23px;
+  font-size: 16px;
   color: #fff;
   font-weight: 500;
   transition: 0.5s;
@@ -125,7 +148,7 @@ body {
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-  font-size: clamp(14px, 2.5vw, 16px);
+  font-size: 16px;
   color: #fff;
   pointer-events: none;
   transition: 0.5s;
@@ -142,7 +165,7 @@ body {
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  font-size: clamp(16px, 3vw, 18px);
+  font-size: 18px;
   color: #fff;
   transition: 0.5s;
 }
@@ -155,13 +178,13 @@ body {
 .btn {
   position: relative;
   width: 100%;
-  height: clamp(40px, 6vh, 45px);
+  height: 45px;
   background: transparent;
   border: 2px solid #0ef;
   outline: none;
   border-radius: 40px;
   cursor: pointer;
-  font-size: clamp(14px, 2.5vw, 16px);
+  font-size: 16px;
   color: #fff;
   font-weight: 600;
   z-index: 1;
@@ -185,10 +208,10 @@ body {
 }
 
 .form-box .logreg-link {
-  font-size: clamp(12px, 2vw, 14.5px);
+  font-size: 14.5px;
   color: #fff;
   text-align: center;
-  margin: clamp(15px, 3vh, 20px) 0 clamp(5px, 1.5vh, 10px);
+  margin: 20px 0 10px;
 }
 
 .logreg-link p a {
@@ -201,7 +224,7 @@ body {
   text-decoration: underline;
 }
 
-/* Estilos para los textos informativos */
+/* === TEXTOS INFORMATIVOS === */
 .wrapper .info-text {
   position: absolute;
   top: 0;
@@ -215,17 +238,16 @@ body {
 .wrapper .info-text.login {
   right: 0;
   text-align: right;
-  padding: 0 5% 60px 15%;
+  padding: 0 40px 60px 120px;
 }
 
 .wrapper .info-text.register {
   left: 0;
   text-align: left;
-  padding: 0 15% 60px 5%;
-  pointer-events: none; /* Asegura que no interfiera con el clic en el botón de registro */
+  padding: 0 120px 60px 40px;
+  pointer-events: none;
 }
 
-/* Animaciones de entrada/salida para el modo de escritorio */
 .wrapper .info-text.login .animation,
 .wrapper .info-text.register .animation {
   transform: translateX(0);
@@ -257,24 +279,24 @@ body {
 }
 
 .info-text h2 {
-  font-size: clamp(28px, 5vw, 36px);
+  font-size: 36px;
   color: #fff;
   line-height: 1.3;
   text-transform: uppercase;
 }
 
 .info-text p {
-  font-size: clamp(14px, 2.5vw, 16px);
+  font-size: 16px;
   color: #fff;
 }
 
-/* Background animado */
+/* === FONDOS ANIMADOS === */
 .wrapper .bg-animate {
   position: absolute;
   top: -4px;
   right: 0;
-  width: 120%;
-  height: 130%;
+  width: 850px;
+  height: 600px;
   background: linear-gradient(45deg, #081b29, #0ef);
   border-bottom: 3px solid #0ef;
   transform: rotate(10deg) skewY(40deg);
@@ -291,9 +313,9 @@ body {
 .wrapper .bg-animate2 {
   position: absolute;
   top: 100%;
-  left: 30%;
-  width: 120%;
-  height: 150%;
+  left: 250px;
+  width: 850px;
+  height: 700px;
   background: #081b29;
   border-bottom: 3px solid #0ef;
   transform: rotate(0) skewY(0);
@@ -306,11 +328,6 @@ body {
   transform: rotate(-11deg) skewY(-41deg);
   transition-delay: 1.2s;
 }
-
-/*
-  Media Queries para hacer el layout responsivo
-  -------------------------------------------
-*/
 
 @media (max-width: 768px) {
   body {

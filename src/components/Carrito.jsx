@@ -1,10 +1,12 @@
 // src/components/Carrito.jsx
 import { useContext } from 'react';
 import Swal from 'sweetalert2';
-import CarritoContext from "../context/CarritoContext";
+import { CarritoContext } from '../context/CarritoContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthProvider';
-import { useLoginModal } from '../context/LoginModalContext';
+// ❌ ¡ERROR! import { useLoginModal } from '../context/LoginModalContext';
+// ✅ CORRECCIÓN: Importa useLoginModal desde el archivo del proveedor
+import { useLoginModal } from '../context/LoginModalProvider';
 import "../css/carrito.css";
 
 const API_BASE = 'https://mi-api-burger.onrender.com';
@@ -12,7 +14,8 @@ const API_BASE = 'https://mi-api-burger.onrender.com';
 function Carrito() {
   const { carrito, aumentarCantidad, disminuirCantidad, vaciarCarrito } = useContext(CarritoContext);
   const { currentUser } = useAuth();
-  const { setShowLogin } = useLoginModal(); // ✅ Correctamente llamado
+  // Asumiendo que useLoginModal expone openLogin y closeLogin, es mejor usar esas funciones.
+  const { openLogin } = useLoginModal();
   const navigate = useNavigate();
   const total = carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0);
 
@@ -25,7 +28,7 @@ function Carrito() {
         confirmButtonText: 'Ir al login',
         confirmButtonColor: '#3085d6',
       }).then(() => {
-        setShowLogin(true); // ✅ Abre el modal de login
+        openLogin(); // ✅ Usa openLogin() para abrir el modal
       });
       return;
     }
@@ -49,7 +52,7 @@ function Carrito() {
           confirmButtonText: 'Aceptar'
         }).then(() => {
           vaciarCarrito();
-          navigate('/'); // ✅ Redirige al home
+          navigate('/');
         });
       }
     });

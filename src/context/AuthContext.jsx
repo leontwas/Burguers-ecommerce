@@ -1,5 +1,5 @@
 // src/context/AuthContext.jsx
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
@@ -22,16 +22,17 @@ export const useAuth = () => {
   return context;
 };
 
-
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [currentUsername, setCurrentUsername] = useState(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  const [loggedInSuccessfully, setLoggedInSuccessfully] = useState(false);
+  const loginHandledRef = useRef(false);
 
   useEffect(() => {
-
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
       if (user) {
@@ -43,50 +44,80 @@ export function AuthProvider({ children }) {
             const userData = userDocSnap.data();
             setIsAdmin(userData.role === 'admin');
             setCurrentUsername(userData.username || user.email);
-          } else {
 
+            if (userData.role === 'admin') {
+              const idToken = await user.getIdToken();
+              localStorage.setItem('adminToken', idToken);
+              console.log("ID Token de admin guardado:", idToken);
+            } else {
+              localStorage.removeItem('adminToken');
+            }
+
+            if (loggedInSuccessfully && !loginHandledRef.current) {
+              await Swal.fire({
+                title: '¡Inicio de Sesión Exitoso!',
+                text: `Bienvenido de nuevo, ${userData.username || user.email}.`,
+                icon: 'success',
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                position: 'center'
+              });
+              navigate('/');
+              setLoggedInSuccessfully(false);
+              loginHandledRef.current = true;
+            }
+
+          } else {
             await setDoc(userDocRef, {
               email: user.email,
               role: 'user',
               createdAt: new Date().toISOString(),
-              username: user.email 
+              username: user.email
             }, { merge: true });
             setIsAdmin(false);
             setCurrentUsername(user.email);
+            localStorage.removeItem('adminToken');
+
+            if (loggedInSuccessfully && !loginHandledRef.current) {
+              await Swal.fire({
+                title: '¡Registro Exitoso!',
+                text: `Bienvenido, ${user.email}.`,
+                icon: 'success',
+                timer: 2000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+                position: 'center'
+              });
+              navigate('/');
+              setLoggedInSuccessfully(false);
+              loginHandledRef.current = true;
+            }
           }
         } catch (error) {
           console.error("Error al obtener datos del usuario desde Firestore:", error);
           setIsAdmin(false);
           setCurrentUsername(null);
+          localStorage.removeItem('adminToken');
         }
       } else {
         setIsAdmin(false);
         setCurrentUsername(null);
+        localStorage.removeItem('adminToken');
+        loginHandledRef.current = false;
       }
       setLoading(false);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [loggedInSuccessfully, navigate]);
 
   const login = async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      await Swal.fire({ 
-        title: '¡Inicio de Sesión Exitoso!',
-        text: `Bienvenido de nuevo, ${currentUsername || user.email}.`, 
-        icon: 'success',
-        timer: 2000,
-        timerProgressBar: true,
-        showConfirmButton: false,
-        position: 'center'
-      });
-
-      navigate('/'); 
-
-      return user;
+      setLoggedInSuccessfully(true);
+      loginHandledRef.current = false;
+      return userCredential.user;
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
       throw error;
@@ -105,17 +136,22 @@ export function AuthProvider({ children }) {
         createdAt: new Date().toISOString()
       }, { merge: true });
 
+      if (role === 'admin') {
+        const idToken = await user.getIdToken();
+        localStorage.setItem('adminToken', idToken);
+        console.log("ID Token de admin guardado en registro:", idToken);
+      }
 
       await Swal.fire({
-      title: '¡Registro Exitoso!',
-      text: `Bienvenido, ${user.email}.`,
-      icon: 'success',
-      timer: 2000,
-      timerProgressBar: true,
-      showConfirmButton: false,
-      position: 'center'
-       });
-       navigate('/');
+        title: '¡Registro Exitoso!',
+        text: `Bienvenido, ${user.email}.`,
+        icon: 'success',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+        position: 'center'
+      });
+      navigate('/');
 
       return user;
     } catch (error) {
@@ -127,6 +163,15 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     try {
       await signOut(auth);
+      localStorage.removeItem('adminToken');
+      Swal.fire({
+        title: 'Sesión Cerrada',
+        text: 'Has cerrado sesión correctamente.',
+        icon: 'info',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      navigate('/login');
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
       Swal.fire({
@@ -149,7 +194,8 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {/* ⭐ CORRECCIÓN CLAVE AQUÍ: Siempre renderiza los hijos */}
+      {children}
     </AuthContext.Provider>
   );
 }

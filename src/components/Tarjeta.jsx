@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import Boton from './Boton';
 import '../css/tarjeta.css';
-import CarritoContext from "../context/CarritoContext";
+import { CarritoContext } from '../context/CarritoContext'; 
 import ProductDetailModal from './ProductosDetailModal'; 
 
 const API_BASE = 'https://mi-api-burger.onrender.com';

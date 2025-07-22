@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
-import CarritoContext from "../context/CarritoContext";
+import { CarritoContext } from '../context/CarritoContext'; 
 
 export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
