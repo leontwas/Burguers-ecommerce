@@ -89,7 +89,7 @@ function Carrito() {
         <>
           <p><strong>Total:</strong> ${total.toFixed(2)}</p>
           <button className='vaciar' onClick={vaciarCarrito}>Vaciar</button>
-          <button className='agregar' onClick={() => navigate('/')}>Agregar Otro</button>
+          <button className='agregar' onClick={() => navigate('/')}>Agregar</button>
           <button className='confirmar' onClick={confirmarCompra}>Pagar</button>
         </>
       )}

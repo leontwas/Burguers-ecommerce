@@ -249,11 +249,15 @@
     margin-top: 20px;
   }
 
-  .vaciar, .confirmar {
+  .vaciar, .confirmar, .agregar {
     padding: 10px 20px; /* Botones de acción más pequeños */
     font-size: 1em;
     margin: 8px; /* Reduce el margen entre botones */
   }
+
+  .vaciar:active, .confirmar:active, .agregar:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
 }
 
@@ -282,9 +286,33 @@
     font-size: 0.9em;
   }
 
-  .vaciar, .confirmar {
-    padding: 8px 15px;
-    font-size: 0.9em;
-    margin: 5px;
-  }
+.vaciar,
+.confirmar,
+.agregar {
+  padding: 8px 15px;
+  font-size: 0.9em;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Hover: más elevación */
+.vaciar:hover,
+.confirmar:hover,
+.agregar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Active: como si se hundiera */
+.vaciar:active,
+.confirmar:active,
+.agregar:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+}
 }

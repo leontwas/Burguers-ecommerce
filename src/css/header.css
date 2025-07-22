@@ -104,7 +104,6 @@
 /* Admin como botón especial */
 
 .admin-nav-link {
-  background-color: #28a745;
   color: white;
   padding: 8px 15px;
   border-radius: 5px;
@@ -175,8 +174,7 @@
   }
 
   .offcanvas-body .nav-custom .admin-nav-link {
-    background-color: #28a745;
-    color: white !important;
+    color: black !important;
     font-size: 1.1em;
   }
 
@@ -187,6 +185,14 @@
   .header-bootstrap .nombre {
     font-size: 1.5em;
   }
+
+  .contador {
+  padding: 2px 7px;
+  right: 103px;
+  min-width: 18px;
+  text-align: center;
+}
+  
 }
 
 @media (max-width: 575.98px) {
@@ -212,5 +218,12 @@
     height: 1.2em !important; 
     background-size: contain !important;
   }
+
+  .contador {
+  padding: 2px 7px;
+  right: 103px;
+  min-width: 18px;
+  text-align: center;
+}
 
 }

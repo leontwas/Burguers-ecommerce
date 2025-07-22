@@ -52,20 +52,9 @@ function ReservaMesa() {
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Aquí podrías enviar la info a una API real
-    // Ejemplo con fetch si tuvieras un endpoint:
-    /*
-    await fetch('https://tu-api.com/reservas', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
-    */
-
-    // Validación de nombre y apellido (solo letras y espacios)
     const soloLetras = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/;
     if (!soloLetras.test(formData.nombre)) {
       return Swal.fire('Error', 'El nombre solo puede contener letras y espacios.', 'error');
@@ -74,28 +63,25 @@ function ReservaMesa() {
       return Swal.fire('Error', 'El apellido solo puede contener letras y espacios.', 'error');
     }
 
-    // Validación de teléfono
     const soloNumeros = /^\d+$/;
     if (!soloNumeros.test(formData.telefono) || formData.telefono.length > 15) {
       return Swal.fire('Error', 'El teléfono debe contener solo números y tener máximo 15 dígitos.', 'error');
     }
 
-    // Validación de cantidad de personas
     if (!soloNumeros.test(formData.cantidad)) {
       return Swal.fire('Error', 'La cantidad de personas debe ser un número válido.', 'error');
     }
 
-    // Validación de email
     const emailRegex = /^[\w.-]+@([\w-]+\.)+[\w-]{2,}$/;
     if (!emailRegex.test(formData.email)) {
       return Swal.fire('Error', 'El correo electrónico no es válido.', 'error');
     }
+
     const dominio = formData.email.split('@')[1];
     if (!dominiosValidos.includes(dominio)) {
       return Swal.fire('Error', `El dominio "${dominio}" no está permitido.`, 'error');
     }
 
-    // Validación de fecha
     const hoy = new Date();
     const fechaReserva = new Date(formData.fecha);
     const dosMesesAdelante = new Date();
@@ -105,20 +91,45 @@ function ReservaMesa() {
       return Swal.fire('Error', 'La fecha debe estar entre hoy y dentro de los próximos 2 meses.', 'error');
     }
 
-    // Si todo está OK:
-    Swal.fire({
-      title: '¡Reserva enviada!',
-      text: `Gracias por tu reserva, ${formData.nombre}. Nos pondremos en contacto pronto.`,
-      icon: 'success',
-      confirmButtonText: 'OK'
-    });
+    // ✅ Envío real a Formspree
+    const formSpreeData = new FormData();
+    formSpreeData.append('Nombre', formData.nombre);
+    formSpreeData.append('Apellido', formData.apellido);
+    formSpreeData.append('Teléfono', formData.telefono);
+    formSpreeData.append('Email', formData.email);
+    formSpreeData.append('Fecha de reserva', formData.fecha);
+    formSpreeData.append('Cantidad de personas', formData.cantidad);
+    formSpreeData.append('Mensaje adicional', formData.mensaje);
 
-    handleReset();
+    try {
+      const response = await fetch('https://formspree.io/f/xovlewpb', {
+        method: 'POST',
+        body: formSpreeData,
+        headers: {
+          Accept: 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          title: '¡Reserva enviada!',
+          text: `Gracias por tu reserva, ${formData.nombre}. Te responderemos a la brevedad.`,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+        handleReset();
+      } else {
+        Swal.fire('Error', 'Hubo un problema al enviar tu reserva. Intenta nuevamente más tarde.', 'error');
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire('Error', 'Error de red. Intenta más tarde.', 'error');
+    }
   };
 
   return (
     <Container className="mt-5 p-4 bg-dark text-white rounded shadow-lg">
-     <h2 className="text-center mb-4" style={{ color: '#0ef' }}>Reservá tu mesa</h2>
+      <h2 className="text-center mb-4" style={{ color: '#0ef' }}>Reservá tu mesa</h2>
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col md={6}>
