@@ -5,11 +5,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); 
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 .product-detail-card {
@@ -20,7 +20,7 @@
   text-align: center;
   max-width: 500px;
   width: 90%;
-  position: relative; 
+  position: relative;
 }
 
 .detail-img {
@@ -45,82 +45,88 @@
 
 .detail-picante {
   font-size: 1.2em;
-  color: #e44d26; 
+  color: #e44d26;
   margin-bottom: 10px;
   font-weight: bold;
 }
 
 .detail-precio {
   font-size: 1.5em;
-  color: #28a745; 
+  color: #28a745;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
+/* ✅ Botones con igual estilo y animaciones */
 .detail-actions {
   display: flex;
-  justify-content: space-around;
-  gap: 15px; 
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-/* Estilos base para los botones (si no los tienes ya en Boton.jsx o un CSS global) */
 .detail-actions button {
-  padding: 12px 25px;
-  border: none;
-  border-radius: 8px; 
-  cursor: pointer;
-  font-size: 1.1em;
+  flex: 1 1 30%;
+  padding: 12px 15px;
+  font-size: 1em;
   font-weight: bold;
-  transition: all 0.3s ease; 
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); 
-  text-transform: uppercase; 
-  letter-spacing: 0.5px; 
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Estilos específicos para el botón "Agregar al Carrito" (color: #28a745) */
-.detail-actions button[style*="background-color: rgb(40, 167, 69)"],
-.detail-actions button[style*="background-color: #28a745"] {
-  background-color: #28a745; 
+/* Hover & Active comunes */
+.detail-actions button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+}
+
+.detail-actions button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilos específicos por color (por inline-style de <Boton />) */
+.detail-actions button[style*="background-color: #28a745"],
+.detail-actions button[style*="background-color: rgb(40, 167, 69)"] {
+  background-color: #28a745;
+  color: white;
+}
+.detail-actions button[style*="background-color: #007bff"],
+.detail-actions button[style*="background-color: rgb(0, 123, 255)"] {
+  background-color: #007bff;
+  color: white;
+}
+.detail-actions button[style*="background-color: #6c757d"],
+.detail-actions button[style*="background-color: rgb(108, 117, 125)"] {
+  background-color: #6c757d;
   color: white;
 }
 
-.detail-actions button[style*="background-color: rgb(40, 167, 69)"]:hover,
-.detail-actions button[style*="background-color: #28a745"]:hover {
-  background-color: #218838; 
-  transform: translateY(-3px); 
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); 
+/* ✅ Responsive para pantallas pequeñas */
+@media (max-width: 420px) {
+  .detail-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .detail-actions button {
+    flex: 1 1 30%;
+    font-size: 0.8em;
+    padding: 10px;
+  }
 }
 
-.detail-actions button[style*="background-color: rgb(40, 167, 69)"]:active,
-.detail-actions button[style*="background-color: #28a745"]:active {
-  transform: translateY(0); 
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-}
-
-
-/* Estilos específicos para el botón "Volver atrás" (color: #007bff) */
-.detail-actions button[style*="background-color: rgb(0, 123, 255)"],
-.detail-actions button[style*="background-color: #007bff"] {
-  background-color: #007bff; 
-  color: white;
-}
-
-.detail-actions button[style*="background-color: rgb(0, 123, 255)"]:hover,
-.detail-actions button[style*="background-color: #007bff"]:hover {
-  background-color: #0056b3; 
-  transform: translateY(-3px); 
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); 
-}
-
-.detail-actions button[style*="background-color: rgb(0, 123, 255)"]:active,
-.detail-actions button[style*="background-color: #007bff"]:active {
-  transform: translateY(0); 
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-}
-
+/* SweetAlert estilos */
 .swal2-popup {
   border-radius: 10px !important;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3) !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3) !important;
 }
 
 .swal2-title {
