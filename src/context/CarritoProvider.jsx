@@ -1,14 +1,8 @@
 // src/context/CarritoProvider.jsx
 import { useState } from "react";
 import PropTypes from "prop-types";
-// Importa CarritoContext desde su archivo dedicado
-import { CarritoContext } from "./CarritoContext"; // <-- ¡IMPORTANTE: Importar CarritoContext desde su propio archivo!
-
-// Decide si usar 'toast' o 'Swal'. Si usas toast, asegúrate de tener 'react-toastify' instalado y <ToastContainer /> en App.jsx
-import { toast } from "react-toastify";
-// Si prefieres SweetAlert2, descomenta la línea de abajo y usa Swal.fire
-// import Swal from "sweetalert2";
-
+import { CarritoContext } from "./CarritoContext";
+import Swal from "sweetalert2"; 
 
 export function CarritoProvider({ children }) {
   const [carrito, setCarrito] = useState([]);
@@ -21,10 +15,7 @@ export function CarritoProvider({ children }) {
           p.nombre === producto.nombre ? { ...p, cantidad: p.cantidad + 1 } : p
         );
       } else {
-        // Usa 'toast.success' si estás usando react-toastify
-        toast.success(`${producto.nombre} ha sido agregado al carrito.`);
-        // Si usas SweetAlert2, usarías Swal.fire aquí:
-        /*
+
         Swal.fire({
           title: '¡Agregado!',
           text: `${producto.nombre} ha sido agregado al carrito.`,
@@ -41,7 +32,6 @@ export function CarritoProvider({ children }) {
             content: 'swal-content-large'
           }
         });
-        */
         return [...prev, { ...producto, cantidad: 1 }];
       }
     });

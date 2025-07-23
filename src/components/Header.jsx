@@ -26,8 +26,7 @@ function Header() {
   const handleLogout = async () => {
     try {
       await logout();
-      // El mensaje de éxito ya se maneja en AuthProvider,
-      // aquí solo podrías mostrar un error si el logout falla específicamente.
+
     } catch (error) {
       console.error("Error al cerrar sesión desde Header:", error);
       Swal.fire({
@@ -36,13 +35,13 @@ function Header() {
         text: 'Ocurrió un problema al cerrar tu sesión. Inténtalo de nuevo.',
       });
     } finally {
-      handleCloseOffcanvas(); // Asegurarse de cerrar el offcanvas
+      handleCloseOffcanvas(); 
     }
   };
 
   const handleLoginClick = () => {
     setShowLogin(true);
-    handleCloseOffcanvas(); // Asegurarse de cerrar el offcanvas
+    handleCloseOffcanvas(); 
   };
 
   return (
@@ -148,8 +147,6 @@ function Header() {
         </Container>
       </Navbar>
 
-      {/* ⭐ ELIMINAR: LoginModal se renderiza en App.jsx, no aquí. */}
-      {/* {showLogin && <LoginModal onClose={() => setShowLogin(false)} />} */}
     </>
   );
 }

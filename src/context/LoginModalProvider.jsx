@@ -1,7 +1,7 @@
 // src/context/LoginModalProvider.jsx
 import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { LoginModalContext } from './LoginModalContext'; // Importa el contexto desde su propio archivo
+import { LoginModalContext } from './LoginModalContext'; 
 
 export const useLoginModal = () => {
   const context = useContext(LoginModalContext);
@@ -35,4 +35,4 @@ LoginModalProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default LoginModalProvider; // Exporta por defecto el proveedor
+export default LoginModalProvider; 

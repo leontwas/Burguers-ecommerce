@@ -103,12 +103,10 @@ export function AuthProvider({ children }) {
           localStorage.setItem('adminToken', idToken);
         }
       }
-      // No navegamos aquí, el LoginModal o el componente de login manejará el cierre
-      // y la redirección si es necesario, después de la llamada a esta función.
       return user;
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
-      throw error; // Propagar el error para que el componente Login lo maneje
+      throw error; 
     }
   };
 
@@ -134,7 +132,7 @@ export function AuthProvider({ children }) {
       return user;
     } catch (error) {
       console.error("Error al registrar usuario:", error);
-      throw error; // Propagar el error
+      throw error; 
     }
   };
 
@@ -150,7 +148,7 @@ export function AuthProvider({ children }) {
       navigate('/'); // Redirigir al home al cerrar sesión
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
-      throw error; // Propagar el error
+      throw error;
     }
   };
 
@@ -167,8 +165,6 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={value}>
-      {/* ⭐ LA CLAVE: Siempre renderiza los hijos. La lógica de 'loading'
-           debe ser manejada por el componente AppContent o el router. */}
       {children}
     </AuthContext.Provider>
   );
