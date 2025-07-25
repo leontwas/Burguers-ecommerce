@@ -115,6 +115,7 @@ function InicioPage() {
             <div className="carousel-caption">
               <h3>{image.title}</h3>
               <p>Las hamburguesas más picantes</p>
+
             </div>
           </div>
         ))}

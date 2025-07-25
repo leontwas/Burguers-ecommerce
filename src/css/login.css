@@ -185,7 +185,7 @@ body {
   border-radius: 40px;
   cursor: pointer;
   font-size: 16px;
-  color: #fff;
+  color: #d1d0d0 !important;
   font-weight: 600;
   z-index: 1;
   overflow: hidden;
