@@ -235,7 +235,7 @@ function ReservaMesa() {
             Borrar
           </Button>
           <Button variant="success" type="submit">
-            Reservar mesa
+            Reservar
           </Button>
         </div>
       </Form>

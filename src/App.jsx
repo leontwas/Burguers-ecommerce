@@ -2,44 +2,29 @@
 import './css/App.css';
 import './css/index.css';
 import './css/footer.css';
-
-// Importa tus componentes
+// import Main from './components/Main'; // Si 'Main' no se usa en otras rutas, puedes eliminar esta importación
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Main from './components/Main';
 import ProductosGrid from './components/ProductosGrid';
 import Carrito from './components/Carrito';
 import ReservaMesa from './components/ReservaMesa';
 import ProductCRUDForm from './components/ProductCRUDForm';
 import LoginModal from './components/LoginModal';
 import PrivateRoutes from './components/PrivateRoutes';
-
-// Importa tus contextos
+import InicioPage from './components/inicioPage'; // Importa tu nuevo componente de página de inicio
 import { CarritoProvider } from "./context/CarritoProvider";
 import { AuthProvider, useAuth } from "./context/AuthProvider";
-
-// ⭐⭐⭐ CORRECCIÓN CLAVE AQUÍ ⭐⭐⭐
-// LoginModalProvider es un default export de './context/LoginModalProvider'
 import LoginModalProvider from './context/LoginModalProvider';
-// useLoginModal es un named export de './context/LoginModalProvider'
 import { useLoginModal } from './context/LoginModalProvider';
-// ⭐⭐⭐ FIN CORRECCIÓN CLAVE ⭐⭐⭐
-
-// Rutas de React Router
 import { Routes, Route, BrowserRouter as Router, Navigate } from 'react-router-dom';
-
-// Estilos de Toastify y Bootstrap
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Componente que contendrá la lógica principal de la aplicación
 function AppContent() {
-  // Ahora useLoginModal se importa correctamente
   const { showLogin, closeLogin } = useLoginModal();
   const { loading } = useAuth();
-
-  // Loading spinner mientras se carga el estado de autenticación inicial
   if (loading) {
     return (
       <div
@@ -71,12 +56,7 @@ function AppContent() {
         <Routes>
           <Route
             path="/"
-            element={
-              <>
-                <Main />
-                <ProductosGrid />
-              </>
-            }
+            element={<InicioPage />} // <--- ¡CAMBIO AQUÍ! Ahora la ruta raíz renderiza InicioPage
           />
           <Route path="/productos" element={<ProductosGrid />} />
           <Route path="/carrito" element={<Carrito />} />
@@ -148,7 +128,6 @@ function AppContent() {
   );
 }
 
-// Componente principal de la aplicación
 function App() {
   return (
     <Router>

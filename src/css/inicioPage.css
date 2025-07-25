@@ -1,0 +1,415 @@
+/* src/components/InicioPage.css */
+
+.inicio-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* === CARRUSEL === */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin-bottom: 40px;
+}
+
+.carousel-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 60px;
+  left: 50%; /* Centra el borde izquierdo del caption */
+  transform: translateX(-50%); /* Desplaza el caption hacia la izquierda la mitad de su propio ancho para centrarlo */
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  text-align: center; /* Centra el texto (h3 y p) dentro del caption */
+  width: 90%;
+}
+
+.carousel-caption h3 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+}
+
+.carousel-caption p {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* Botones de navegación */
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.carousel-nav-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-prev {
+  left: 20px;
+}
+
+.carousel-next {
+  right: 20px;
+}
+
+/* Indicadores modernos */
+.carousel-indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 0; /* Extiende desde el borde izquierdo */
+  right: 0; /* Extiende hasta el borde derecho */
+  margin: auto; /* Centra el elemento horizontalmente dentro de su contenedor padre */
+  display: flex;
+  justify-content: center; /* Centra los elementos hijos (los indicadores) dentro de este contenedor flex */
+  gap: 8px;
+  z-index: 10;
+}
+
+.carousel-indicator {
+  width: 30px;
+  height: 4px;
+  border-radius: 2px;
+  border: none;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.carousel-indicator.active {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scaleX(1.2);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* === SECCIÓN HISTORIA === */
+.historia-section {
+  padding: 40px 20px;
+  text-align: center;
+  background: #f8f9fa;
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+
+.historia-title {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2.5rem;
+}
+
+.historia-text {
+  font-size: 1.2em;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* === SECCIÓN MAPA === */
+.mapa-section {
+  margin-bottom: 40px;
+}
+
+.mapa-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2rem;
+}
+
+.mapa-container {
+  height: 400px;
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mapa-info {
+  text-align: center;
+  margin-top: 15px;
+  padding: 15px;
+  background: #e9ecef;
+  border-radius: 8px;
+}
+
+.mapa-info p {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+/* === RESPONSIVO TABLETS === */
+@media (max-width: 768px) {
+  .inicio-container {
+    padding: 15px;
+  }
+
+  .carousel-container {
+    height: 350px;
+    margin-bottom: 30px;
+  }
+
+  .carousel-caption {
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 85%;
+  }
+
+  .carousel-caption h3 {
+    font-size: 1.8rem;
+  }
+
+  .carousel-caption p {
+    font-size: 1rem;
+  }
+
+  .carousel-nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .carousel-prev {
+    left: 15px;
+  }
+
+  .carousel-next {
+    right: 15px;
+  }
+
+  .carousel-indicators {
+    bottom: 15px;
+    gap: 6px;
+  }
+
+  .carousel-indicator {
+    width: 25px;
+    height: 3px;
+  }
+
+  .historia-section {
+    padding: 30px 15px;
+    margin-bottom: 30px;
+  }
+
+  .historia-title {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  .historia-text {
+    font-size: 1.1em;
+  }
+
+  .mapa-title {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+
+  .mapa-container {
+    height: 300px;
+  }
+
+  .mapa-info {
+    padding: 12px;
+    margin-top: 12px;
+  }
+
+  .mapa-info p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}
+
+/* === RESPONSIVO MÓVILES === */
+@media (max-width: 480px) {
+  .inicio-container {
+    padding: 10px;
+  }
+
+  .carousel-container {
+    height: 280px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+  }
+
+  .carousel-caption {
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 80%;
+  }
+
+  .carousel-caption h3 {
+    font-size: 1.4rem;
+    margin-bottom: 5px;
+  }
+
+  .carousel-caption p {
+    font-size: 0.9rem;
+  }
+
+  .carousel-nav-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .carousel-prev {
+    left: 10px;
+  }
+
+  .carousel-next {
+    right: 10px;
+  }
+
+  .carousel-indicators {
+    bottom: 10px;
+    gap: 5px;
+  }
+
+  .carousel-indicator {
+    width: 20px;
+    height: 3px;
+  }
+
+  .historia-section {
+    padding: 25px 12px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+  }
+
+  .historia-title {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+
+  .historia-text {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .mapa-title {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+  }
+
+  .mapa-container {
+    height: 250px;
+    border-radius: 8px;
+  }
+
+  .mapa-info {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+  }
+
+  .mapa-info p {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+}
+
+/* === RESPONSIVO MÓVILES MUY PEQUEÑOS === */
+@media (max-width: 360px) {
+  .carousel-container {
+    height: 220px;
+  }
+
+    .carousel-caption {
+      top: 120px;
+  }
+
+  .carousel-caption h3 {
+    font-size: 1rem;
+  }
+
+  .carousel-caption p {
+    font-size: 0.7rem;
+  }
+
+  .carousel-nav-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .historia-title {
+    font-size: 1.6rem;
+  }
+
+  .historia-text {
+    font-size: 0.95rem;
+  }
+
+  .mapa-title {
+    font-size: 1.4rem;
+  }
+
+  .mapa-container {
+    height: 200px;
+  }
+
+  .mapa-info p {
+    font-size: 0.8rem;
+  }
+
+}
+
+/* === MEJORAS DE ACCESIBILIDAD === */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-slide {
+    transition: none;
+  }
+  
+  .carousel-nav-btn {
+    transition: none;
+  }
+  
+  .carousel-indicator {
+    transition: none;
+  }
+}
