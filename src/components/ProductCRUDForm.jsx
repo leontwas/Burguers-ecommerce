@@ -1,8 +1,7 @@
 // src/components/ProductCRUDForm.jsx
 import { useState } from 'react';
-import axios from 'axios'; // Necesario para las operaciones de búsqueda a la API
-import Swal from 'sweetalert2';
-import '../css/ProductCRUDForm.css'; // Asegúrate de que este CSS exista y se cargue
+import Swal from 'sweetalert2'; // Se mantiene para SweetAlerts
+import '../css/ProductCRUDForm.css'; 
 // Importa el mock desde el archivo separado
 import initialProductsMock from '../data/initialProductsMock.js'; 
 
@@ -18,14 +17,17 @@ const ProductCRUDForm = () => {
     nivel_picante: '',
   });
 
-  // Estado para la lista de productos en el mock local (para operaciones de agregar/modificar/borrar)
+  // Estado para la lista de productos en el mock local (para operaciones de agregar/modificar/borrar y búsquedas locales)
+  // IMPORTANTE: ESTO ES UN MOCK EN MEMORIA DEL NAVEGADOR. 
+  // Los cambios realizados aquí NO persisten en el archivo initialProductsMock.js en tu disco duro.
+  // Se reinician al recargar la página.
   const [products, setProducts] = useState(initialProductsMock);
 
   // Estado para controlar si el campo ID debe estar bloqueado (solo editable al limpiar o si no hay producto cargado)
   const [isIdLocked, setIsIdLocked] = useState(false);
 
-  // URL base de tu API de productos (para operaciones de búsqueda)
-  const API_BASE_URL = 'https://mi-api-burger.onrender.com/api/productos';
+  // URL base de tu API de productos (ya no se usa para búsquedas en este archivo)
+  // const API_BASE_URL = 'https://mi-api-burger.onrender.com/api/productos';
 
   // Maneja los cambios en los campos del formulario
   const handleChange = (e) => {
@@ -112,7 +114,7 @@ const ProductCRUDForm = () => {
     return true;
   };
 
-  // Maneja la acción de agregar un nuevo producto (simulado localmente)
+  // Maneja la acción de agregar un nuevo producto (simulado localmente en memoria)
   const handleAdd = async () => {
     if (!validateFormForOperation('add')) return;
 
@@ -120,7 +122,7 @@ const ProductCRUDForm = () => {
       const newId = String(Date.now()); // Generar un ID único simple para el mock local
       const newProduct = { ...formData, id: newId, precio: parseFloat(formData.precio) };
 
-      // Actualizar el estado de los productos en el mock local
+      // Actualizar el estado de los productos en el mock local (en memoria)
       setProducts((prevProducts) => [...prevProducts, newProduct]);
 
       Swal.fire({
@@ -141,7 +143,7 @@ const ProductCRUDForm = () => {
     }
   };
 
-  // Maneja la acción de modificar un producto existente (simulado localmente)
+  // Maneja la acción de modificar un producto existente (simulado localmente en memoria)
   const handleModify = async () => {
     if (!validateFormForOperation('modify')) return;
 
@@ -196,7 +198,7 @@ const ProductCRUDForm = () => {
         return;
       }
 
-      // Actualizar el estado de los productos en el mock local
+      // Actualizar el estado de los productos en el mock local (en memoria)
       const updatedProducts = [...products];
       updatedProducts[productIndex] = productToUpdate;
       setProducts(updatedProducts);
@@ -220,42 +222,48 @@ const ProductCRUDForm = () => {
     }
   };
 
-  // Maneja la acción de cambiar el estado de un producto a "agotado" (simulado localmente)
+  // Maneja la acción de cambiar el estado de un producto (simulado localmente en memoria)
   const handleChangeStatusToSoldOut = async () => {
     if (!validateFormForOperation('delete')) return;
 
+    const { id } = formData;
+    const productIndex = products.findIndex(p => String(p.id) === String(id));
+
+    if (productIndex === -1) {
+      Swal.fire({ icon: 'error', title: 'Producto No Encontrado', text: `Producto con ID '${id}' no encontrado.` });
+      return;
+    }
+
+    let productToUpdate = { ...products[productIndex] };
+    const currentStatus = productToUpdate.estado;
+    const newStatus = currentStatus === 'disponible' ? 'agotado' : 'disponible';
+    const actionText = newStatus === 'agotado' ? 'cambiar a agotado' : 'cambiar a disponible';
+    const successText = newStatus === 'agotado' ? 'agotado' : 'disponible';
+
     const result = await Swal.fire({
       title: '¿Estás seguro?',
-      text: "Esto cambiará el estado del producto a 'agotado'.",
+      text: `Esto cambiará el estado del producto a '${newStatus}'.`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, cambiar a agotado',
+      confirmButtonText: `Sí, ${actionText}`,
       cancelButtonText: 'No, cancelar',
     });
 
     if (result.isConfirmed) {
       try {
-        const { id } = formData;
-        const productIndex = products.findIndex(p => String(p.id) === String(id));
+        productToUpdate.estado = newStatus;
 
-        if (productIndex === -1) {
-          Swal.fire({ icon: 'error', title: 'Producto No Encontrado', text: `Producto con ID '${id}' no encontrado.` });
-          return;
-        }
-
-        const productToUpdate = { ...products[productIndex], estado: 'agotado' };
-
-        // Actualizar el estado de los productos en el mock local
+        // Actualizar el estado de los productos en el mock local (en memoria)
         const updatedProducts = [...products];
         updatedProducts[productIndex] = productToUpdate;
         setProducts(updatedProducts);
         setFormData(productToUpdate); // Actualiza el formulario con el estado modificado
         Swal.fire({
           icon: 'success',
-          title: '¡Producto Agotado!',
-          text: `El estado de "${productToUpdate.nombre}" (ID: ${productToUpdate.id}) ha sido cambiado a "agotado".`,
+          title: `¡Producto ${successText.charAt(0).toUpperCase() + successText.slice(1)}!`,
+          text: `El estado de "${productToUpdate.nombre}" (ID: ${productToUpdate.id}) ha sido cambiado a "${newStatus}".`,
           timer: 2000,
           showConfirmButton: false,
         });
@@ -271,10 +279,94 @@ const ProductCRUDForm = () => {
     }
   };
 
-  // Maneja la búsqueda de un producto por nombre (CONECTADO A LA API REAL)
-  const handleSearchByName = async () => {
+  // --- MÉTODOS DE BÚSQUEDA LOCAL (OPERAN SOBRE EL ESTADO 'products') ---
+
+  // Maneja la búsqueda de un producto por nombre (LOCAL en el mock en memoria)
+  const handleSearchByNameLocal = async () => {
     if (!formData.nombre.trim()) {
-      Swal.fire({ icon: 'warning', title: 'Nombre Requerido', text: 'Por favor, ingrese el nombre del producto para buscar.' });
+      Swal.fire({ icon: 'warning', title: 'Nombre Requerido', text: 'Por favor, ingrese el nombre del producto para buscar en el mock local.' });
+      return;
+    }
+    
+    try {
+      const nombreLower = formData.nombre.toLowerCase();
+      const productFound = products.find(p => p.nombre && p.nombre.toLowerCase().includes(nombreLower));
+
+      if (productFound) {
+        setFormData(productFound); // Carga los datos del producto encontrado en el formulario
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto Encontrado (Local)',
+          text: `"${productFound.nombre}" (ID: ${productFound.id}) cargado desde el mock local.`,
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        setIsIdLocked(true); // Bloquear el ID al encontrar un producto
+      } else {
+        // Lógica para producto no encontrado: Muestra SweetAlert y limpia el formulario
+        Swal.fire({
+          icon: 'info',
+          title: 'Producto No Encontrado (Local)',
+          text: `No se encontró ningún producto con el nombre "${formData.nombre}" en el mock local.`,
+        });
+        handleClear(); // Limpiar el formulario si no se encuentra
+      }
+    } catch (error) {
+      console.error('Error al buscar producto por nombre (local mock):', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al buscar (Local)',
+        text: `Ocurrió un error al buscar el producto por nombre en el mock local. ${error.message}`,
+      });
+      handleClear(); // Limpiar el formulario en caso de error
+    }
+  };
+
+  // Maneja la búsqueda de un producto por ID (LOCAL en el mock en memoria)
+  const handleSearchByIDLocal = async () => {
+    if (!validateFormForOperation('searchByID')) return; // Reutiliza la validación de ID
+
+    try {
+      const productFound = products.find(p => String(p.id) === String(formData.id));
+
+      if (productFound) {
+        setFormData(productFound); // Carga los datos del producto encontrado en el formulario
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto Encontrado (Local)',
+          text: `El producto con ID "${formData.id}" ha sido cargado desde el mock local.`,
+          timer: 2000,
+          showConfirmButton: false,
+        });
+        setIsIdLocked(true); // Bloquear el ID al encontrar un producto
+      } else {
+        // Lógica para producto no encontrado: Muestra SweetAlert y limpia el formulario
+        Swal.fire({
+          icon: 'info',
+          title: 'Producto No Encontrado (Local)',
+          text: `No se encontró ningún producto con el ID "${formData.id}" en el mock local.`,
+        });
+        handleClear(); // Limpiar el formulario si no se encuentra
+      }
+    } catch (error) {
+      console.error('Error al buscar producto por ID (local mock):', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al buscar (Local)',
+        text: `Ocurrió un error al buscar el producto por ID en el mock local. ${error.message}`,
+      });
+      handleClear(); // Limpiar el formulario en caso de error
+    }
+  };
+
+  // --- MÉTODOS DE BÚSQUEDA A LA API EXTERNA (RENOMBRADOS y COMENTADOS) ---
+  // Las siguientes funciones están comentadas porque no se utilizan actualmente en el código.
+  // Si en el futuro necesitas interactuar con la API externa para búsquedas, puedes descomentarlas.
+
+  /*
+  const handleSearchByNameAPI = async () => {
+    if (!formData.nombre.trim()) {
+      Swal.fire({ icon: 'warning', title: 'Nombre Requerido', text: 'Por favor, ingrese el nombre del producto para buscar en la API externa.' });
       return;
     }
     try {
@@ -286,8 +378,8 @@ const ProductCRUDForm = () => {
         setFormData(productFound); // Carga los datos del producto encontrado en el formulario
         Swal.fire({
           icon: 'success',
-          title: 'Producto Encontrado',
-          text: `"${productFound.nombre}" (ID: ${productFound.id}) cargado en el formulario.`,
+          title: 'Producto Encontrado (API)',
+          text: `"${productFound.nombre}" (ID: ${productFound.id}) cargado desde la API.`,
           timer: 2000,
           showConfirmButton: false,
         });
@@ -296,8 +388,8 @@ const ProductCRUDForm = () => {
         // Lógica para producto no encontrado: Muestra SweetAlert y limpia el formulario
         Swal.fire({
           icon: 'info',
-          title: 'Producto No Encontrado',
-          text: `No se encontró ningún producto con el nombre "${formData.nombre}".`,
+          title: 'Producto No Encontrado (API)',
+          text: `No se encontró ningún producto con el nombre "${formData.nombre}" en la API externa.`,
         });
         handleClear(); // Limpiar el formulario si no se encuentra
       }
@@ -306,23 +398,22 @@ const ProductCRUDForm = () => {
       // Lógica para error en la búsqueda: Muestra SweetAlert de error y limpia el formulario
       if (error.response && error.response.status === 404) {
         Swal.fire({
-          icon: 'info', // Usar 'info' o 'warning' para "no encontrado"
-          title: 'Producto No Encontrado',
-          text: `No se encontró ningún producto con el nombre "${formData.nombre}".`,
+          icon: 'info', 
+          title: 'Producto No Encontrado (API)',
+          text: `No se encontró ningún producto con el nombre "${formData.nombre}" en la API externa.`,
         });
       } else {
         Swal.fire({
           icon: 'error',
-          title: 'Error al buscar',
-          text: `No se pudo buscar el producto por nombre. ${error.message}`,
+          title: 'Error al buscar (API)',
+          text: `No se pudo buscar el producto por nombre en la API externa. ${error.message}`,
         });
       }
       handleClear(); // Limpiar el formulario en caso de error
     }
   };
 
-  // Maneja la búsqueda de un producto por ID (CONECTADO A LA API REAL)
-  const handleSearchByID = async () => {
+  const handleSearchByIDAPI = async () => {
     if (!validateFormForOperation('searchByID')) return;
 
     try {
@@ -332,19 +423,17 @@ const ProductCRUDForm = () => {
         setFormData(response.data); // Carga los datos del producto encontrado en el formulario
         Swal.fire({
           icon: 'success',
-          title: 'Producto Encontrado',
-          text: `El producto con ID "${formData.id}" ha sido cargado.`,
+          title: 'Producto Encontrado (API)',
+          text: `El producto con ID "${formData.id}" ha sido cargado desde la API.`,
           timer: 2000,
           showConfirmButton: false,
         });
         setIsIdLocked(true); // Bloquear el ID al encontrar un producto
       } else {
-        // Esta rama else solo se alcanzaría si la API devuelve un 200 OK con data nula/vacía,
-        // lo cual es menos común para un "no encontrado" por ID.
         Swal.fire({
           icon: 'info',
-          title: 'Producto No Encontrado',
-          text: `No se encontró ningún producto con el ID "${formData.id}".`,
+          title: 'Producto No Encontrado (API)',
+          text: `No se encontró ningún producto con el ID "${formData.id}" en la API externa.`,
         });
         handleClear(); // Limpiar el formulario si no se encuentra
       }
@@ -353,20 +442,21 @@ const ProductCRUDForm = () => {
       // Lógica para error en la búsqueda: Muestra SweetAlert de error y limpia el formulario
       if (error.response && error.response.status === 404) {
         Swal.fire({
-          icon: 'info', // Usar 'info' o 'warning' para "no encontrado"
-          title: 'Producto No Encontrado',
-          text: `No se encontró ningún producto con el ID "${formData.id}".`,
+          icon: 'info', 
+          title: 'Producto No Encontrado (API)',
+          text: `No se encontró ningún producto con el ID "${formData.id}" en la API externa.`,
         });
       } else {
         Swal.fire({
           icon: 'error',
-          title: 'Error al buscar',
-          text: `No se pudo encontrar el producto con ID "${formData.id}". ${error.message}`,
+          title: 'Error al buscar (API)',
+          text: `No se pudo encontrar el producto con ID "${formData.id}" en la API externa. ${error.message}`,
         });
       }
       handleClear(); // Limpiar el formulario en caso de error
     }
   };
+  */
 
   return (
     <>
@@ -440,7 +530,7 @@ const ProductCRUDForm = () => {
               <div className="form-floating mb-3">
                 <input
                   name="imagen"
-                  type="url"
+                  type="text" 
                   className="form-control"
                   id="imagen"
                   placeholder="URL de la imagen"
@@ -490,9 +580,9 @@ const ProductCRUDForm = () => {
                 <button type="button" className="btn btn-primary" onClick={handleClear}>Limpiar</button>
                 <button type="submit" className="btn btn-success" onClick={handleAdd}>Agregar</button>
                 <button type="button" className="btn btn-dark" onClick={handleModify}>Modificar</button>
-                <button type="button" className="btn btn-danger" onClick={handleChangeStatusToSoldOut}>Marcar Agotado</button>
-                <button type="button" className="btn btn-dark" onClick={handleSearchByName}>Buscar por Nombre</button>
-                <button type="button" className="btn btn-dark" onClick={handleSearchByID}>Buscar por ID</button>
+                <button type="button" className="btn btn-danger" onClick={handleChangeStatusToSoldOut}>Cambiar Estado</button>
+                <button type="button" className="btn btn-info" onClick={handleSearchByNameLocal}>Buscar por Nombre</button>
+                <button type="button" className="btn btn-info" onClick={handleSearchByIDLocal}>Buscar por ID</button>
               </div>
             </form>
           </div>
